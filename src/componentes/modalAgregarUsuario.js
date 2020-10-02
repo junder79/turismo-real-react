@@ -10,19 +10,19 @@ function ModalNuevoUsuario(objeto) {
 
     // Inicalizando los valores de los Input 
 
-    const [datosForm , setDatoForm ] = useState({
-        nombre:'',
-        apellido:'',
-        correo:'',
-        telefono:'',
-        run:'',
-        tipousuario:''
+    const [datosForm, setDatoForm] = useState({
+        nombre: '',
+        apellido: '',
+        correo: '',
+        telefono: '',
+        run: '',
+        tipousuario: ''
 
-});
+    });
 
     // Detectar los cambios realizados en los input 
 
-    const handleInputChange  = (event) =>{
+    const handleInputChange = (event) => {
         setDatoForm({
             ... datosForm,
             [event.target.name]:event.target.value
@@ -35,19 +35,19 @@ function ModalNuevoUsuario(objeto) {
         event.preventDefault()
         console.log("DATOS A ENVIAR " + JSON.stringify(datosForm));
         axios.post('http://localhost:3001/agregarUsuario', datosForm)
-        .then(response => {
-            console.log(response);
-        })
-        .catch(err => console.warn(err));
+            .then(response => {
+                console.log(response);
+            })
+            .catch(err => console.warn(err));
     }
     useEffect(() => {
 
 
-        
+
     }, [])
 
 
-  
+
     return (
         <Modal isOpen={objeto.ModalNuevoUsuario}>
             <ModalHeader >Agregar Usuario</ModalHeader>
@@ -65,17 +65,18 @@ function ModalNuevoUsuario(objeto) {
                                 <input type="text" className="form-control" onChange={handleInputChange} name="apellido" placeholder="Apellido"></input>
                             </div>
                             <div className="col-12 mt-2">
-                                <input type="text" className="form-control" onChange={handleInputChange} name="correo"  placeholder="Correo"></input>
+                                <input type="text" className="form-control" onChange={handleInputChange} name="correo" placeholder="Correo"></input>
                             </div>
                             <div className="col-12 mt-2">
                                 <input type="text" className="form-control" onChange={handleInputChange} name="telefono" placeholder="Teléfono"></input>
                             </div>
                             <div className="col-12 mt-2">
-                               <select name="tipousuario" className="form-control" onChange={handleInputChange}>
-                                   <option value="1" >Administrador</option>
-                                   <option value="2" >Funcionario</option>
-                                   <option value="3" >Cliente</option>
-                               </select>
+                                <select name="tipousuario" className="form-control" onChange={handleInputChange}>
+                                    <option value="" disabled selected >Seleccione Tipo Usuario</option>
+                                    <option value="1" >Administrador</option>
+                                    <option value="2" >Funcionario</option>
+                                    <option value="3" >Cliente</option>
+                                </select>
                             </div>
                         </div>
                         <Button type="submit" className="mt-2" color="primary">Agregar</Button>{' '}
@@ -83,7 +84,7 @@ function ModalNuevoUsuario(objeto) {
                 </div>
             </ModalBody>
             <ModalFooter>
-               
+
                 <Button color="secondary" onClick={() => (objeto.setModalNuevoUsuario(false))}>Cerrar</Button>
             </ModalFooter>
         </Modal>

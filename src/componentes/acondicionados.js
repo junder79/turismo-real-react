@@ -37,9 +37,9 @@ function Acondicionados() {
                     {
                         dataAcondicionados.map((elemento, i) => (
                             <tr key={i}>
-                                <td>{elemento.IDACONDICIONADO}</td>
-                                <td>{elemento.NOMBREACONDICIONADO}</td>
-                                <td>${elemento.VALORACONDICIONADO}</td>
+                                <td>{elemento.IDACOND}</td>
+                                <td>{elemento.NOMBREACONDI}</td>
+                                <td>${elemento.VALORACOND}</td>
                              
                             </tr>
                         ))
