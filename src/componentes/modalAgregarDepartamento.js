@@ -99,7 +99,7 @@ function ModalAgregarDepartamento(objeto) {
         formData.append("comuna", data.comuna);
         formData.append("cantidad", data.cantidad);
         acondicionados.forEach((item) => {
-            formData.append('acondicionados[]', item);
+            formData.append('acondicionados', item);
         });
        
         axios.post('http://localhost:3001/agregarDepartamentos', formData)
@@ -117,10 +117,7 @@ function ModalAgregarDepartamento(objeto) {
         let value = Array.from(target.selectedOptions, option => option.value);
 
         setSelectAcondicionado([value]);
-        // console.log(acondicionadoSelect);
-        // // this.setState({
-        // //     [name]: value
-        // // });
+      
     }
 
     return (
