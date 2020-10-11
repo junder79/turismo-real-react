@@ -1,23 +1,131 @@
-import React, { useState } from 'react';
-import { Button} from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Button } from 'reactstrap';
 import { useHistory } from "react-router-dom";
 import ModalAgregarDepartamento from './modalAgregarDepartamento';
+import {  faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from 'axios';
+import swal from 'sweetalert';
 function Departamentos() {
     const history = useHistory();
 
-    // Manejo de Modal Abierto o cerrado
+    useEffect(() => {
+        getDepartamentos();
+    }, [])
 
+
+
+    // Manejo de Modal Abierto o cerrado
     const [modalAgregar, setModalAgregar] = useState(false);
+    const [departamento, setDepartamento] = useState([]);
+    const [dataD, setDataD] = useState(false);
     const redireccionRuta = () => {
         let path = 'acondicionado';
         history.push(path);
     }
+
+
+    // Realizar Peticion que muestra los departamentos 
+    const getDepartamentos = async => {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:3001/getDepartamentos'
+        }).then(res => {
+            console.log(res);
+            setDepartamento(res.data);
+            setDataD(true);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const eliminarDepartamento = (elemento) => {
+        swal({
+            title: "¿Deseas Eliminar el departamento?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.post('http://localhost:3001/eliminarDepartamento', elemento)
+                        .then(response => {
+
+                            var respuestaServidor = response.data;
+                            if (respuestaServidor == 1) {
+                                swal("Usuario Eliminado Correctamente", {
+                                    icon: "success",
+                                });
+                                
+                                // Refresh Tabla
+
+                            } else {
+                                swal("Error al eliminar Departamento", {
+                                    icon: "error",
+                                });
+                            }
+
+                        })
+                        .catch(err => console.warn(err));
+
+                } else {
+
+                }
+            });
+    }
     return (
         <div className="container">
             <p className="titulo-componentes">Departamentos</p>
-            <Button onClick={redireccionRuta} className="btn btn-sm btn-primary">Acondicionados</Button>
-            <Button onClick={ () => setModalAgregar(true)} className="btn btn-sm btn-success ml-2">Agregar Departamentos</Button>
-            <ModalAgregarDepartamento setModalAgregar={setModalAgregar} modalAgregar={modalAgregar} />
+
+            <Button onClick={redireccionRuta} className="btn btn-sm btn-primary mb-2">Acondicionados</Button>
+            <Button onClick={() => setModalAgregar(true)} className="btn btn-sm btn-success ml-2 mb-2">Agregar Departamentos</Button>
+            <div className="table-responsive">
+                {
+                    !dataD ?
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        :
+                        <table className="table-bordered table table-striped formato-tabla">
+
+                            <thead>
+                                <tr>
+                                    <th>Nombre D</th>
+                                    <th>Descripcion</th>
+                                    <th>Direccion</th>
+                                    <th>Valor</th>
+                                    <th>Cantidad Habitaciones</th>
+                                    <th>Acción</th>
+                                    <th>Acción</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    departamento.map((elemento, i) => (
+                                        <tr key={i}>
+                                            <td>{elemento.NOMBRED}</td>
+                                            <td>{elemento.DESCRIPCIOND}</td>
+                                            <td>{elemento.DIRECCIOND}</td>
+                                            <td>{elemento.VALORDEPARTAMENTO}</td>
+                                            <td>{elemento.CANTIDADH}</td>
+
+                                            <td><button className="btn btn-primary">Acondicionados</button></td>
+                                            <td><button className="btn btn-danger">Imágenes</button></td>
+                                            <td><button className="btn btn-danger" onClick={() => eliminarDepartamento(elemento)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button></td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                }
+
+            </div>
+            <ModalAgregarDepartamento setModalAgregar={setModalAgregar} setDepartamento = {setDepartamento} departamento = {departamento} getDepartamentos={getDepartamentos} modalAgregar={modalAgregar} />
+
         </div>
     )
 }

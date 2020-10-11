@@ -14,6 +14,7 @@ function App() {
   return (
 
     <div className="app">
+       
       {history.location.pathname === '/login' ? <Login></Login>  : <Navbar />}
       <Router>
         <Switch>

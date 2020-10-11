@@ -6,7 +6,9 @@ import Inicio from './inicio';
 import Reservas from './reservas';
 import { BrowserRouter as Router, Switch, Route, Link,useLocation } from "react-router-dom";
 import Acondicionados from './acondicionados';
-
+import Tours from './servicioTour';
+import Transportes from './servicioTransporte';
+import DetalleTour from './detalle/detalleTour';
 function Navbar() {
     
    
@@ -33,8 +35,16 @@ function Navbar() {
                         <li className="nav-item">
                             <Link to="/reservas" className="nav-link">Reservas</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/tours" className="nav-link">Tours</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/transportes" className="nav-link">Servicios de Transportes</Link>
+                        </li>
                     </ul>
                 </div>
+                {/* <a href={''} className="btn btn-primary">Ver Más</a> */}
+              
                 <form className="form-inline">
                     <Link to="/login" className="btn btn-outline btn-sm">Cerrar Sesión</Link>
                 </form>
@@ -55,6 +65,13 @@ function Navbar() {
                 <Route path="/reservas">
                     <Reservas></Reservas>
                 </Route>
+                <Route path="/tours">
+                   <Tours></Tours>
+                </Route>
+                <Route path="/transportes">
+                   <Transportes></Transportes>
+                </Route>
+                <Route exact path="/tour/:tourId" component={DetalleTour}></Route>
             </Switch>
         </Router>
     )

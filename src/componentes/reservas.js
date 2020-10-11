@@ -2,9 +2,12 @@ import React from 'react';
 
 
 function Reservas(){
+
+    
+
     return (
-        <div>
-            <p>Reservas</p>
+        <div className="container">
+           <p className="titulo-componentes">Reservas Activas</p>
         </div>
     )
 }
