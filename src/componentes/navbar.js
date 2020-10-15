@@ -1,54 +1,40 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { DatePicker } from 'antd';
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import GetUsuarios from './data';
 import Departamentos from './departamentos';
 import Inicio from './inicio';
 import Reservas from './reservas';
-import { BrowserRouter as Router, Switch, Route, Link,useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useLocation } from "react-router-dom";
 import Acondicionados from './acondicionados';
 import Tours from './servicioTour';
 import Transportes from './servicioTransporte';
 import DetalleTour from './detalle/detalleTour';
+import { Menu } from 'antd';
+import { MailOutlined, AppstoreOutlined, SettingOutlined ,UserOutlined  , HomeOutlined ,CarOutlined,CarryOutOutlined} from '@ant-design/icons';
+const { SubMenu } = Menu;
 function Navbar() {
-    
-   
+
+
     return (
         <Router>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light" >
-                <a className="navbar-brand" href="#">Navbar</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav items-navbar">
-
-                        <li className="nav-item" >
-                            <Link to="/inicio"  className="nav-link">Inicio</Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link to="/usuarios" className="nav-link">Usuarios</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/departamentos" className="nav-link">Departamentos</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/reservas" className="nav-link">Reservas</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/tours" className="nav-link">Tours</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/transportes" className="nav-link">Servicios de Transportes</Link>
-                        </li>
-                    </ul>
-                </div>
-                {/* <a href={''} className="btn btn-primary">Ver Más</a> */}
-              
-                <form className="form-inline">
-                    <Link to="/login" className="btn btn-outline btn-sm">Cerrar Sesión</Link>
-                </form>
-            </nav>
+            <Menu mode="horizontal">
+                <Menu.Item key="mail" icon={<UserOutlined />}>
+                    <Link to="/usuarios" >Usuarios</Link>
+                </Menu.Item>
+                <Menu.Item key="departamento" icon={<HomeOutlined />}>
+                    <Link to="/departamentos" >Departamentos</Link>
+                </Menu.Item>
+                <Menu.Item key="reserva" icon={<CarryOutOutlined />}>
+                    <Link to="/reservas" >Reservas</Link>
+                </Menu.Item>
+                <Menu.Item key="tours" icon={<MailOutlined />}>
+                    <Link to="/tours" >Tours</Link>
+                </Menu.Item>
+                <Menu.Item key="servicio" icon={<CarOutlined />}>
+                    <Link to="/transportes" >Servicios de Transportes</Link>
+                </Menu.Item>
+            </Menu>
             <Switch>
                 <Route path="/inicio" >
                     <Inicio></Inicio>
@@ -66,16 +52,16 @@ function Navbar() {
                     <Reservas></Reservas>
                 </Route>
                 <Route path="/tours">
-                   <Tours></Tours>
+                    <Tours></Tours>
                 </Route>
                 <Route path="/transportes">
-                   <Transportes></Transportes>
+                    <Transportes></Transportes>
                 </Route>
-                <Route exact path="/tour/:tourId" component={DetalleTour}></Route>
+                <Route exact path="/tour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>
             </Switch>
         </Router>
     )
-   
+
 }
 
 export default Navbar;

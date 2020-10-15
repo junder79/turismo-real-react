@@ -4,7 +4,10 @@ import {
     BrowserRouter as Router,
 
     Link,
- } from "react-router-dom";
+} from "react-router-dom";
+import { Skeleton, Switch, Card, Avatar, Button, Row, Col, } from 'antd';
+import ModalAgregarTour from './modal/modalAgregarTour';
+const { Meta } = Card;
 function Tours() {
 
     useEffect(() => {
@@ -26,34 +29,56 @@ function Tours() {
             console.log(err);
         })
     }
-
+    // Estado del Modal
+    const [estadoModalTour, setEstado] = useState(false); 
 
     return (
         <div className="container">
+
             <p className="titulo-componentes">Tours</p>
-            {
-                !dataT ?
-                    <div className="text-center">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>     
-                        </div>
-                      
-                    </div> :
-                    tours.map((elemento, i) => (
+            <ModalAgregarTour estadoModalTour = {estadoModalTour} setEstado={setEstado} ></ModalAgregarTour>
+            <Button   type="primary mb-2">Agregar Tour</Button>
+            <Row>
+                {
+                    !dataT ?
+                        <Card style={{ width: '100%', marginTop: 16 }} loading={true}>
+                            <Meta
+                                avatar={
+                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                }
+                                title="Card title"
+                                description="This is the description"
+                            />
+                        </Card> :
+
+                        tours.map((elemento, i) => (
 
 
-                        <div className="card" style={{ borderRadius: 50 }}>
-                            <img style={{ borderRadius: 50, width: '100%', height: '50vh' }} src="http://localhost:3001/imagenes13136c8506f89055fd05ec441855f8af9431c966.jpg" className="card-img-top img-responsive" alt="..."></img>
-                            <div className="card-body">
-                                <h5 className="card-title">{elemento.LUGARTOUR}</h5>
-                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <Link to={`/tour/${elemento.IDDETATOUR}`} className=" btn btn-outline-success btn-sm">Ver más</Link>
+                            <div>
+
+
+
+                                <Col span={6}><Card
+                                    hoverable
+                                    style={{ width: '18rem' }}
+                                    className="ml-2"
+                                    cover={<img alt="example" src={elemento.IMAGENTOUR} />}
+                                >
+
+                                    <Meta title={elemento.LUGARTOUR} />
+                                    <Button type="primary" className="mt-2"><Link to={`/tour/${elemento.IDDETATOUR}/${elemento.LUGARTOUR}/${elemento.VALORTOUR}/${elemento.DESCRIPCIONTOUR}/${elemento.NOMBRECOMUNA}/${elemento.NOMBREREGION}/${elemento.HORARIOT}`}>Ver más</Link></Button>
+
+                                </Card></Col>
+
+
                             </div>
-                        </div>
 
-                    ))
-            }
-        </div>
+
+
+                        ))
+                }
+            </Row>
+        </div >
     )
 }
 

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'reactstrap';
+// import { Button } from 'reactstrap';
 import { useHistory } from "react-router-dom";
 import ModalAgregarDepartamento from './modalAgregarDepartamento';
 import {  faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import swal from 'sweetalert';
+import { Button } from 'antd';
 function Departamentos() {
     const history = useHistory();
 
@@ -76,11 +77,12 @@ function Departamentos() {
     }
     return (
         <div className="container">
-            <p className="titulo-componentes">Departamentos</p>
+            <p className="titulo-componentes">DepartamentosSKJDHKJAHSDKHJKAJSDHKJAHSD</p>
 
-            <Button onClick={redireccionRuta} className="btn btn-sm btn-primary mb-2">Acondicionados</Button>
-            <Button onClick={() => setModalAgregar(true)} className="btn btn-sm btn-success ml-2 mb-2">Agregar Departamentos</Button>
-            <div className="table-responsive">
+            <Button onClick={redireccionRuta} className="primary">Acondicionados</Button>
+            
+            <Button onClick={() => setModalAgregar(true)} className="primary ml-2">Agregar Departamentos</Button>
+            <div className="table-responsive mt-2">
                 {
                     !dataD ?
                         <div class="text-center">
