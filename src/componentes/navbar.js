@@ -20,44 +20,44 @@ function Navbar() {
         <Router>
             <Menu mode="horizontal">
                 <Menu.Item key="mail" icon={<UserOutlined />}>
-                    <Link to="/usuarios" >Usuarios</Link>
+                    <Link to="/admin/usuarios" >Usuarios</Link>
                 </Menu.Item>
                 <Menu.Item key="departamento" icon={<HomeOutlined />}>
-                    <Link to="/departamentos" >Departamentos</Link>
+                    <Link to="/admin/departamentos" >Departamentos</Link>
                 </Menu.Item>
                 <Menu.Item key="reserva" icon={<CarryOutOutlined />}>
-                    <Link to="/reservas" >Reservas</Link>
+                    <Link to="/admin/reservas" >Reservas</Link>
                 </Menu.Item>
                 <Menu.Item key="tours" icon={<MailOutlined />}>
-                    <Link to="/tours" >Tours</Link>
+                    <Link to="/admin/tours" >Tours</Link>
                 </Menu.Item>
                 <Menu.Item key="servicio" icon={<CarOutlined />}>
-                    <Link to="/transportes" >Servicios de Transportes</Link>
+                    <Link to="/admin/transportes" >Servicios de Transportes</Link>
                 </Menu.Item>
             </Menu>
             <Switch>
-                <Route path="/inicio" >
+                <Route path="/admin/inicio" >
                     <Inicio></Inicio>
                 </Route>
-                <Route path="/usuarios">
+                <Route path="/admin/usuarios">
                     <GetUsuarios></GetUsuarios>
                 </Route>
-                <Route path="/departamentos">
+                <Route path="/admin/departamentos">
                     <Departamentos></Departamentos>
                 </Route>
-                <Route path="/acondicionado">
+                <Route path="/admin/acondicionado">
                     <Acondicionados></Acondicionados>
                 </Route>
-                <Route path="/reservas">
+                <Route path="/admin/reservas">
                     <Reservas></Reservas>
                 </Route>
-                <Route path="/tours">
+                <Route path="/admin/tours">
                     <Tours></Tours>
                 </Route>
-                <Route path="/transportes">
+                <Route path="/admin/transportes">
                     <Transportes></Transportes>
                 </Route>
-                <Route exact path="/tour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>
+                <Route exact path="/detalletour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>
             </Switch>
         </Router>
     )

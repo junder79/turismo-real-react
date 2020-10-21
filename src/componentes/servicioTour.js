@@ -37,7 +37,7 @@ function Tours() {
 
             <p className="titulo-componentes">Tours</p>
             <ModalAgregarTour estadoModalTour = {estadoModalTour} setEstado={setEstado} ></ModalAgregarTour>
-            <Button   type="primary mb-2">Agregar Tour</Button>
+           
             <Row>
                 {
                     !dataT ?
@@ -62,11 +62,11 @@ function Tours() {
                                     hoverable
                                     style={{ width: '18rem' }}
                                     className="ml-2"
-                                    cover={<img alt="example" src={elemento.IMAGENTOUR} />}
+                                    
                                 >
 
                                     <Meta title={elemento.LUGARTOUR} />
-                                    <Button type="primary" className="mt-2"><Link to={`/tour/${elemento.IDDETATOUR}/${elemento.LUGARTOUR}/${elemento.VALORTOUR}/${elemento.DESCRIPCIONTOUR}/${elemento.NOMBRECOMUNA}/${elemento.NOMBREREGION}/${elemento.HORARIOT}`}>Ver más</Link></Button>
+                                    <Button type="primary" className="mt-2"><Link to={`/detalletour/${elemento.IDDETATOUR}/${elemento.LUGARTOUR}/${elemento.VALORTOUR}/${elemento.DESCRIPCIONTOUR}/${elemento.NOMBRECOMUNA}/${elemento.NOMBREREGION}/${elemento.HORARIOT}`}>Ver más</Link></Button>
 
                                 </Card></Col>
 

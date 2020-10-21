@@ -19,10 +19,10 @@ function App() {
       <Router>
         <Switch>
           
-          <Route path='/inicio' component={Inicio}> </Route>
-          <Route path='/acondicionados' component={Acondicionados}> </Route>
-          <Route path='/usuarios' component={GetUsuarios}> </Route>
-          <Route path='/departamentos' component={Departamentos}> </Route>
+          <Route path='/admin/inicio' component={Inicio}> </Route>
+          <Route path='/admin/acondicionados' component={Acondicionados}> </Route>
+          <Route path='/admin/usuarios' component={GetUsuarios}> </Route>
+          <Route path='/admin/departamentos' component={Departamentos}> </Route>
         </Switch>
       </Router>
     </div>

@@ -76,17 +76,6 @@ function ModalAgregarDepartamento(objeto) {
         // Enviar Peticion para traer las comunas de dicha region 
 
     }
-    // const getAcondicionados = async => {
-    //     axios({
-    //         method: 'GET',
-    //         url: 'http://localhost:3001/getAcondicionados'
-    //     }).then(res => {
-    //         console.log(res);
-    //         setAcondicionados(res.data);
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
 
     // Enviar Formulario a POST junto a la imagen
     const [btnAgregarDepartamento, setBtnDepartamento] = useState('');
@@ -129,8 +118,10 @@ function ModalAgregarDepartamento(objeto) {
                         icon: 'success',
                         confirmButtonText: 'Continuar'
                     })
+                    setPicture([]);
                     objeto.setModalAgregar(false);
                     objeto.getDepartamentos();
+                    setBtnDepartamento(false);
                 } else {
                     Swal.fire({
                         title: 'Error al Agregar',
@@ -138,6 +129,7 @@ function ModalAgregarDepartamento(objeto) {
                         icon: 'error',
                         confirmButtonText: 'Continuar'
                     })
+                    setBtnDepartamento(false);
                 }
             })
             .catch(err => console.warn(err));
@@ -162,7 +154,7 @@ function ModalAgregarDepartamento(objeto) {
 
         setPicture([...picture, ...e.target.files]);
 
-
+        console.log("IMAGEN" + JSON.stringify(picture));
     };
 
 

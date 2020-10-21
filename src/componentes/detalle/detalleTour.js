@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-// import { Card, Button } from 'react-bootstrap';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 import { Descriptions, Radio, Button, Card, Avatar } from 'antd';
 const { Meta } = Card;
 function DetalleTour() {
@@ -27,18 +28,26 @@ function DetalleTour() {
             url: `http://localhost:3001/detalleTour/${params.tourId}`
         }).then(res => {
             setCargado(true);
-            setDetalleT(res.data[0].IMAGENTOUR);
+            console.log(res.data);
+            setDetalleT(res.data);
 
         }).catch(err => {
             console.log(err);
         })
     }
+    const contentStyle = {
+        height: '160px',
+        color: '#fff',
+        lineHeight: '160px',
+        textAlign: 'center',
+        background: '#364d79',
+    };
     return (
         <div className="container">
 
 
             <div className="row">
-                <div className="col-6">
+                <div className="col-6 mt-2">
                     {
                         !estadoCargado ?
                             <Card style={{ width: '100%', marginTop: 16 }} loading={true}>
@@ -50,13 +59,26 @@ function DetalleTour() {
                                     description="This is the description"
                                 />
                             </Card> :
-                            <Card
-                                hoverable
-                                className="mt-2"
-                                cover={<img alt="example" src={detalleT} />}
-                            >
+                        
 
-                            </Card>
+                                <Carousel>
+                                    {
+
+                                        detalleT.map((elemento, i) => (
+                                            <div>
+                                                <img src={elemento.IMAGEN} />
+
+                                            </div>
+                                        ))
+                                    }
+
+
+                                </Carousel>
+
+
+
+
+                            
                     }
                 </div>
                 <div className="col-6">

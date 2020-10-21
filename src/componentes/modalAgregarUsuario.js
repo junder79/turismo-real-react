@@ -42,7 +42,7 @@ function ModalNuevoUsuario(objeto) {
                 var respuestaServidor = response.data;
                 if (respuestaServidor == 1) {
                     swal.fire({
-                        title: 'Departamento Agregado',
+                        title: 'Usuario Agregado',
                         text: '',
                         icon: 'success',
                         confirmButtonText: 'Continuar'

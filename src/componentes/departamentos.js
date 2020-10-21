@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 // import { Button } from 'reactstrap';
 import { useHistory } from "react-router-dom";
 import ModalAgregarDepartamento from './modalAgregarDepartamento';
-import {  faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faExchangeAlt, faImages } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import swal from 'sweetalert';
 import { Button } from 'antd';
+import ModalGalleryImagen from './modal/modalDetalleImagenes';
+import ModalAcondicionados from './modal/modalAcondicionados';
 function Departamentos() {
     const history = useHistory();
 
@@ -18,6 +20,10 @@ function Departamentos() {
 
     // Manejo de Modal Abierto o cerrado
     const [modalAgregar, setModalAgregar] = useState(false);
+    // Manejo de Modal de Galeria de Imageness
+    const [estado, setEstado] = useState(false);
+    // Manejo de Modal de Galeria de Acondicionados
+    const [estadoAcond, setEstadoAcond] = useState(false);
     const [departamento, setDepartamento] = useState([]);
     const [dataD, setDataD] = useState(false);
     const redireccionRuta = () => {
@@ -40,9 +46,10 @@ function Departamentos() {
         })
     }
 
-    const eliminarDepartamento = (elemento) => {
+    const cambiarEstado = (elemento) => {
+        console.log("ID A ENTREGAR" + elemento.IDDEPARTAMENTO)
         swal({
-            title: "¿Deseas Eliminar el departamento?",
+            title: "¿Deseas cambiar el estado del departamento?",
             text: "",
             icon: "warning",
             buttons: true,
@@ -55,14 +62,14 @@ function Departamentos() {
 
                             var respuestaServidor = response.data;
                             if (respuestaServidor == 1) {
-                                swal("Usuario Eliminado Correctamente", {
+                                swal("Estado cambiado exitosamente", {
                                     icon: "success",
                                 });
-                                
+                                getDepartamentos();
                                 // Refresh Tabla
 
                             } else {
-                                swal("Error al eliminar Departamento", {
+                                swal("Error al cambiar estado Departamento", {
                                     icon: "error",
                                 });
                             }
@@ -75,12 +82,54 @@ function Departamentos() {
                 }
             });
     }
+
+    // Rescatar las Imagenes
+    const [imagenD, setImagenD] = useState([]);
+    const [estadoCargaI, setEstadoCargaI] = useState(false);
+    const abrirModalImagen = (idDepartamento) => {
+        setEstado(true);
+        axios({
+            method: 'GET',
+            url: `http://localhost:3001/getImagesDepartament/${idDepartamento}`
+        }).then(res => {
+            console.log(res.data);
+            setEstadoCargaI(true);
+            setImagenD(res.data);
+
+        }).catch(err => {
+            console.log(err);
+        })
+
+    }
+
+    // Rescatar los Acondicionados del departamento 
+
+    const [estadoCargaA, setEstadoCargaA] = useState(false);
+    const [acondicionadoSelect, acondicionadoSelected] = useState([]);
+    const abrirModalAcondicionado = (idDepartamento) => {
+        setEstadoAcond(true);
+        axios({
+            method: 'GET',
+            url: `http://localhost:3001/getAcondicionados/${idDepartamento}`
+        }).then(res => {
+            console.log(res.data);
+            setEstadoCargaA(true);
+            acondicionadoSelected(res.data);
+
+        }).catch(err => {
+            console.log(err);
+        })
+
+    }
+
+
     return (
         <div className="container">
-            <p className="titulo-componentes">DepartamentosSKJDHKJAHSDKHJKAJSDHKJAHSD</p>
+            <p className="titulo-componentes">Departamentos</p>
 
             <Button onClick={redireccionRuta} className="primary">Acondicionados</Button>
-            
+            <ModalGalleryImagen estado={estado} imagenD={imagenD} setEstadoCargaI={setEstadoCargaI} setImagenD={setImagenD} estadoCargaI={estadoCargaI} setEstado={setEstado} ></ModalGalleryImagen>
+            <ModalAcondicionados setEstadoAcond={setEstadoAcond} estadoAcond={estadoAcond} acondicionadoSelect={acondicionadoSelect} acondicionadoSelected={acondicionadoSelected} estadoCargaA={estadoCargaA} setEstadoCargaA={setEstadoCargaA}></ModalAcondicionados>
             <Button onClick={() => setModalAgregar(true)} className="primary ml-2">Agregar Departamentos</Button>
             <div className="table-responsive mt-2">
                 {
@@ -100,6 +149,7 @@ function Departamentos() {
                                     <th>Direccion</th>
                                     <th>Valor</th>
                                     <th>Cantidad Habitaciones</th>
+                                    <th>Estado</th>
                                     <th>Acción</th>
                                     <th>Acción</th>
                                     <th>Acción</th>
@@ -114,10 +164,10 @@ function Departamentos() {
                                             <td>{elemento.DIRECCIOND}</td>
                                             <td>{elemento.VALORDEPARTAMENTO}</td>
                                             <td>{elemento.CANTIDADH}</td>
-
-                                            <td><button className="btn btn-primary">Acondicionados</button></td>
-                                            <td><button className="btn btn-danger">Imágenes</button></td>
-                                            <td><button className="btn btn-danger" onClick={() => eliminarDepartamento(elemento)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button></td>
+                                            <td>{elemento.ACTIVO}</td>
+                                            <td><button className="btn btn-primary" onClick={() => abrirModalAcondicionado(elemento.IDDEPARTAMENTO)}>Acondicionados</button></td>
+                                            <td><button className="btn btn-danger" onClick={() => abrirModalImagen(elemento.IDDEPARTAMENTO)}><FontAwesomeIcon icon={faImages}></FontAwesomeIcon></button></td>
+                                            <td><button className="btn btn-danger" onClick={() => cambiarEstado(elemento)}><FontAwesomeIcon icon={faExchangeAlt}></FontAwesomeIcon></button></td>
                                         </tr>
                                     ))
                                 }
@@ -126,7 +176,7 @@ function Departamentos() {
                 }
 
             </div>
-            <ModalAgregarDepartamento setModalAgregar={setModalAgregar} setDepartamento = {setDepartamento} departamento = {departamento} getDepartamentos={getDepartamentos} modalAgregar={modalAgregar} />
+            <ModalAgregarDepartamento setModalAgregar={setModalAgregar} setDepartamento={setDepartamento} departamento={departamento} getDepartamentos={getDepartamentos} modalAgregar={modalAgregar} />
 
         </div>
     )
