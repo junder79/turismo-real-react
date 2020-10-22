@@ -10,8 +10,14 @@ import Acondicionados from './acondicionados';
 import Tours from './servicioTour';
 import Transportes from './servicioTransporte';
 import DetalleTour from './detalle/detalleTour';
+import ReservaCliente from './crearReserva';
+import DetalleReservaC from './detalle/detalleReservaCliente';
 import { Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined ,UserOutlined  , HomeOutlined ,CarOutlined,CarryOutOutlined} from '@ant-design/icons';
+import AgregarHuespedes from './detalle/detalleHuespedes';
+
+import ServicioExtraTour from './detalle/detalleServicioExtraTour';
+import ServicioExtraTransporte from './detalle/detalleTransporte';
 const { SubMenu } = Menu;
 function Navbar() {
 
@@ -57,6 +63,22 @@ function Navbar() {
                 <Route path="/admin/transportes">
                     <Transportes></Transportes>
                 </Route>
+                <Route path="/clie/reservar">
+                   <ReservaCliente></ReservaCliente>
+                </Route>
+                <Route path="/clie/detalleLugar">
+                  <DetalleReservaC></DetalleReservaC>
+                </Route>
+                <Route path="/clie/detalleHuespedes">
+                 <AgregarHuespedes></AgregarHuespedes>
+                </Route>
+                <Route path="/clie/detalleTour">
+                 <ServicioExtraTour></ServicioExtraTour>
+                </Route>
+                <Route path="/clie/detalleTransporte">
+                 <ServicioExtraTransporte></ServicioExtraTransporte>
+                </Route>
+
                 <Route exact path="/detalletour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>
             </Switch>
         </Router>
