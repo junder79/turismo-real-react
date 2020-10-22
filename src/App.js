@@ -9,13 +9,14 @@ import { BrowserRouter as Router, Switch, Route, Link, useLocation } from "react
 import Departamentos from './componentes/departamentos';
 import { createBrowserHistory } from "history";
 import DetalleReservaC from './componentes/detalle/detalleReservaCliente';
+import InicioWebsite from './componentes/website';
 function App() {
   const history = createBrowserHistory()
   return (
 
     <div className="app">
        
-      {history.location.pathname === '/login' ? <Login></Login>  : <Navbar />}
+      {/* {history.location.pathname === '/login' ? <Login></Login>  : <Navbar />}
       <Router>
         <Switch>
           
@@ -26,7 +27,8 @@ function App() {
           <Route path='/clie/reservar' component={ReservaCliente}> </Route>
           <Route path='/clie/detalleLugar' component={DetalleReservaC}> </Route>
         </Switch>
-      </Router>
+      </Router> */}
+      <InicioWebsite></InicioWebsite>
     </div>
 
   );
