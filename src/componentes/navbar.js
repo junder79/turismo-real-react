@@ -18,6 +18,8 @@ import AgregarHuespedes from './detalle/detalleHuespedes';
 
 import ServicioExtraTour from './detalle/detalleServicioExtraTour';
 import ServicioExtraTransporte from './detalle/detalleTransporte';
+import InicioWebsite from './website';
+import TotalReserva from './detalle/detalleTotalReserva';
 const { SubMenu } = Menu;
 function Navbar() {
 
@@ -78,7 +80,12 @@ function Navbar() {
                 <Route path="/clie/detalleTransporte">
                  <ServicioExtraTransporte></ServicioExtraTransporte>
                 </Route>
-
+                <Route path="/clie/inicio">
+                 <InicioWebsite></InicioWebsite>
+                </Route>
+                <Route path="/clie/total">
+                 <TotalReserva></TotalReserva>
+                </Route>
                 <Route exact path="/detalletour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>
             </Switch>
         </Router>

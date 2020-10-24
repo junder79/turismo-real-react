@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Row, Card, Col, Form, Input, DatePicker, Button,Carousel } from 'antd';
-
+import { useHistory } from "react-router-dom";
 const { Header, Content, Footer } = Layout;
 function InicioWebsite() {
     const { RangePicker } = DatePicker;
@@ -12,6 +12,11 @@ function InicioWebsite() {
         textAlign: 'center',
         background: '#364d79',
     };
+    const history = useHistory();
+    const redireccionRuta = () => {
+        let path = 'detalleLugar';
+        history.push(path);
+    }
     return (
         <div>
             <Header style={{ backgroundColor: '#FFFFFF' }}>
@@ -54,13 +59,15 @@ function InicioWebsite() {
                 <div className="container">
                     <h3 className="texto-calistoga" style={{ marginTop: 10  }}>Hoteles Populares</h3>
                     <Row>
-                        <Card
+                        <Card 
+                        
                             hoverable
                             style={{ width: 240, marginLeft: 10, borderRadius: 20 }}
                             cover={<img alt="example" src="https://img.ev.mu/images/attractions/624/960x640/440131.jpg" />}
                         >
                             <Meta title="Europe Street beat" description="www.instagram.com" />
                         </Card>
+                        <Button onClick={redireccionRuta} type="primary">Reservar</Button>
                         <Card
                             hoverable
                             style={{ width: 240, marginLeft: 10, borderRadius: 20 }}

@@ -10,13 +10,14 @@ import Departamentos from './componentes/departamentos';
 import { createBrowserHistory } from "history";
 import DetalleReservaC from './componentes/detalle/detalleReservaCliente';
 import InicioWebsite from './componentes/website';
+import TotalReserva from './componentes/detalle/detalleTotalReserva';
 function App() {
   const history = createBrowserHistory()
   return (
 
     <div className="app">
        
-      {/* {history.location.pathname === '/login' ? <Login></Login>  : <Navbar />}
+      {history.location.pathname === '/login' ? <Login></Login>  : <Navbar />}
       <Router>
         <Switch>
           
@@ -26,9 +27,11 @@ function App() {
           <Route path='/admin/departamentos' component={Departamentos}> </Route>
           <Route path='/clie/reservar' component={ReservaCliente}> </Route>
           <Route path='/clie/detalleLugar' component={DetalleReservaC}> </Route>
+          <Route path='/clie/inicio' component={InicioWebsite}> </Route>
+          <Route path='/clie/total' component={TotalReserva}> </Route>
         </Switch>
-      </Router> */}
-      <InicioWebsite></InicioWebsite>
+      </Router>
+      
     </div>
 
   );

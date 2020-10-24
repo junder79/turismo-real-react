@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Space, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
+import { DownloadOutlined } from '@ant-design/icons';
 const areas = [
     { label: 'Beijing', value: 'Beijing' },
     { label: 'Shanghai', value: 'Shanghai' },
@@ -32,7 +33,7 @@ function AgregarHuespedes() {
                 {/* <Form.Item name="area" label="Area" rules={[{ required: true, message: 'Missing area' }]}>
                     <Select options={areas} onChange={handleChange} />
                 </Form.Item> */}
-                <h1>Registra tus acompompañantes</h1>
+                <h1 className="texto-calistoga">Registra tus acompompañantes</h1>
                 <Form.List name="sights">
                     {(fields, { add, remove }) => {
                         return (
@@ -97,7 +98,7 @@ function AgregarHuespedes() {
                                         }}
                                         block
                                     >
-                                        <PlusOutlined /> Añadir Acompompañantes
+                                        <PlusOutlined  className="texto-calistoga"/> Añadir Acompompañantes
                   </Button>
                                 </Form.Item>
                             </>
@@ -106,10 +107,13 @@ function AgregarHuespedes() {
                 </Form.List>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Siguiente
-          </Button>
-          <Button onClick={redireccionRuta} type="primary">NEXT</Button>
+                <Button type="primary" shape="round"  htmlType="submit" icon={<DownloadOutlined />} size={'large'}>
+          Siguiente
+        </Button>
+          {/* <Button onClick={redireccionRuta} type="primary">Omitir</Button> */}
+          <Button type="primary" onClick={redireccionRuta} className="ml-2" shape="round" icon={<DownloadOutlined />} size={'large'}>
+          Omitir
+        </Button>
                 </Form.Item>
             </Form>
         </div>
