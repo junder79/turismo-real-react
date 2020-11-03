@@ -1,9 +1,15 @@
-import React from 'react';
-import { Layout, Menu, Breadcrumb, Row, Card, Col, Form, Input, DatePicker, Button,Carousel } from 'antd';
-import { useHistory } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Layout, Menu, Breadcrumb, Row, Card, Col, Form, Input, DatePicker, Button, Carousel } from 'antd';
+import { useHistory, Link } from "react-router-dom";
+import { DataContext } from './context/reserva-context';
+import moment from 'moment';
+import Cookies from 'universal-cookie';
 const { Header, Content, Footer } = Layout;
 function InicioWebsite() {
     const { RangePicker } = DatePicker;
+    const cookies = new Cookies();
+    const estado = cookies.get('estadoSesion');
+    const { setCheckIn, setCheckOut , setCantDia } = useContext(DataContext);
     const { Meta } = Card;
     const contentStyle = {
         height: '160px',
@@ -13,20 +19,24 @@ function InicioWebsite() {
         background: '#364d79',
     };
     const history = useHistory();
-    const redireccionRuta = () => {
-        let path = 'detalleLugar';
-        history.push(path);
+    function onChange(time, timeString) {
+
+        const getDaysDiff = (start_date, end_date, date_format = 'YYYY-MM-DD') => {
+            const getDateAsArray = (date) => {
+                return moment(date.split(/\D+/), date_format);
+            }
+            return getDateAsArray(end_date).diff(getDateAsArray(start_date), 'days') + 1;
+        }
+        setCheckIn(timeString[0]);
+        cookies.set('checkIn', timeString[0], { path: '/' });
+        cookies.set('checkOut', timeString[1], { path: '/' });
+        cookies.set('cantD', getDaysDiff(timeString[0], timeString[1]), { path: '/' });
+        setCheckOut(timeString[1]);
+        setCantDia(getDaysDiff(timeString[0], timeString[1]));
     }
     return (
         <div>
-            <Header style={{ backgroundColor: '#FFFFFF' }}>
-                <div className="logo" />
-                <Menu mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="1">LOGO</Menu.Item>
-                    <Menu.Item key="2">Inicio Sesion</Menu.Item>
-                    <Menu.Item key="3">Mis Viajes</Menu.Item>
-                </Menu>
-            </Header>
+            <h1>Estado {estado}</h1>
             <Row style={{ backgroundColor: '#DDD5F5', justifyContent: 'center', alignItems: 'center' }}>
 
 
@@ -42,7 +52,7 @@ function InicioWebsite() {
                             </Col>
                             <Col span={6}>
                                 <Form.Item name="range-picker" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} className="ml-2" label="Entrada y salida" >
-                                    <RangePicker />
+                                    <RangePicker onChange={onChange} />
                                 </Form.Item>
                             </Col>
                             <Col span={6}>
@@ -57,17 +67,17 @@ function InicioWebsite() {
             </Row>
             <Row style={{ backgroundColor: '#EEEEEE', height: 600 }}>
                 <div className="container">
-                    <h3 className="texto-calistoga" style={{ marginTop: 10  }}>Hoteles Populares</h3>
+                    <h3 className="texto-calistoga" style={{ marginTop: 10 }}>Hoteles Populares</h3>
                     <Row>
-                        <Card 
-                        
+                        <Card
+
                             hoverable
                             style={{ width: 240, marginLeft: 10, borderRadius: 20 }}
                             cover={<img alt="example" src="https://img.ev.mu/images/attractions/624/960x640/440131.jpg" />}
                         >
                             <Meta title="Europe Street beat" description="www.instagram.com" />
                         </Card>
-                        <Button onClick={redireccionRuta} type="primary">Reservar</Button>
+                        <Button type="primary"><Link to={`/clie/departamento/1`}>Reservar</Link></Button>
                         <Card
                             hoverable
                             style={{ width: 240, marginLeft: 10, borderRadius: 20 }}
@@ -94,7 +104,7 @@ function InicioWebsite() {
 
                 </div>
             </Row>
-            <Row style={{   backgroundImage: "url(" + "https://image.freepik.com/vetores-gratis/papel-de-parede-ondulado-escuro_23-2148385294.jpg" + ")", height: 400 }}>
+            <Row style={{ backgroundImage: "url(" + "https://image.freepik.com/vetores-gratis/papel-de-parede-ondulado-escuro_23-2148385294.jpg" + ")", height: 400 }}>
                 <div className="container">
                     <h3 className="texto-calistoga" style={{ marginTop: 15, color: 'white', marginBottom: 15 }}>Elige Despegar para tus viajes</h3>
                     <Row gutter={16}>
@@ -169,23 +179,23 @@ function InicioWebsite() {
                 </div>
             </Row>
 
-         
-                <Carousel autoplay>
-                    <div>
-                        <img src="https://i.pinimg.com/originals/44/36/18/4436181ef01c67fc45a84f203bca5e07.jpg"></img>
-                        <h3 style={contentStyle}>1</h3>
-                    </div>
-                    <div>
-                        <h3 style={contentStyle}>2</h3>
-                    </div>
-                    <div>
-                        <h3 style={contentStyle}>3</h3>
-                    </div>
-                    <div>
-                        <h3 style={contentStyle}>4</h3>
-                    </div>
-                </Carousel>
-                <Footer>footer</Footer>
+
+            <Carousel autoplay>
+                <div>
+                    <img src="https://i.pinimg.com/originals/44/36/18/4436181ef01c67fc45a84f203bca5e07.jpg"></img>
+                    <h3 style={contentStyle}>1</h3>
+                </div>
+                <div>
+                    <h3 style={contentStyle}>2</h3>
+                </div>
+                <div>
+                    <h3 style={contentStyle}>3</h3>
+                </div>
+                <div>
+                    <h3 style={contentStyle}>4</h3>
+                </div>
+            </Carousel>
+            <Footer>footer</Footer>
         </div>
     )
 }

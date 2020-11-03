@@ -8,31 +8,49 @@ import ReservaCliente from './componentes/crearReserva';
 import { BrowserRouter as Router, Switch, Route, Link, useLocation } from "react-router-dom";
 import Departamentos from './componentes/departamentos';
 import { createBrowserHistory } from "history";
+
+
+
 import DetalleReservaC from './componentes/detalle/detalleReservaCliente';
 import InicioWebsite from './componentes/website';
 import TotalReserva from './componentes/detalle/detalleTotalReserva';
+import Registro from './componentes/registro';
+import InicioSesion from './componentes/inicio-sesion';
+import DetalleDepartamento from './componentes/detalle/detalleDepartamento';
+import ServicioExtraTour from './componentes/detalle/detalleServicioExtraTour';
+import DetalleViaje from './componentes/detalle/detalleViaje';
+
+import { DataProvider } from './componentes/context/reserva-context'
+
 function App() {
   const history = createBrowserHistory()
   return (
 
-    <div className="app">
-       
-      {history.location.pathname === '/login' ? <Login></Login>  : <Navbar />}
-      <Router>
-        <Switch>
-          
-          <Route path='/admin/inicio' component={Inicio}> </Route>
-          <Route path='/admin/acondicionados' component={Acondicionados}> </Route>
-          <Route path='/admin/usuarios' component={GetUsuarios}> </Route>
-          <Route path='/admin/departamentos' component={Departamentos}> </Route>
-          <Route path='/clie/reservar' component={ReservaCliente}> </Route>
-          <Route path='/clie/detalleLugar' component={DetalleReservaC}> </Route>
-          <Route path='/clie/inicio' component={InicioWebsite}> </Route>
-          <Route path='/clie/total' component={TotalReserva}> </Route>
-        </Switch>
-      </Router>
-      
-    </div>
+    <DataProvider>
+      <div  className="app">
+
+        {history.location.pathname === '/login' ? <Login></Login> : <Navbar />}
+        <Router>
+          <Switch>
+
+            <Route path='/admin/inicio' component={Inicio}> </Route>
+            <Route path='/admin/acondicionados' component={Acondicionados}> </Route>
+            <Route path='/admin/usuarios' component={GetUsuarios}> </Route>
+            <Route path='/admin/departamentos' component={Departamentos}> </Route>
+            <Route path='/clie/reservar' component={ReservaCliente}> </Route>
+            <Route path='/clie/tours/:id' component={DetalleReservaC}> </Route>
+            <Route path='/clie/inicio' component={InicioWebsite}> </Route>
+            <Route path='/clie/total' component={TotalReserva}> </Route>
+            <Route path='/clie/registro' component={Registro}> </Route>
+            <Route path='/clie/login' component={InicioSesion}> </Route>
+            <Route path='/clie/departamento/:id' component={DetalleDepartamento}> </Route>
+            <Route path='/clie/tours' component={ServicioExtraTour}> </Route>
+            <Route path='/clie/mireserva/:idreserva' component={DetalleViaje}> </Route>
+          </Switch>
+        </Router>
+
+      </div>
+    </DataProvider>
 
   );
 }

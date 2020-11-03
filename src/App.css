@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+.site-badge-count-4 .ant-badge-count {
+  background-color: #fff;
+  color: #999;
+  box-shadow: 0 0 0 1px #d9d9d9 inset;
+}.box{
+ 
+  background: #fff; /* fallback for old browsers */
+
+
+
+  
+  
+}
+
+.titulo-card {
+  font-family: 'Alata', sans-serif;
+}
+.titulo-tours {
+  font-family: 'Alata', sans-serif;
+  font-size: 45px;
+}
+
+.titulo-componentes {
+  font-family: 'Roboto', sans-serif;
+  font-size: 45px;
+  font-weight: 900;
+}
+.contenido-card {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}
+.contenido-viajes {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+
+}
+.contenido-table {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+}
+.border-right {
+  border-right: 1px solid #ddd;
+}
+.borders {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  margin: -1px;
+}
+.border-left {
+  border-left: 1px solid #ddd;
+}
+.titulo-detalle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}

@@ -22,14 +22,17 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.2.0",
     "react-dropzone-uploader": "^2.11.0",
+    "react-elastic-carousel": "^0.9.3",
     "react-hook-form": "^6.8.3",
+    "react-multi-carousel": "^2.5.5",
     "react-multiple-image-input": "^1.0.0",
     "react-responsive-carousel": "^3.2.10",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "reactstrap": "^8.6.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^10.3.5"
+    "sweetalert2": "^10.3.5",
+    "universal-cookie": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

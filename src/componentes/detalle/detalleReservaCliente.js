@@ -1,43 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Descriptions, Card, Avatar, Row, Col } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, Descriptions, Card, Avatar, Row, Col, Badge } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWifi, faMugHot, faTv } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+import { faCalendarCheck, faArrowLeft, faMapMarkerAlt, faDollarSign } from "@fortawesome/free-solid-svg-icons";
+import { useHistory, useParams } from "react-router-dom";
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import { DownloadOutlined } from '@ant-design/icons';
+import swal from 'sweetalert'
+import Transportes from '../servicioTransporte';
+import { DataContext } from '../context/reserva-context';
+import Cookies from 'universal-cookie';
 const { Meta } = Card;
+
 function DetalleReservaC() {
+    let params = useParams();
+    const cookies = new Cookies();
+    const idTour = params.id;
     const history = useHistory();
+    const { departamento, setTourNombre, setValorTour } = useContext(DataContext);
     const redireccionRuta = () => {
         let path = 'detalleHuespedes';
         history.push(path);
     }
-    // let params = useParams();
+    const redirigirBack = () => {
+        let path = `/clie/tours`;
+        history.push(path);
+    }
 
-    // let lugar = params.lugar;
-    // let valor = params.valor;
-    // let comuna = params.comuna;
-    // let horario = params.horario;
-    // let descripcion = params.descripcion;
-    // let region = params.region;
+
+    const [detalleTImages, setDetalleTImages] = useState([]);
     const [detalleT, setDetalleT] = useState([]);
+    const[lugarTour,setLugarT]=useState([]);
     useEffect(() => {
 
-        getDetalleTour();
+        getDetalleTour(setTourNombre, setValorTour);
 
     }, [])
 
     const [estadoCargado, setCargado] = useState(false);
-    const getDetalleTour = () => {
+    const getDetalleTour = (setTourNombre, setValorTour) => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/detalleTour/18`
+            url: `http://localhost:3001/detalleTourImagen/${idTour}`
         }).then(res => {
             setCargado(true);
             console.log(res.data);
+            setDetalleTImages(res.data);
+
+
+        }).catch(err => {
+            console.log(err);
+        })
+        axios({
+            method: 'GET',
+            url: `http://localhost:3001/detalleTour/${idTour}`
+        }).then(res => {
+
+            console.log(res.data);
             setDetalleT(res.data);
+            setTourNombre(res.data[0].LUGARTOUR)
+            setValorTour(res.data[0].VALORTOUR);
+            setLugarT(res.data[0].LUGARTOUR);
 
         }).catch(err => {
             console.log(err);
@@ -45,19 +69,20 @@ function DetalleReservaC() {
     }
 
     const agendarReserva = () => {
-        let path = 'detalleHuespedes';
+        cookies.set('estadoTour', 1, { path: '/' });
+        cookies.set('tourId', idTour, { path: '/' });
+        cookies.set('lugarTour', lugarTour, { path: '/' });
+        let path = '/clie/detalleTransporte';
         history.push(path);
     }
     return (
-        // <div className="container">
-        //     <Button onClick={redireccionRuta} type="primary">Reservaré</Button>
-        // </div>
-        <div style={{ backgroundColor: '#EEEEEE', height:'100%' }}>
+
+        <div style={{ backgroundColor: '#EEEEEE', height: '100%' }}>
             <div className="container">
 
-
+                <h1 className="titulo-componentes" >Tour</h1>
                 <div className="row">
-                    <div className="col-6 mt-2">
+                    <div className="col-12 col-sm-6 col-md-6 mt-2">
                         {
                             !estadoCargado ?
                                 <Card style={{ width: '100%', marginTop: 16 }} loading={true}>
@@ -74,7 +99,7 @@ function DetalleReservaC() {
                                 <Carousel>
                                     {
 
-                                        detalleT.map((elemento, i) => (
+                                        detalleTImages.map((elemento, i) => (
                                             <div>
                                                 <img src={elemento.IMAGEN} />
 
@@ -91,44 +116,39 @@ function DetalleReservaC() {
 
                         }
                     </div>
-                    <div className="col-6 mt-2">
-                        <Card style={{ borderRadius: 30 }}>
-                            <span className="texto-calistoga">Conoce un poco más</span>
-                            <p>  Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,
-                 cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-                            <hr></hr>
+                    <div className="col-12 col-sm-6 col-md-6 mt-2">
+                        <Card style={{ borderRadius: 30 }} className="shadow">
 
-                            <span className="texto-calistoga">El alojamiento ofrece</span>
                             <div className="site-card-wrapper">
-                                <Row gutter={16}>
-                                    <Col span={8}>
-                                        <Card title={<FontAwesomeIcon icon={faWifi}></FontAwesomeIcon>} bordered={false}>
-                                        </Card>
-                                    </Col>
-                                    <Col span={8}>
-                                        <Card title={<FontAwesomeIcon icon={faMugHot}></FontAwesomeIcon>} bordered={false}>
-                                        </Card>
-                                    </Col>
-                                    <Col span={8}>
-                                        <Card title={<FontAwesomeIcon icon={faTv}></FontAwesomeIcon>} bordered={false}>
-                                        </Card>
-                                    </Col>
 
-                                </Row>
+                                {
+                                    detalleT.map((elemento, i) => (
+                                        <Descriptions title="Detalle del Tour" layout="vertical" bordered>
+                                            <Descriptions.Item label="Lugar:" ><span className="contenido-table">{elemento.LUGARTOUR}</span></Descriptions.Item>
+                                            <Descriptions.Item label="Valor:"><span className="contenido-table">${elemento.VALORTOUR}</span></Descriptions.Item>
+                                            <Descriptions.Item label="Horario:"><span className="contenido-table">{elemento.HORARIOT}</span></Descriptions.Item>
+                                            <Descriptions.Item label="Comuna:"><span className="contenido-table">{elemento.NOMBRECOMUNA}</span></Descriptions.Item>
+                                            <Descriptions.Item label="Region:"><span className="contenido-table">{elemento.NOMBREREGION}</span></Descriptions.Item>
+                                            <Descriptions.Item label="Estado:"> <span className="contenido-table"> Disponible</span></Descriptions.Item>
+                                            <Descriptions.Item label="Descripción:">
+                                                <span className="contenido-table"> {elemento.DESCRIPCIONTOUR}</span>
+                                            </Descriptions.Item>
+                                        </Descriptions>
+                                    ))
+                                }
+
+
                             </div>
 
-                            <Row>
-                                <span className="texto-calistoga">Cant. Habitaciones: <strong>5</strong></span>
 
-                            </Row>
-                            <Row>
-                                <span className="texto-calistoga">Lugar</span>
-                                <p>  Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,
-                 cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-                            </Row>
-                            <Button style={{ backgroundColor: '#311b92', color: 'white' }} onClick={agendarReserva} className="mt-2" shape="round" icon={<DownloadOutlined />} size={'large'}>
-                                Reservar Ahora
+                            <div className="row mb-2 mt-2 text-center">
+                                <Button style={{ backgroundColor: '#311b92', color: 'white' }} onClick={agendarReserva} className="mt-2" shape="round" icon={<FontAwesomeIcon className="mr-2" icon={faCalendarCheck}></FontAwesomeIcon>} size={'large'}>
+                                    Agendar
 </Button>
+                                <Button style={{ backgroundColor: '#311b92', color: 'white' }} onClick={redirigirBack} className="mt-2" shape="round" icon={<FontAwesomeIcon className="mr-2" icon={faArrowLeft}></FontAwesomeIcon>} size={'large'}>
+                                    Regresar
+</Button>
+                            </div>
                         </Card>
                     </div>
                 </div>

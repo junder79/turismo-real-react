@@ -1,27 +1,24 @@
 import React from 'react';
 import { Form, Input, Button, Space, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { useHistory } from "react-router-dom";
+import { useHistory , useLocation  } from "react-router-dom";
 import { DownloadOutlined } from '@ant-design/icons';
-const areas = [
-    { label: 'Beijing', value: 'Beijing' },
-    { label: 'Shanghai', value: 'Shanghai' },
-];
-
-const sights = {
-    Beijing: ['Tiananmen', 'Great Wall'],
-    Shanghai: ['Oriental Pearl', 'The Bund'],
-};
-
+import Cookies from 'universal-cookie';
+import { ReservaProvider, useReserva } from '../context/reserva-context';
 function AgregarHuespedes() {
+    const cookies = new Cookies();
+    const location = useLocation();
     const [form] = Form.useForm();
     const history = useHistory();
+   
     const redireccionRuta = () => {
         let path = 'detalleTour';
         history.push(path);
+        console.log(cookies.get('departamento')); // Pacman
     }
     const onFinish = values => {
         console.log('Received values of form:', values);
+
     };
 
     const handleChange = () => {

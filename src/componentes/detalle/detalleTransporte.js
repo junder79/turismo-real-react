@@ -1,56 +1,113 @@
-import React from 'react';
-import { Button, Card, Row } from 'antd';
+import React, { useContext, useState, useEffect } from 'react';
+import { Button, Card, Row, Badge } from 'antd';
 import { useHistory } from "react-router-dom";
-const { Meta } = Card;
+import { DataContext } from '../context/reserva-context';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+import ModalAgregarTransporte from '../modal/modalTransporte';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
-function ServicioExtraTransporte(){
+function ServicioExtraTransporte() {
     const history = useHistory();
-    const redireccionRuta = () => {
-        let path = 'detalleTotal';
+    const cookies = new Cookies();
+    const { Meta } = Card;
+
+    const { departamento, setTransporteSeleccionado } = useContext(DataContext);
+    const [mapTransporte, setMapTransporte] = useState([]);
+    const [idTransporte, setIdTransporte] = useState('');
+    const [direccionTransporte, setDireccionTransporte] = useState('');
+    const comuna = cookies.get('idComuna');
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+    useEffect(() => {
+
+        getTransporteZona();
+
+    }, [])
+    const getTransporteZona = () => {
+        axios({
+            method: 'GET',
+            url: `http://localhost:3001/getTransporte/${comuna}`
+        }).then(res => {
+
+            console.log(res.data);
+            setMapTransporte(res.data);
+            setIdTransporte(res.data[0].ID);
+            setDireccionTransporte(res.data[0].DIRECCION);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const redireccionTotal = (idVehiculo) => {
+        setTransporteSeleccionado(idVehiculo);
+        let path = 'total';
         history.push(path);
     }
-    return(
+
+    const [estadoModalTransp, setEstadoModalTran] = useState(false);
+    const showModal = () => {
+        setEstadoModalTran(true);
+
+    };
+    const omitir = () => {
+        cookies.set('estadoTransporte', 0, { path: '/' });
+        history.push('/clie/total');
+    }
+    return (
         <div className="container">
-            <h1  className="texto-calistoga">Transportes que podrías hacer mas cómodo tu estadía</h1>
-            <Button onClick={redireccionRuta} type="primary">Pagar</Button>
-            <Row>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-            </Row>
+            <ModalAgregarTransporte estadoModalTransp={estadoModalTransp} direccionTransporte={direccionTransporte} idTransporte={idTransporte} setEstadoModalTran={setEstadoModalTran} redireccionTotal={redireccionTotal} ></ModalAgregarTransporte>
+            <h1 className="titulo-componentes">Transportes</h1>
+            <Button className="mt-2" style={{ backgroundColor: '#461CE2',color:'white' }} shape="round" onClick={omitir} size={'large'} >Omitir</Button>
+
+
+            <div className="container">
+
+                <Carousel responsive={responsive}>
+                    {
+                        mapTransporte.map((elemento, i) => (
+                            <div >
+                                <Card
+                                    className="ml-4 mr-4 mb-4 mt-4 shadow "
+                                    hoverable
+                                    onClick={showModal}
+                                    style={{ borderRadius: 30 }}
+                                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://image.freepik.com/free-vector/flat-color-location-icon-paper-map_52465-148.jpg" />}
+                                >
+
+                                    <Card style={{ borderRadius: 30, width: '100%',backgroundColor: '#461CE2', color:'white' }}>
+                                        <span className="titulo-card">Valor: ${elemento.VALOR}</span><br></br>
+                                        <span className="titulo-card">Direccion: {elemento.DIRECCION}</span><br></br>
+
+                                    </Card>
+                                </Card>
+                            </div>
+                        ))
+                    }
+
+
+                </Carousel>
+
+            </div>
+
         </div>
     )
 }

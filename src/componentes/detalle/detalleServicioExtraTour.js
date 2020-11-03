@@ -1,55 +1,108 @@
-import React from 'react';
-import { Button, Card, Row } from 'antd';
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, Card, Skeleton } from 'antd';
+import { useHistory, Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt, faDollarSign } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 const { Meta } = Card;
 function ServicioExtraTour() {
     const history = useHistory();
-    const redireccionRuta = () => {
-        let path = 'detalleTransporte';
-        history.push(path);
+    const cookies = new Cookies();
+    const comuna = cookies.get('idComuna');
+    const [mapTour, setMapTour] = useState([]);
+    const [estadoCargaT, setEstadoCargaT] = useState(false);
+    useEffect(() => {
+
+        getToursZona();
+
+    }, [])
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+    const getToursZona = () => {
+        axios({
+            method: 'GET',
+            url: `http://localhost:3001/getTours/${comuna}`
+        }).then(res => {
+
+            console.log("Detalle Tour" + JSON.stringify(res.data));
+            setMapTour(res.data);
+            setEstadoCargaT(true);
+
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    const omitir = () => {
+        cookies.set('estadoTour', 0, { path: '/' });
+        history.push('/clie/detalleTransporte');
     }
     return (
         <div className="container">
-            <h1 className="texto-calistoga">Tours</h1>
-            <Row>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-                <Card
-                    className="ml-2"
-                    hoverable
-                    style={{ width: 240, borderRadius: 30 }}
-                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://s3-eu-west-1.amazonaws.com/eflanguagesblog/wp-content/uploads/sites/26/2018/07/18150652/new-york-movies.jpg" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                    <Button onClick={redireccionRuta} type="primary">Ver más</Button>
-                </Card>
-            </Row>
-           
+            <h1 className="titulo-componentes">Tours</h1>
+            <Button className="mt-2" style={{ backgroundColor: '#461CE2', color: 'white' }} shape="round" onClick={omitir} size={'large'} >Omitir</Button>
+            <div className="container">
+
+                {
+                    !estadoCargaT ?
+                        <Skeleton></Skeleton> :
+                        <Carousel responsive={responsive}>
+                            {
+                                mapTour.map((elemento, i) => (
+                                    <Link to={`/clie/tours/${elemento.IDDETATOUR}`}>
+                                        <Card
+                                            className="ml-4 mr-4 mb-4 mt-4 shadow "
+                                            hoverable
+                                            style={{ borderRadius: 30 }}
+                                            cover={<img alt="example" style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }} src={elemento.IMAGEN} />}
+                                        >
+                                            {/* <Meta title={elemento.LUGARTOUR} description={elemento.VALORTOUR} /> */}
+
+
+                                            <div className="row">
+                                                <div className="col-6">
+                                                    <span className="contenido-card"><FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" color={'#311b92'}></FontAwesomeIcon>{elemento.LUGARTOUR} </span><br></br>
+                                                    <span className="contenido-card"><FontAwesomeIcon icon={faDollarSign} className="mr-2" color={'#311b92'}></FontAwesomeIcon>{elemento.VALORTOUR} </span>
+                                                </div>
+                                                <div className="col-6">
+                                                   <div className="row">          
+                                                    <div class="col-sm-12 border-left">{elemento.DESCRIPCIONTOUR}</div>
+                                                   </div>
+                                                </div>
+                                            </div>
+
+
+                                        </Card>
+                                    </Link>
+                                ))
+                            }
+
+
+                        </Carousel>
+
+                }
+
+            </div>
+
         </div>
     )
 }

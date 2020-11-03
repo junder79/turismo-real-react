@@ -11,29 +11,51 @@ import Tours from './servicioTour';
 import Transportes from './servicioTransporte';
 import DetalleTour from './detalle/detalleTour';
 import ReservaCliente from './crearReserva';
-import DetalleReservaC from './detalle/detalleReservaCliente';
+
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined ,UserOutlined  , HomeOutlined ,CarOutlined,CarryOutOutlined} from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined, SettingOutlined, UserOutlined, HomeOutlined, CarOutlined, CarryOutOutlined } from '@ant-design/icons';
 import AgregarHuespedes from './detalle/detalleHuespedes';
 
+import DetalleReservaC from './detalle/detalleReservaCliente';
 import ServicioExtraTour from './detalle/detalleServicioExtraTour';
 import ServicioExtraTransporte from './detalle/detalleTransporte';
 import InicioWebsite from './website';
 import TotalReserva from './detalle/detalleTotalReserva';
+import Registro from './registro';
+import InicioSesion from './inicio-sesion';
+import DetalleDepartamento from './detalle/detalleDepartamento';
+import MisViajes from './misViajes';
+import Ajustes from './ajustes';
+import DetalleViaje from './detalle/detalleViaje';
+
+import Cookies from 'universal-cookie';
 const { SubMenu } = Menu;
 function Navbar() {
 
-
+    const cookies = new Cookies();
+    const estadoLogin = cookies.get('estadoSesion');
     return (
         <Router>
             <Menu mode="horizontal">
-                <Menu.Item key="mail" icon={<UserOutlined />}>
-                    <Link to="/admin/usuarios" >Usuarios</Link>
+                {
+                    estadoLogin ?
+                        <Menu.Item key="inicio" icon={<HomeOutlined />}>
+                            <Link to="/clie/login" >Inicio</Link>
+                        </Menu.Item> : <Menu.Item key="inicioSesion" icon={<UserOutlined />}>
+                            <Link to="/clie/login">Iniciar Sesión</Link>
+                        </Menu.Item>
+                }
+
+                {
+                    estadoLogin ?
+                        <Menu.Item key="departamento" icon={<HomeOutlined />}>
+                            <Link to="/clie/viajes" >Mis Viajes</Link>
+                        </Menu.Item> : null
+                }
+                <Menu.Item key="micuenta" icon={<HomeOutlined />}>
+                    <Link to="/clie/micuenta" >Mi Cuenta</Link>
                 </Menu.Item>
-                <Menu.Item key="departamento" icon={<HomeOutlined />}>
-                    <Link to="/admin/departamentos" >Departamentos</Link>
-                </Menu.Item>
-                <Menu.Item key="reserva" icon={<CarryOutOutlined />}>
+                {/* <Menu.Item key="reserva" icon={<CarryOutOutlined />}>
                     <Link to="/admin/reservas" >Reservas</Link>
                 </Menu.Item>
                 <Menu.Item key="tours" icon={<MailOutlined />}>
@@ -41,7 +63,7 @@ function Navbar() {
                 </Menu.Item>
                 <Menu.Item key="servicio" icon={<CarOutlined />}>
                     <Link to="/admin/transportes" >Servicios de Transportes</Link>
-                </Menu.Item>
+                </Menu.Item> */}
             </Menu>
             <Switch>
                 <Route path="/admin/inicio" >
@@ -66,25 +88,43 @@ function Navbar() {
                     <Transportes></Transportes>
                 </Route>
                 <Route path="/clie/reservar">
-                   <ReservaCliente></ReservaCliente>
+                    <ReservaCliente></ReservaCliente>
                 </Route>
-                <Route path="/clie/detalleLugar">
-                  <DetalleReservaC></DetalleReservaC>
+                <Route path="/clie/tours/:id">
+                    <DetalleReservaC></DetalleReservaC>
                 </Route>
-                <Route path="/clie/detalleHuespedes">
-                 <AgregarHuespedes></AgregarHuespedes>
+                <Route path="/clie/huespedes">
+                    <AgregarHuespedes></AgregarHuespedes>
                 </Route>
-                <Route path="/clie/detalleTour">
-                 <ServicioExtraTour></ServicioExtraTour>
+                <Route path="/clie/tours">
+                    <ServicioExtraTour></ServicioExtraTour>
                 </Route>
                 <Route path="/clie/detalleTransporte">
-                 <ServicioExtraTransporte></ServicioExtraTransporte>
+                    <ServicioExtraTransporte></ServicioExtraTransporte>
                 </Route>
                 <Route path="/clie/inicio">
-                 <InicioWebsite></InicioWebsite>
+                    <InicioWebsite></InicioWebsite>
                 </Route>
                 <Route path="/clie/total">
-                 <TotalReserva></TotalReserva>
+                    <TotalReserva></TotalReserva>
+                </Route>
+                <Route path="/clie/registro">
+                    <Registro></Registro>
+                </Route>
+                <Route path="/clie/login">
+                    <InicioSesion></InicioSesion>
+                </Route>
+                <Route path="/clie/departamento/:id">
+                    <DetalleDepartamento></DetalleDepartamento>
+                </Route>
+                <Route path="/clie/viajes">
+                    <MisViajes></MisViajes>
+                </Route>
+                <Route path="/clie/mireserva/:idreserva">
+                    <DetalleViaje></DetalleViaje>
+                </Route>
+                <Route path="/clie/micuenta">
+                    <Ajustes></Ajustes>
                 </Route>
                 <Route exact path="/detalletour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>
             </Switch>

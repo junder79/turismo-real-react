@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-    BrowserRouter as Router,
-
-    Link,
-} from "react-router-dom";
+import {BrowserRouter as Router,Link,} from "react-router-dom";
 import { Skeleton, Switch, Card, Avatar, Button, Row, Col, } from 'antd';
 import ModalAgregarTour from './modal/modalAgregarTour';
 const { Meta } = Card;
