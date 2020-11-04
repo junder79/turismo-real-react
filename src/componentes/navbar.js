@@ -11,6 +11,8 @@ import Tours from './servicioTour';
 import Transportes from './servicioTransporte';
 import DetalleTour from './detalle/detalleTour';
 import ReservaCliente from './crearReserva';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle, faLuggageCart, faHome, faSignInAlt, faSignOutAlt, faFan, faMapMarkerAlt, faSink, faArrowLeft, faCalendarCheck, faRoute } from "@fortawesome/free-solid-svg-icons";
 
 import { Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined, UserOutlined, HomeOutlined, CarOutlined, CarryOutOutlined } from '@ant-design/icons';
@@ -22,11 +24,13 @@ import ServicioExtraTransporte from './detalle/detalleTransporte';
 import InicioWebsite from './website';
 import TotalReserva from './detalle/detalleTotalReserva';
 import Registro from './registro';
+import CerrarSesion from './cerrar-sesion';
 import InicioSesion from './inicio-sesion';
 import DetalleDepartamento from './detalle/detalleDepartamento';
 import MisViajes from './misViajes';
 import Ajustes from './ajustes';
 import DetalleViaje from './detalle/detalleViaje';
+
 
 import Cookies from 'universal-cookie';
 const { SubMenu } = Menu;
@@ -37,33 +41,38 @@ function Navbar() {
     return (
         <Router>
             <Menu mode="horizontal">
+           
+                <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
+                    <Link to="/clie/inicio" >Inicio</Link>
+                </Menu.Item>
                 {
-                    estadoLogin ?
-                        <Menu.Item key="inicio" icon={<HomeOutlined />}>
-                            <Link to="/clie/login" >Inicio</Link>
-                        </Menu.Item> : <Menu.Item key="inicioSesion" icon={<UserOutlined />}>
+                    estadoLogin == "true" ?
+                        <>
+                            <Menu.Item key="micuenta" icon={<FontAwesomeIcon icon={faUserCircle} className="mr-2"></FontAwesomeIcon>}>
+                                <Link to="/clie/micuenta" >Mi Cuenta</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
+                                <Link to="/clie/viajes" >Mis Viajes</Link>
+                            </Menu.Item>
+                            <Menu.Item key="cerrar" icon={<FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon>}>
+                                <Link to="/clie/cerrar" >Cerrar Sesión</Link>
+                            </Menu.Item>
+                        </>
+                        : <Menu.Item key="inicioSesion" icon={<FontAwesomeIcon icon={faSignInAlt} className="mr-2"></FontAwesomeIcon>}>
                             <Link to="/clie/login">Iniciar Sesión</Link>
                         </Menu.Item>
                 }
 
-                {
-                    estadoLogin ?
-                        <Menu.Item key="departamento" icon={<HomeOutlined />}>
+                {/* {
+                    estadoLogin == "true" ?
+                        <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
                             <Link to="/clie/viajes" >Mis Viajes</Link>
                         </Menu.Item> : null
-                }
-                <Menu.Item key="micuenta" icon={<HomeOutlined />}>
-                    <Link to="/clie/micuenta" >Mi Cuenta</Link>
-                </Menu.Item>
-                {/* <Menu.Item key="reserva" icon={<CarryOutOutlined />}>
-                    <Link to="/admin/reservas" >Reservas</Link>
-                </Menu.Item>
-                <Menu.Item key="tours" icon={<MailOutlined />}>
-                    <Link to="/admin/tours" >Tours</Link>
-                </Menu.Item>
-                <Menu.Item key="servicio" icon={<CarOutlined />}>
-                    <Link to="/admin/transportes" >Servicios de Transportes</Link>
-                </Menu.Item> */}
+                } */}
+
+
+
             </Menu>
             <Switch>
                 <Route path="/admin/inicio" >
@@ -113,6 +122,9 @@ function Navbar() {
                 </Route>
                 <Route path="/clie/login">
                     <InicioSesion></InicioSesion>
+                </Route>
+                <Route path="/clie/cerrar">
+                    <CerrarSesion></CerrarSesion>
                 </Route>
                 <Route path="/clie/departamento/:id">
                     <DetalleDepartamento></DetalleDepartamento>

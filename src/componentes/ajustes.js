@@ -40,15 +40,15 @@ function Ajustes() {
         formData.append("contrasena", values.contrasena);
         formData.append("id", idUsuario);
 
-    
-        axios.post('http://localhost:3001/modificarCliente',formData)
+
+        axios.post('http://localhost:3001/modificarCliente', formData)
             .then(response => {
                 // Setear Cookies
-                 cookies.set('nombre', values.nombre, { path: '/' });
-                 cookies.set('apellido', values.apellido, { path: '/' });
-                 cookies.set('email',values.correo, { path: '/' });
-                 cookies.set('telefono', values.telefono, { path: '/' });
-                 cookies.set('contrasena', values.contrasena, { path: '/' });
+                cookies.set('nombre', values.nombre, { path: '/' });
+                cookies.set('apellido', values.apellido, { path: '/' });
+                cookies.set('email', values.correo, { path: '/' });
+                cookies.set('telefono', values.telefono, { path: '/' });
+                cookies.set('contrasena', values.contrasena, { path: '/' });
                 swal.fire({
                     title: 'Datos de tu cuenta modificados',
                     text: '',
@@ -60,10 +60,10 @@ function Ajustes() {
             .catch(err => console.warn(err));
     };
 
-    
+
     return (
         <div className="container">
-            <h1>Estas en Ajustes</h1>
+             <h1 className="titulo-componentes">Mi Cuenta</h1>
             <div className="container">
                 <Form
                     labelCol={{ span: 4 }}
@@ -93,8 +93,8 @@ function Ajustes() {
 
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
+                        <Button style={{backgroundColor: '#461CE2', color: 'white' }} size={'large'} shape="round" htmlType="submit">
+                            Guardar
         </Button>
                     </Form.Item>
                 </Form>

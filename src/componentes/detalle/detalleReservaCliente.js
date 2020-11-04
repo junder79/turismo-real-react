@@ -32,6 +32,7 @@ function DetalleReservaC() {
     const [detalleTImages, setDetalleTImages] = useState([]);
     const [detalleT, setDetalleT] = useState([]);
     const[lugarTour,setLugarT]=useState([]);
+    
     useEffect(() => {
 
         getDetalleTour(setTourNombre, setValorTour);
@@ -85,7 +86,7 @@ function DetalleReservaC() {
                     <div className="col-12 col-sm-6 col-md-6 mt-2">
                         {
                             !estadoCargado ?
-                                <Card style={{ width: '100%', marginTop: 16 }} loading={true}>
+                                <Card style={{ width: '100%', marginTop: 16 ,borderRadius: 30  }} loading={true}>
                                     <Meta
                                         avatar={
                                             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />

@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, Card, Row, Badge } from 'antd';
+import { Button, Card, Avatar } from 'antd';
 import { useHistory } from "react-router-dom";
 import { DataContext } from '../context/reserva-context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import ModalAgregarTransporte from '../modal/modalTransporte';
@@ -17,6 +19,8 @@ function ServicioExtraTransporte() {
     const [mapTransporte, setMapTransporte] = useState([]);
     const [idTransporte, setIdTransporte] = useState('');
     const [direccionTransporte, setDireccionTransporte] = useState('');
+    const [cantidadFilas, setCantidadFilas] = useState('');
+    const [estadoCargado, setEstadoCargado] = useState(false);
     const comuna = cookies.get('idComuna');
     const responsive = {
         superLargeDesktop: {
@@ -48,10 +52,16 @@ function ServicioExtraTransporte() {
             url: `http://localhost:3001/getTransporte/${comuna}`
         }).then(res => {
 
-            console.log(res.data);
-            setMapTransporte(res.data);
-            setIdTransporte(res.data[0].ID);
-            setDireccionTransporte(res.data[0].DIRECCION);
+            setCantidadFilas(res.data.length);
+            console.log("Cantidad" + cantidadFilas);
+            setEstadoCargado(true);
+            if (cantidadFilas > 0) {
+                setMapTransporte(res.data);
+                setIdTransporte(res.data[0].ID);
+                setDireccionTransporte(res.data[0].DIRECCION);
+
+            }
+
         }).catch(err => {
             console.log(err);
         })
@@ -75,36 +85,74 @@ function ServicioExtraTransporte() {
     return (
         <div className="container">
             <ModalAgregarTransporte estadoModalTransp={estadoModalTransp} direccionTransporte={direccionTransporte} idTransporte={idTransporte} setEstadoModalTran={setEstadoModalTran} redireccionTotal={redireccionTotal} ></ModalAgregarTransporte>
-            <h1 className="titulo-componentes">Transportes</h1>
-            <Button className="mt-2" style={{ backgroundColor: '#461CE2',color:'white' }} shape="round" onClick={omitir} size={'large'} >Omitir</Button>
+
+            <div className="row">
+                <div className="col-12">
+                    <h1 className="titulo-componentes">Transportes</h1>
+                </div>
+                <div className="col-12 ">
+                    <h7 className="subtitulo-componentes mt-2">La mejor manera de ir y volver a tu departamento en tu viaje es mediante los traslados que tenemos para tí</h7>
+                </div>
+            </div>
+
+            <Button className="mt-2" style={{ backgroundColor: '#461CE2', color: 'white' }} shape="round" onClick={omitir} size={'large'} >Omitir <FontAwesomeIcon className="ml-2" icon={faChevronCircleRight}></FontAwesomeIcon></Button>
 
 
             <div className="container">
 
-                <Carousel responsive={responsive}>
-                    {
-                        mapTransporte.map((elemento, i) => (
-                            <div >
-                                <Card
-                                    className="ml-4 mr-4 mb-4 mt-4 shadow "
-                                    hoverable
-                                    onClick={showModal}
-                                    style={{ borderRadius: 30 }}
-                                    cover={<img alt="example" style={{ borderRadius: 30 }} src="https://image.freepik.com/free-vector/flat-color-location-icon-paper-map_52465-148.jpg" />}
-                                >
+                {
 
-                                    <Card style={{ borderRadius: 30, width: '100%',backgroundColor: '#461CE2', color:'white' }}>
-                                        <span className="titulo-card">Valor: ${elemento.VALOR}</span><br></br>
-                                        <span className="titulo-card">Direccion: {elemento.DIRECCION}</span><br></br>
+                    !estadoCargado ?
+                        <Card style={{ width: '100%', marginTop: 16, borderRadius: 30 }} loading={true}>
+                            <Meta
+                                avatar={
+                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                }
+                                title="Card title"
+                                description="This is the description"
+                            />
+                        </Card> :
+                        <>
+                            {
+                                cantidadFilas == 0 ?
+                                    <Card
+                                        className="ml-4 mr-4 mb-4 mt-4 shadow "
+                                        hoverable
+                                      
+                                        style={{ borderRadius: 30 }}
+                                        cover={<img alt="example" style={{ borderRadius: 30 }} src="https://www.flaticon.com/svg/static/icons/svg/1329/1329663.svg" />}
+                                    >
 
-                                    </Card>
-                                </Card>
-                            </div>
-                        ))
-                    }
+                                       <span className="texto-no-disponible">Ups! no tenemos servicios disponibles</span>
+                                    </Card> :
+                                    <Carousel responsive={responsive}>
+                                        {
+                                            mapTransporte.map((elemento, i) => (
+                                                <div >
+                                                    <Card
+                                                        className="ml-4 mr-4 mb-4 mt-4 shadow "
+                                                        hoverable
+                                                        onClick={showModal}
+                                                        style={{ borderRadius: 30 }}
+                                                        cover={<img alt="example" style={{ borderRadius: 30 }} src="https://image.freepik.com/free-vector/flat-color-location-icon-paper-map_52465-148.jpg" />}
+                                                    >
+
+                                                        <Card style={{ borderRadius: 30, width: '100%', backgroundColor: '#461CE2', color: 'white' }}>
+                                                            <span className="titulo-card">Valor: ${elemento.VALOR}</span><br></br>
+                                                            <span className="titulo-card">Direccion: {elemento.DIRECCION}</span><br></br>
+
+                                                        </Card>
+                                                    </Card>
+                                                </div>
+                                            ))
+                                        }
 
 
-                </Carousel>
+                                    </Carousel>
+                            }
+                        </>
+                }
+
 
             </div>
 

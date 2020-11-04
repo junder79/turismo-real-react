@@ -21,7 +21,7 @@ const validateMessages = {
 function Registro() {
     const history = useHistory();
     const onFinish = values => {
-        console.log(values);
+        
 
         // Enviar Peticion POST a Registrar
         const formData = new FormData()
@@ -43,7 +43,7 @@ function Registro() {
                         icon: 'success',
                         confirmButtonText: 'Continuar'
                     });
-                    let path = 'inicio';
+                    let path = '/clie/login';
                     history.push(path);
                    
                 } else {
@@ -61,8 +61,8 @@ function Registro() {
     };
     return (
         <div className="container" style={{backgroundColor:'#EEEEEE'}}>
-           <Card>
-           <h5 className="texto-calistoga">Bienvenido a tu próximo viaje</h5>
+           <Card className="mt-2 shadow" style={{borderRadius:30}}>
+           <h5 className="titulo-componentes">Bienvenido a tu próximo viaje</h5>
             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                 <Form.Item name={['rut']} label="Rut" rules={[{ required: true }]}>
                     <Input />
@@ -84,7 +84,7 @@ function Registro() {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                    <Button type="primary" htmlType="submit">
+                    <Button size={'large'} style={{ backgroundColor: '#461CE2', color: 'white' }} shape="round" htmlType="submit">
                         Regístrate
         </Button>
                 </Form.Item>

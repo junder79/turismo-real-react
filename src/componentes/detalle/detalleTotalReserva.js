@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Card, Row, Col, Button, Radio, Input, Descriptions, Badge, InputNumber, Form } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShuttleVan, faMapMarkerAlt, faCalendarDay, faClock } from "@fortawesome/free-solid-svg-icons";
@@ -46,6 +46,25 @@ function TotalReserva() {
         console.log("Total" + valorTotal);
 
         setTotalReserva(valorTotal);
+    }
+    useEffect(() => {
+
+        realizarPagoweb();
+
+    }, [])
+    const [url, setUrl] = useState('');
+    const [token, setToken] = useState('');
+    const realizarPagoweb = () => {
+
+        axios.post('http://localhost:3001/pagar')
+            .then(response => {
+                console.log(response);
+                setUrl(response.data.url);
+                setToken(response.data.token);
+                console.log("response" + JSON.stringify(response));
+                // window.location.href = response.data.url + '?token_ws=' + response.data.token;
+            })
+            .catch(err => console.warn(err));
     }
     const realizarPago = () => {
         let timerInterval
@@ -134,23 +153,24 @@ function TotalReserva() {
                 <h7 className="titulo-componentes mt-2" >¡Falta poco! Completa tus datos y finaliza tu compra</h7>
                 <div className="row">
                     <div className="col-md-4 col-sm-12 mb-2 ">
-                        <Card style={{ backgroundImage: "url(" + "https://image.freepik.com/vector-gratis/fondo-colores-abstractos_9778-99.jpg" + ")", height: 500, borderRadius: 30 }} className="shadow">
+                        <Card style={{ backgroundImage: "url(" + "https://static.vecteezy.com/system/resources/previews/001/222/715/non_2x/blue-purple-gradient-dynamic-rounded-stripe-design-vector.jpg" + ")", height: 500, borderRadius: 30 }} className="shadow">
                             <p style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Detalle del pago</p>
-                            <span style={{ color: 'white', fontSize: 20 }}>Valor X día : ${valorDepartamento} </span><br />
-                            <span style={{ color: 'white', fontSize: 20 }}>Cant Días  : {cantDia} </span><br />
-                            <span style={{ color: 'white', fontSize: 20 }}>Total a Pagar: ${totalReserva}</span><br />
+                            <span className="detallePago" style={{ color: 'white', fontSize: 20 }}>Valor X día : ${valorDepartamento} </span><br />
+                            <span className="detallePago" style={{ color: 'white', fontSize: 20 }}>Cant Días  : {cantDia} </span><br />
+                            <span className="detallePago" style={{ color: 'white', fontSize: 20 }}>Total a Pagar: ${totalReserva}</span><br />
                         </Card>
                         <div className="mt-4 mb-2 shadow-xs">
-                            <Card style={{ width: '100%', backgroundImage: "url(" + "https://image.freepik.com/vector-gratis/fondo-pantalla-futurista-abstracto_23-2148399591.jpg" + ")", borderRadius: 20, color: 'white' }}>
+                            <Card style={{ width: '100%', backgroundImage: "url(" + "https://static.vecteezy.com/system/resources/previews/000/681/826/non_2x/neon-yellow-green-gradient-background-with-overlapping-round-shapes.jpg" + ")", borderRadius: 20, color: 'white' }}>
                                 <p>Deberás pagar un valor anticipado de la reserva, el resto deberás pagarlo en el primer día de tu agendado</p>
+                                <Form style={{color:'white'}}> 
+                                <Form.Item  label="Monto Anticipado">
+                                    <InputNumber defaultValue={0} style={{ width: '100%' }} onChange={onChange} />
+                                </Form.Item>
+                            </Form>
                             </Card>
-
+                           
                         </div>
-                        <Form>
-                            <Form.Item label="Monto Anticipado">
-                                <InputNumber defaultValue={0} style={{ width: '100%' }} onChange={onChange} />
-                            </Form.Item>
-                        </Form>
+
                     </div>
 
                     <div className="col-md-8  col-sm-12 ">
@@ -194,6 +214,13 @@ function TotalReserva() {
 
                             <Button disabled={btnAgregarReserva} onClick={() => realizarPago()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar Ahora
+        </Button>
+                            <form method="POST" action={url} >
+                                <input name="token_ws" value={token}></input>
+                                <input type="submit" value="Enviar" />
+                            </form>
+                            <Button onClick={() => realizarPagoweb()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
+                                Pagar webpay
         </Button>
                         </Card>
 

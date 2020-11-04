@@ -58,16 +58,26 @@
   font-family: 'Alata', sans-serif;
   font-size: 45px;
 }
+.detallePago {
+  font-family: 'Alata', sans-serif;
+  font-size: 45px;
+}
 
 .titulo-componentes {
   font-family: 'Roboto', sans-serif;
   font-size: 45px;
   font-weight: 900;
 }
+.subtitulo-componentes {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #616161;
+}
 .contenido-card {
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 700;
 }
 .contenido-viajes {
   font-family: 'Roboto', sans-serif;
@@ -93,5 +103,15 @@
 .titulo-detalle {
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
+  font-weight: 900;
+}
+.titulo-registrate{
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}
+.texto-no-disponible{
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
   font-weight: 900;
 }

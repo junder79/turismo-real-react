@@ -131,7 +131,7 @@ function DetalleDepartamento() {
                     <div className="col-12 col-sm-12 col-md-6 mt-2">
                         {
                             !estadoCargado ?
-                                <Card style={{ width: '100%', marginTop: 16 }} loading={true}>
+                                <Card style={{ width: '100%', marginTop: 16 , borderRadius:30 }} loading={true}>
                                     <Meta
                                         avatar={
                                             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -207,8 +207,8 @@ function DetalleDepartamento() {
                                         </Row>
                                         <hr></hr>
                                         <Row>
-                                            <span className="texto-calistoga">Valor por día</span><br></br>
-                                            <p>${elemento.VALORDEPARTAMENTO}</p>
+                                            <span className="texto-calistoga">Valor por día: </span><br></br>
+                                            <p className="ml-2">${elemento.VALORDEPARTAMENTO}</p>
                                         </Row>
                                     </>
                                 ))

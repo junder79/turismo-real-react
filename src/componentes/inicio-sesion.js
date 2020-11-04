@@ -1,19 +1,19 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Card, Row } from 'antd';
 import axios from 'axios';
 import swal from 'sweetalert2'
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import Cookies from 'universal-cookie';
 function InicioSesion() {
     const history = useHistory();
     const cookies = new Cookies();
-    
+
     const onFinish = values => {
-        console.log('Success:', values);
+        
         const formData = new FormData()
         formData.append("correo", values.correo);
         formData.append("contrasena", values.password);
-        
+
         axios.post('http://localhost:3001/validarUsuario', formData)
             .then(response => {
                 // Guardo la respuesta del parametro de salida del sp
@@ -21,15 +21,14 @@ function InicioSesion() {
                 let idUsuario = response.data.p_out_id;
                 let nombre = response.data.p_out_nombre;
                 let apellido = response.data.p_out_apellido;
-               
+
                 let contrasena = response.data.p_out_contrasena;
                 let telefono = response.data.p_out_telefono;
                 let rut = response.data.p_out_rut;
                 let email = response.data.p_out_email;
                 if (respuestaServidor === "1") {
                     console.log("Usuario Encontrado");
-                    let path = 'inicio';
-                    history.push(path);
+                   
                     // Se crea las cookies con el id del usuario
                     let estadoSesion = true;
                     cookies.set('idUsuario', idUsuario, { path: '/' });
@@ -39,12 +38,14 @@ function InicioSesion() {
                     cookies.set('telefono', telefono, { path: '/' });
                     cookies.set('rut', rut, { path: '/' });
                     cookies.set('email', email, { path: '/' });
-                   
+
                     cookies.set('estadoSesion', estadoSesion, { path: '/' });
-                   
+                    let path = 'inicio';
+                    // history.push(path);
+                    window.location.href = "inicio";
                 } else {
                     console.log("No pudimos encontrar una cuenta");
-                    
+
                     swal.fire({
                         title: 'Cuenta no encontrada',
                         text: '',
@@ -61,39 +62,60 @@ function InicioSesion() {
         console.log('Failed:', errorInfo);
     };
     return (
-        <div className="container">
-            <h5>Inicia Sesión</h5>
-            <Form
+        <div className="container" style={{}}>
+            
+            <div className="row flex justify-content-center">
+                <Card style={{ borderRadius: 20 }} className="mt-2">
 
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <Form.Item
-                    label="Correo"
-                    name="correo"
-                    rules={[{ required: true, message: 'Ingresa tu nombre de usuario' }]}
-                >
-                    <Input />
-                </Form.Item>
+                <h1 className="titulo-componentes justify-content-center">Inicio Sesión</h1>
+                    <Form
 
-                <Form.Item
-                    label="Contraseña"
-                    name="password"
-                    rules={[{ required: true, message: 'Ingresa tu password' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
+                        name="basic"
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                    >
+                        <Form.Item
+                            labelCol={{ span: 24 }}
+                            label="Correo"
+                            name="correo"
+                            className="titulo-registrate"
+                            rules={[{ required: true, message: 'Ingresa tu nombre de usuario' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            labelCol={{ span: 24 }}
+                            label="Contraseña"
+                            name="password"
+                            className="titulo-registrate"
+                            rules={[{ required: true, message: 'Ingresa tu password' }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
 
 
 
-                <Form.Item >
-                    <Button type="primary" htmlType="submit">
-                        Ingresar
-          </Button>
-                </Form.Item>
-            </Form>
+                        <div className="row flex  text-center ">
+                            <div className="col-12">
+                                <Form.Item >
+                                    <Button className="titulo-registrate" style={{ backgroundColor: '#461CE2', color: 'white' }} size={'large'} shape="round" htmlType="submit">
+                                        Ingresar
+</Button>
+
+                                </Form.Item>
+                            </div>
+                            <div className="col-12">
+                                <Link to="/clie/registro" className="titulo-registrate" >Regístrate</Link>
+                            </div>
+                        </div>
+                    </Form>
+
+
+
+                </Card>
+            </div>
         </div>
     )
 }

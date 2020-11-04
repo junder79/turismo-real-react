@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Card, Skeleton } from 'antd';
+import { Button, Card, Avatar } from 'antd';
 import { useHistory, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt, faDollarSign } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faDollarSign ,faChevronCircleRight} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import Carousel from 'react-multi-carousel';
@@ -58,13 +58,29 @@ function ServicioExtraTour() {
     }
     return (
         <div className="container">
-            <h1 className="titulo-componentes">Tours</h1>
-            <Button className="mt-2" style={{ backgroundColor: '#461CE2', color: 'white' }} shape="round" onClick={omitir} size={'large'} >Omitir</Button>
+            <div className="row">
+                <div className="col-12">
+                    <h1 className="titulo-componentes">Tours</h1>
+                </div>
+                <div className="col-12 ">
+                    <h7 className="subtitulo-componentes mt-2">Que estarán cerca de tu zona de hospedaje</h7>
+                </div>
+            </div>
+
+            <Button className="mt-2" style={{ backgroundColor: '#461CE2', color: 'white' }} shape="round" onClick={omitir} size={'large'} >Omitir <FontAwesomeIcon className="ml-2" icon={faChevronCircleRight}></FontAwesomeIcon></Button>
             <div className="container">
 
                 {
                     !estadoCargaT ?
-                        <Skeleton></Skeleton> :
+                        <Card style={{ width: '100%', marginTop: 16, borderRadius: 30 }} loading={true}>
+                            <Meta
+                                avatar={
+                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                }
+                                title="Card title"
+                                description="This is the description"
+                            />
+                        </Card> :
                         <Carousel responsive={responsive}>
                             {
                                 mapTour.map((elemento, i) => (
@@ -84,9 +100,9 @@ function ServicioExtraTour() {
                                                     <span className="contenido-card"><FontAwesomeIcon icon={faDollarSign} className="mr-2" color={'#311b92'}></FontAwesomeIcon>{elemento.VALORTOUR} </span>
                                                 </div>
                                                 <div className="col-6">
-                                                   <div className="row">          
-                                                    <div class="col-sm-12 border-left">{elemento.DESCRIPCIONTOUR}</div>
-                                                   </div>
+                                                    <div className="row">
+                                                        <div class="col-sm-12 border-left">{elemento.DESCRIPCIONTOUR}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
