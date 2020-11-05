@@ -29,6 +29,7 @@ function DetalleTour() {
             url: `http://localhost:3001/detalleTour/${params.tourId}`
         }).then(res => {
             setCantidadFilas(res.data.length);
+            console.log("Cantidad de filas " + res.data.length);
             if (cantidadFilas > 0) {
                 setCargado(true);
                 console.log(res.data);

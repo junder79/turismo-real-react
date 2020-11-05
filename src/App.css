@@ -41,51 +41,45 @@
   background-color: #fff;
   color: #999;
   box-shadow: 0 0 0 1px #d9d9d9 inset;
-}.box{
- 
+}
+.box {
   background: #fff; /* fallback for old browsers */
-
-
-
-  
-  
 }
 
 .titulo-card {
-  font-family: 'Alata', sans-serif;
+  font-family: "Alata", sans-serif;
 }
 .titulo-tours {
-  font-family: 'Alata', sans-serif;
+  font-family: "Alata", sans-serif;
   font-size: 45px;
 }
 .detallePago {
-  font-family: 'Alata', sans-serif;
+  font-family: "Alata", sans-serif;
   font-size: 45px;
 }
 
 .titulo-componentes {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 45px;
   font-weight: 900;
 }
 .subtitulo-componentes {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 17px;
   font-weight: 700;
   color: #616161;
 }
 .contenido-card {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 20px;
   font-weight: 700;
 }
 .contenido-viajes {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
-
 }
 .contenido-table {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 15px;
   font-weight: 900;
 }
@@ -101,17 +95,20 @@
   border-left: 1px solid #ddd;
 }
 .titulo-detalle {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 20px;
   font-weight: 900;
 }
-.titulo-registrate{
-  font-family: 'Roboto', sans-serif;
+.titulo-registrate {
+  font-family: "Roboto", sans-serif;
   font-size: 20px;
   font-weight: 900;
 }
-.texto-no-disponible{
-  font-family: 'Roboto', sans-serif;
+.texto-no-disponible {
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: 900;
+}
+.label-website {
+  color: '#363636';
 }

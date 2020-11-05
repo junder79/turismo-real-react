@@ -37,7 +37,7 @@ function MisViajes() {
     }
     return (
         <div className="container">
-            <h1 className="titulo-componentes">Mis Viajes</h1>
+            <h1 className="titulo-componentes">Mis Reservas</h1>
             <div className="row">
                 {
                     !cargadoReserva ?

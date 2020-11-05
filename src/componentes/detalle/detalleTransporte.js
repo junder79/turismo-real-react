@@ -53,9 +53,9 @@ function ServicioExtraTransporte() {
         }).then(res => {
 
             setCantidadFilas(res.data.length);
-            console.log("Cantidad" + cantidadFilas);
+            console.log("Cantidad" + res.data.length);
             setEstadoCargado(true);
-            if (cantidadFilas > 0) {
+            if (res.data.length > 0) {
                 setMapTransporte(res.data);
                 setIdTransporte(res.data[0].ID);
                 setDireccionTransporte(res.data[0].DIRECCION);

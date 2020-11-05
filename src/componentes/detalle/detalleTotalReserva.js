@@ -5,10 +5,11 @@ import { faShuttleVan, faMapMarkerAlt, faCalendarDay, faClock } from "@fortaweso
 import axios from 'axios';
 import swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
-
+import { useHistory, useParams } from "react-router-dom";
 function TotalReserva() {
 
     const cookies = new Cookies();
+    const history = useHistory();
     const valorDepartamento = cookies.get('valorDepart');
     const idUsuario = cookies.get('idUsuario');
     const checkIn = cookies.get('checkIn');
@@ -132,7 +133,7 @@ function TotalReserva() {
                         icon: 'success',
                         confirmButtonText: 'Continuar'
                     });
-
+                    history.push('/clie/viajes');
                 } else {
                     swal.fire({
                         title: 'Error al agregar',
@@ -162,13 +163,13 @@ function TotalReserva() {
                         <div className="mt-4 mb-2 shadow-xs">
                             <Card style={{ width: '100%', backgroundImage: "url(" + "https://static.vecteezy.com/system/resources/previews/000/681/826/non_2x/neon-yellow-green-gradient-background-with-overlapping-round-shapes.jpg" + ")", borderRadius: 20, color: 'white' }}>
                                 <p>Deberás pagar un valor anticipado de la reserva, el resto deberás pagarlo en el primer día de tu agendado</p>
-                                <Form style={{color:'white'}}> 
-                                <Form.Item  label="Monto Anticipado">
-                                    <InputNumber defaultValue={0} style={{ width: '100%' }} onChange={onChange} />
-                                </Form.Item>
-                            </Form>
+                                <Form style={{ color: 'white' }}>
+                                    <Form.Item label="Monto Anticipado">
+                                        <InputNumber defaultValue={0} style={{ width: '100%' }} onChange={onChange} />
+                                    </Form.Item>
+                                </Form>
                             </Card>
-                           
+
                         </div>
 
                     </div>
@@ -215,11 +216,16 @@ function TotalReserva() {
                             <Button disabled={btnAgregarReserva} onClick={() => realizarPago()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar Ahora
         </Button>
-                            <form method="POST" action={url} >
-                                <input name="token_ws" value={token}></input>
-                                <input type="submit" value="Enviar" />
+                            {/* <form method="POST" action={url} >
+                                <input name="token_ws" ></input>
+
+                            </form> */}
+                            <form action="https://webpay3gint.transbank.cl/webpayserver/init_transaction.cgi" method="post" id="form">
+                                <input type="hidden" name="token_ws" value={token} />
+                                <input type="submit" hidden value="Enviar" />
                             </form>
-                            <Button onClick={() => realizarPagoweb()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
+                            
+                            <Button onClick={() =>  realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar webpay
         </Button>
                         </Card>

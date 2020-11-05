@@ -17,7 +17,7 @@ function DetalleDepartamento() {
     let params = useParams();
     const cookies = new Cookies();
     cookies.set('idDepart', params.id, { path: '/' });
-    cookies.set('idComuna', 345, { path: '/' });
+    cookies.set('idComuna', params.comuna, { path: '/' });
     const estadoInicioS = cookies.get('estadoSesion');
     const idDepartamento = cookies.get('idDepart');
     const idRegion = 16;

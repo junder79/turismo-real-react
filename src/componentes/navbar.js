@@ -41,7 +41,7 @@ function Navbar() {
     return (
         <Router>
             <Menu mode="horizontal">
-           
+                {/* <img  src="https://www.strunkmedia.com/wp-content/uploads/2018/05/bigstock-221516158.jpg" width="35" height="35"></img> */}
                 <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
                     <Link to="/clie/inicio" >Inicio</Link>
                 </Menu.Item>
@@ -126,7 +126,7 @@ function Navbar() {
                 <Route path="/clie/cerrar">
                     <CerrarSesion></CerrarSesion>
                 </Route>
-                <Route path="/clie/departamento/:id">
+                <Route path="/clie/departamento/:id/:comuna">
                     <DetalleDepartamento></DetalleDepartamento>
                 </Route>
                 <Route path="/clie/viajes">
