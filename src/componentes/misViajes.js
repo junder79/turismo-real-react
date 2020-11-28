@@ -22,7 +22,7 @@ function MisViajes() {
 
         axios({
             method: 'GET',
-            url: `http://localhost:3001/getReservas/${idUsuario}`
+            url: `http://satur.docn.us/api/getReservas/${idUsuario}`
         }).then(res => {
 
             setCargadoReserva(true);

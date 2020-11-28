@@ -57,12 +57,12 @@ function TotalReserva() {
     const [token, setToken] = useState('');
     const realizarPagoweb = () => {
 
-        axios.post('http://localhost:3001/pagar')
+        axios.post('http://localhost:3001/api/pagar')
             .then(response => {
                 console.log(response);
                 setUrl(response.data.url);
                 setToken(response.data.token);
-                console.log("response" + JSON.stringify(response));
+                // console.log("response" + JSON.stringify(response));
                 // window.location.href = response.data.url + '?token_ws=' + response.data.token;
             })
             .catch(err => console.warn(err));
@@ -121,7 +121,7 @@ function TotalReserva() {
         }
 
 
-        axios.post('http://localhost:3001/crearreserva', formData)
+        axios.post('http://satur.docn.us/api/crearreserva', formData)
             .then(response => {
                 console.log(response);
 
@@ -220,11 +220,11 @@ function TotalReserva() {
                                 <input name="token_ws" ></input>
 
                             </form> */}
-                            <form action="https://webpay3gint.transbank.cl/webpayserver/init_transaction.cgi" method="post" id="form">
+                            <form id="webpay-form"  action={url} method="post" id="form">
                                 <input type="hidden" name="token_ws" value={token} />
-                                <input type="submit" hidden value="Enviar" />
+                                <input type="submit"  value="Enviar" />
                             </form>
-                            
+                            <script>document.getElementById("webpay-form").submit();</script>
                             <Button onClick={() =>  realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar webpay
         </Button>

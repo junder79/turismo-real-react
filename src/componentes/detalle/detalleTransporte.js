@@ -49,7 +49,7 @@ function ServicioExtraTransporte() {
     const getTransporteZona = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/getTransporte/${comuna}`
+            url: `http://satur.docn.us/api/getTransporte/${comuna}`
         }).then(res => {
 
             setCantidadFilas(res.data.length);

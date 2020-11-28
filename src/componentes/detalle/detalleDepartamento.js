@@ -42,7 +42,7 @@ function DetalleDepartamento() {
     const getDetalleDepartamentoImagen = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/departamentoimagen/${idDepartamento}`
+            url: `http://satur.docn.us/api/departamentoimagen/${idDepartamento}`
         }).then(res => {
             setCargado(true);
             console.log(res.data);
@@ -54,7 +54,7 @@ function DetalleDepartamento() {
     const getDetalleDepartamento = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/getInfodepartamento/${idDepartamento}`
+            url: `http://satur.docn.us/api/getInfodepartamento/${idDepartamento}`
         }).then(res => {
             setCargado(true);
             console.log("valor DEPARTAMENTO" + res.data[0].VALORDEPARTAMENTO * cantDia);
@@ -74,7 +74,7 @@ function DetalleDepartamento() {
     const getDetalleAcondicionado = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/getInfoacondicionado/${idDepartamento}`
+            url: `http://satur.docn.us/api/getInfoacondicionado/${idDepartamento}`
         }).then(res => {
 
             console.log(res.data);

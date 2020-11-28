@@ -34,7 +34,7 @@ function DetalleViaje() {
     const getDetalleDepartamentoImagen = (idDepartamento) => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/departamentoimagen/${idDepartamento}`
+            url: `http://satur.docn.us/api/departamentoimagen/${idDepartamento}`
         }).then(res => {
 
             console.log(res.data);
@@ -47,7 +47,7 @@ function DetalleViaje() {
     const getReservaEspecifica = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/reservaespecifica/${idReserva}`
+            url: `http://satur.docn.us/api/reservaespecifica/${idReserva}`
         }).then(res => {
 
             setEstadoReserva(res.data[0].ESTADOR_IDESTADO);
@@ -65,7 +65,7 @@ function DetalleViaje() {
     const getToursAgendados = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/tourreserva/${idReserva}`
+            url: `http://satur.docn.us/api/tourreserva/${idReserva}`
         }).then(res => {
 
             console.log("DATOS TOUR" + JSON.stringify(res.data));
@@ -87,7 +87,7 @@ function DetalleViaje() {
     const getTransporteAgendado = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/transportereserva/${idReserva}`
+            url: `http://satur.docn.us/api/transportereserva/${idReserva}`
         }).then(res => {
 
 
@@ -116,7 +116,7 @@ function DetalleViaje() {
     const pagoRestante = () => {
         const formData = new FormData();
         formData.append("idReserva", idReserva);
-        axios.post('http://localhost:3001/pagorestante', formData)
+        axios.post('http://satur.docn.us/api/pagorestante', formData)
             .then(response => {
                 console.log(response.data);
                 var respuestaServidor = response.data;

@@ -26,7 +26,7 @@ function DetalleTour() {
     const getDetalleTour = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/detalleTour/${params.tourId}`
+            url: `http://satur.docn.us/api/detalleTour/${params.tourId}`
         }).then(res => {
             setCantidadFilas(res.data.length);
             console.log("Cantidad de filas " + res.data.length);

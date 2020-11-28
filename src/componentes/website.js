@@ -83,7 +83,7 @@ function InicioWebsite() {
         formData.append("fechaTermino", fechaTermino);
         axios({
             method: 'GET',
-            url: `http://localhost:3001/departamentoactivo/${lugar}`
+            url: `http://satur.docn.us/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
 

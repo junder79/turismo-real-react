@@ -11,7 +11,7 @@ function Acondicionados() {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/getAcondicionados'
+            url: 'http://satur.docn.us/api/getAcondicionados'
         }).then(res => {
             console.log(res);
             setDataAcondicionados(res.data);

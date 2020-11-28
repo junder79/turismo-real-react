@@ -31,7 +31,7 @@ function Registro() {
         formData.append("contrasena", values.contrasena);
         formData.append("email", values.email);
         formData.append("telefono", values.telefono);
-        axios.post('http://localhost:3001/agregarCliente', formData)
+        axios.post('http://satur.docn.us/api/agregarCliente', formData)
             .then(response => {
                 console.log(response);
 
