@@ -50,23 +50,12 @@ function TotalReserva() {
     }
     useEffect(() => {
 
-        realizarPagoweb();
+
 
     }, [])
     const [url, setUrl] = useState('');
     const [token, setToken] = useState('');
-    const realizarPagoweb = () => {
 
-        axios.post('http://localhost:3001/api/pagar')
-            .then(response => {
-                console.log(response);
-                setUrl(response.data.url);
-                setToken(response.data.token);
-                // console.log("response" + JSON.stringify(response));
-                // window.location.href = response.data.url + '?token_ws=' + response.data.token;
-            })
-            .catch(err => console.warn(err));
-    }
     const realizarPago = () => {
         let timerInterval
         swal.fire({
@@ -216,16 +205,13 @@ function TotalReserva() {
                             <Button disabled={btnAgregarReserva} onClick={() => realizarPago()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar Ahora
         </Button>
-                            {/* <form method="POST" action={url} >
-                                <input name="token_ws" ></input>
 
-                            </form> */}
-                            <form id="webpay-form"  action={url} method="post" id="form">
-                                <input type="hidden" name="token_ws" value={token} />
-                                <input type="submit"  value="Enviar" />
+                            <form id="webpay-form" action="http://localhost:3001/api/pagar" method="post" id="form">
+                                <input type="hidden" name="total" value="45000" />
+                                <input type="submit" value="Enviar" />
                             </form>
-                            <script>document.getElementById("webpay-form").submit();</script>
-                            <Button onClick={() =>  realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
+
+                            <Button onClick={() => realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar webpay
         </Button>
                         </Card>
