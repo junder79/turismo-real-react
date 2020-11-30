@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Card, Row, Col, Button, Radio, Input, Descriptions, Badge, InputNumber, Form } from 'antd';
+import { Card, Row, Col, Button, Radio, Input, Descriptions, Badge, InputNumber, Form, Modal } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShuttleVan, faMapMarkerAlt, faCalendarDay, faClock } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
@@ -55,6 +55,8 @@ function TotalReserva() {
     }, [])
     const [url, setUrl] = useState('');
     const [token, setToken] = useState('');
+    const [estadoReservaGenerada, setReservaGenerada] = useState(false);
+    const [lastId , setLastId] = useState('');
     const realizarPagoweb = () => {
 
         axios.post('http://localhost:3001/api/pagar')
@@ -69,32 +71,8 @@ function TotalReserva() {
     }
     const realizarPago = () => {
         let timerInterval
-        swal.fire({
-            title: 'Agendando Reserva',
-            html: 'Porfavor espere',
-            timer: 10000,
-            timerProgressBar: true,
-            willOpen: () => {
-                swal.showLoading()
-                timerInterval = setInterval(() => {
-                    const content = swal.getContent()
-                    if (content) {
-                        const b = content.querySelector('b')
-                        if (b) {
-                            b.textContent = swal.getTimerLeft()
-                        }
-                    }
-                }, 100)
-            },
-            onClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+        setModalPago(true);
+        
         const formData = new FormData();
         // Datos de Reserva 
         formData.append("fecha_inicio", checkIn);
@@ -121,19 +99,22 @@ function TotalReserva() {
         }
 
 
-        axios.post('http://satur.docn.us/api/crearreserva', formData)
+        axios.post('http://localhost:3001/api/crearreserva', formData)
             .then(response => {
                 console.log(response);
 
-                var respuestaServidor = response.data;
+                var respuestaServidor = response.data.respuestaReserva;
+                setLastId(response.data.lastId);
                 if (respuestaServidor == 1) {
-                    swal.fire({
-                        title: 'Reserva Generada',
-                        text: '',
-                        icon: 'success',
-                        confirmButtonText: 'Continuar'
-                    });
-                    history.push('/clie/viajes');
+                    // swal.fire({
+                    //     title: 'Reserva Generada',
+                    //     text: '',
+                    //     icon: 'success',
+                    //     confirmButtonText: 'Continuar'
+                    // });
+                    // history.push('/clie/viajes');
+                    setReservaGenerada(true);
+                    console.log("Seteada");
                 } else {
                     swal.fire({
                         title: 'Error al agregar',
@@ -142,12 +123,26 @@ function TotalReserva() {
                         confirmButtonText: 'Continuar'
                     })
 
+
                 }
             })
             .catch(err => console.warn(err));
 
     }
+    const [modalPago, setModalPago] = useState(false);
+    const showModal = () => {
+        setModalPago(true);
+    };
 
+    const handleOk = e => {
+        console.log(e);
+        setModalPago(false)
+    };
+
+    const handleCancel = e => {
+        console.log(e);
+        setModalPago(false);
+    };
     return (
         <div style={{ backgroundColor: '#EEEEEE' }} >
             <div className="container">
@@ -216,16 +211,26 @@ function TotalReserva() {
                             <Button disabled={btnAgregarReserva} onClick={() => realizarPago()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar Ahora
         </Button>
-                            {/* <form method="POST" action={url} >
-                                <input name="token_ws" ></input>
-
-                            </form> */}
-                            <form id="webpay-form"  action={url} method="post" id="form">
-                                <input type="hidden" name="token_ws" value={token} />
-                                <input type="submit"  value="Enviar" />
-                            </form>
+                         
+                            <Modal
+                                title="Confirmación de Reserva"
+                                visible={modalPago}
+                                onOk={handleOk}
+                                onCancel={handleCancel}
+                            >
+                                {
+                                    estadoReservaGenerada == 1 ?
+                                    <form id="webpay-form"  action='http://localhost:3001/webpay-normal/init' method="POST" id="form">
+                                    <input type="hidden" name="total" value={valorAnticipado} />
+                                    <input name="idReserva" value={lastId} />
+                        
+                                    <input type="submit"  value="Enviar" />
+                                </form>
+                                        : <h1>Error al generar reserva</h1>
+                                }
+                            </Modal>
                             <script>document.getElementById("webpay-form").submit();</script>
-                            <Button onClick={() =>  realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
+                            <Button onClick={() => realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar webpay
         </Button>
                         </Card>
