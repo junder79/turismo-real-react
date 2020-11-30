@@ -50,25 +50,15 @@ function TotalReserva() {
     }
     useEffect(() => {
 
-        realizarPagoweb();
+
 
     }, [])
     const [url, setUrl] = useState('');
     const [token, setToken] = useState('');
     const [estadoReservaGenerada, setReservaGenerada] = useState(false);
     const [lastId , setLastId] = useState('');
-    const realizarPagoweb = () => {
 
-        axios.post('http://localhost:3001/api/pagar')
-            .then(response => {
-                console.log(response);
-                setUrl(response.data.url);
-                setToken(response.data.token);
-                // console.log("response" + JSON.stringify(response));
-                // window.location.href = response.data.url + '?token_ws=' + response.data.token;
-            })
-            .catch(err => console.warn(err));
-    }
+
     const realizarPago = () => {
         let timerInterval
         setModalPago(true);
@@ -106,15 +96,9 @@ function TotalReserva() {
                 var respuestaServidor = response.data.respuestaReserva;
                 setLastId(response.data.lastId);
                 if (respuestaServidor == 1) {
-                    // swal.fire({
-                    //     title: 'Reserva Generada',
-                    //     text: '',
-                    //     icon: 'success',
-                    //     confirmButtonText: 'Continuar'
-                    // });
-                    // history.push('/clie/viajes');
+                   
                     setReservaGenerada(true);
-                    console.log("Seteada");
+                   
                 } else {
                     swal.fire({
                         title: 'Error al agregar',
@@ -229,10 +213,7 @@ function TotalReserva() {
                                         : <h1>Error al generar reserva</h1>
                                 }
                             </Modal>
-                            <script>document.getElementById("webpay-form").submit();</script>
-                            <Button onClick={() => realizarPagoweb()} type="primary" hidden shape="round" className="mt-2 text-center" size={'large'}>
-                                Pagar webpay
-        </Button>
+                 
                         </Card>
 
                     </div>
