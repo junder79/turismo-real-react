@@ -235,9 +235,18 @@ function DetalleViaje() {
                                                 </Card>
 
                                             </div>
-                                            <Button onClick={() => pagoRestante()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
+                                            {/* <Button onClick={() => pagoRestante()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                                 Pagar Valor Restante $ {valorRestante}
-                                            </Button>
+                                            </Button> */}
+                                             <form id="webpay-form"  action='http://localhost:3001/webpay-normal/init' method="POST" id="form">
+                                    <input type="hidden" name="total" value={valorRestante} />
+                                    <input name="idReserva" type="hidden" value={idReserva} />
+                                    <input name="motivo" type="hidden" value="Check-In" />
+                        
+                                    <input type="primary" shape="round" className="mt-2 text-center btn-primary btn" size={'large'} type="submit"  value="Pagar" />
+
+                  
+                                       </form>
                                         </> :
                                         null
                                 }

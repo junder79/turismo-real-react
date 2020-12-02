@@ -208,7 +208,7 @@ function TotalReserva() {
                                     <form id="webpay-form"  action='http://localhost:3001/webpay-normal/init' method="POST" id="form">
                                     <input type="hidden" name="total" value={valorAnticipado} />
                                     <input name="idReserva" type="hidden" value={lastId} />
-                        
+                                    <input name="motivo" type="hidden" value="Pago Anticipado" />
                                     <input type="primary" shape="round" className="mt-2 text-center btn-primary btn" size={'large'} type="submit"  value="Pagar" />
 
                   
