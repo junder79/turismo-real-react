@@ -53,7 +53,7 @@ function Navbar() {
                             </Menu.Item>
 
                             <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="/clie/viajes" >Mis Viajes</Link>
+                                <Link to="/clie/viajes" >Mis Reservas</Link>
                             </Menu.Item>
                             <Menu.Item key="cerrar" icon={<FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon>}>
                                 <Link to="/clie/cerrar" >Cerrar Sesión</Link>
