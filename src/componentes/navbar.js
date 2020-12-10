@@ -41,7 +41,7 @@ function Navbar() {
     return (
         <Router >
             
-            <Menu mode="horizontal">
+            <Menu mode="horizontal" styles=" background-color: transparent !important;">
 
                 <img className="logoimg" src="/img/turismoreal-logo.png" width="2%" height="40%"></img> 
                 <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>

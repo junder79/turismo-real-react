@@ -119,33 +119,20 @@ function InicioWebsite() {
 
         <>
             <UpCircleTwoTone className="scrollTop" onClick={scrollTop} style={{ height: 40, display: showScroll ? 'flex' : 'none' }} />
-            <div className="menubar">
-                menu
-            </div>
-            <img style={{ marginLeft: '25%', marginTop: '10%' }} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>
-            <Row style={{borderRadius:'20px'}} className="banner centrar fondo-cuadro" >
+         
+            <img style={{ marginLeft: '25%' }} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>
+            <Row style={{borderTopLeftRadius:'20px',borderTopRightRadius:'20px'}} className="banner centrar fondo-cuadro" >
                 {/* inicio probando fondo con video  */}
-                <div class="header-video ">
-                    {/* <iframe src="https://cdn.dribbble.com/users/4505839/screenshots/12235107/media/f954607e7bc772e69088622495d9b874.jpeg?compress=1&resize=1000x750"
-                        width="126%" height="705px"
-                        frameborder="0"
-                        allow="autoplay; 
-                        fullscreen"
-                        allowfullscreen
-                        muted
-                        playsinline></iframe> */}
-                        
-
-                </div>
+                {/* <img src="https://cdn.dribbble.com/users/1355613/screenshots/10374363/media/0aeca8e7c535e3784a2d9a562a30acc6.jpg"  class="header-video "></img> */}
                 {/* fin probando fondo con video  */}
 
                 {/* <Card className="cuadro texto-roboto shadow negro" style={{ width: '75%', color: 'black' }} bordered={false} > */}
                     {/* <h2>Alojamiento con Reserva Flexible</h2> */}
                   
-                    <Divider style={{ color: 'white' }} ></Divider>
+                    
                     {/* <p className="texto-roboto negro">Encuentra hoteles que puedes cancelar si tus planes cambian</p> */}
 
-                    <div className="row" styles="border: 1px solid black"  style={{borderRadius:'20px'}}>
+                    <div className="row" styles="border: 1px solid black" >
                         <Form
 
                             name="basic"

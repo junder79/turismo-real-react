@@ -63,10 +63,8 @@ function InicioSesion() {
     };
     return (
         <div className="container" style={{}}>
-             <div className="menubar cu">
-                menu
-            </div>
-                <img style={{marginLeft: '25%', marginTop: '10%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> 
+
+                <img style={{marginLeft: '25%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> 
             <div className="row flex justify-content-center ci ">
                 
                 <Card style={{ borderRadius: 20}} className="">

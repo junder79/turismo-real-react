@@ -8,8 +8,12 @@
   padding-top: 80px;
 }
 .fondo {
-  background-image: url(https://fondosmil.com/fondo/9.jpg),
+  background-image: url(https://cdn.dribbble.com/users/4505839/screenshots/14422059/media/50a40a5a6f45183c7ea8d05de45a9d54.png),
     linear-gradient(90deg, #de9b98 0%, #73ef6b 100%);
+    
+    background-position: center;
+    background-size: cover;
+    width: 100%;
     
 }
 
@@ -62,16 +66,7 @@
   text-align: center;
 }
 /* arreglar left y width en header-video */
-.header-video {
-  position: absolute;
-  top: 8%;
-  left: -27%;
-  width: 126%;
-  height: 90%;
-  overflow: hidden;
-  margin-left: 0px;
-  z-index: -1;
-}
+
 .logotr{
   display: none;
 }
@@ -79,6 +74,12 @@
   margin-bottom: 5%;
 }
 
+.fondo-cuadro{
+  background-image: url(https://cdn.dribbble.com/users/1355613/screenshots/10374363/media/0aeca8e7c535e3784a2d9a562a30acc6.jpg);
+  background-position: center;
+  background-size: cover;
+ 
+}
 
 /* ------------------MEDIA QUERY --------------------------------------------------------------------- */
 @media (max-width: 600px) {
@@ -100,6 +101,8 @@
 
   .fondo-cuadro{
     background-image: url(/img/travel_1.jpg);
+    background-position: auto;
+    background-size: cover;
    
   }
   .cuadro {
@@ -111,14 +114,14 @@
 }
 .menubar{
   width: 100%;
-  height: 8%;
+ 
  
 }
 
 .ant-menu-horizontal {
   width: 100%;
   /* height: 8%; */
-  position: fixed;
+  /* position: fixed; */
   z-index: 20;
 }
 
