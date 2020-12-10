@@ -112,3 +112,8 @@
 .label-website {
   color: '#363636';
 }
+.titulo-buscar {
+  font-family: "Roboto", sans-serif;
+  font-size: 44px;
+  font-weight: 900;
+}

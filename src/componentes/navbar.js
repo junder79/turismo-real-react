@@ -43,7 +43,7 @@ function Navbar() {
             
             <Menu mode="horizontal">
 
-                <img className="logoimg" src="/img/turismoreal-logo.png" width="7%" height="100%"></img> 
+                <img className="logoimg" src="/img/turismoreal-logo.png" width="2%" height="40%"></img> 
                 <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
                     <Link to="/clie/inicio" >Inicio</Link>
                 </Menu.Item>

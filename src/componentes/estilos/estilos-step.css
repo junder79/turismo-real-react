@@ -99,7 +99,8 @@
   }
 
   .fondo-cuadro{
-    background-image: url(/img/hoteldepartamento.jpg);
+    background-image: url(/img/travel_1.jpg);
+   
   }
   .cuadro {
     background-color: #5f94c294;
@@ -116,7 +117,7 @@
 
 .ant-menu-horizontal {
   width: 100%;
-  height: 8%;
+  /* height: 8%; */
   position: fixed;
   z-index: 20;
 }

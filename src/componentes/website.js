@@ -10,6 +10,9 @@ import Cookies from 'universal-cookie';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import axios from 'axios';
+import UseAnimations from 'react-useanimations';
+import infinity from 'react-useanimations/lib/infinity'
+import alertOctagon from 'react-useanimations/lib/alertOctagon'
 
 const { Header, Content, Footer } = Layout;
 function InicioWebsite() {
@@ -19,7 +22,7 @@ function InicioWebsite() {
     const [departamento, setDepart] = useState([]);
     const [titulo, setTitulo] = useState('Lugares Populares');
     const [subtitulo, setSubtitulo] = useState('Te mostramos los lugares más reservados y con mejor puntuación para que elijas.');
-    const [mensajeBuscado, setMensajeBuscado] = useState('Buscando');
+    const [estadoBuscar, setestadoBuscar] = useState(0);
     const [visible, setVisible] = useState(false);
     const [cantF, setCantF] = useState('');
     const [lugar, setLugar] = useState('');
@@ -69,7 +72,9 @@ function InicioWebsite() {
 
         setVisible(true);
         setLugar(values.lugar);
-
+        setTitulo("Buscando en " + values.lugar);
+        setSubtitulo('');
+        setestadoBuscar(1);
         var fechaInicio = moment(values.fecha[0]).format("YYYY-MM-DD");
 
         var fechaTermino = moment(values.fecha[1]).format("YYYY-MM-DD");
@@ -83,19 +88,23 @@ function InicioWebsite() {
         formData.append("fechaTermino", fechaTermino);
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/departamentoactivo/${lugar}`
+            url: `http://localhost:3001/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
-
+            setTitulo("Resultado de " + lugar);
             setVisible(false);
 
 
             console.log("CANTIDAD FILAS" + res.data.length);
+            setestadoBuscar(2);
+            setDepart(res.data);
+
             if (res.data.length > 0) {
 
                 setCantF(1)
-                setDepart(res.data);
+
             } else {
+                setTitulo("Hey!, aun no estamos ahí");
                 setCantF(0)
             }
 
@@ -113,27 +122,30 @@ function InicioWebsite() {
             <div className="menubar">
                 menu
             </div>
-                <img style={{marginLeft: '25%', marginTop: '10%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> 
-            <Row className="banner centrar fondo-cuadro" >
-               {/* inicio probando fondo con video  */}
-               <div class="header-video ">
-                        <iframe src="http://satur.docn.us/static/media/satur-no-audio.mp4"
-                        width="126%" height="705px" 
-                        frameborder="0" 
+            <img style={{ marginLeft: '25%', marginTop: '10%' }} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>
+            <Row style={{borderRadius:'20px'}} className="banner centrar fondo-cuadro" >
+                {/* inicio probando fondo con video  */}
+                <div class="header-video ">
+                    {/* <iframe src="https://cdn.dribbble.com/users/4505839/screenshots/12235107/media/f954607e7bc772e69088622495d9b874.jpeg?compress=1&resize=1000x750"
+                        width="126%" height="705px"
+                        frameborder="0"
                         allow="autoplay; 
-                        fullscreen" 
-                        allowfullscreen 
-                        muted 
-                        playsinline></iframe>
-   
-                </div> 
+                        fullscreen"
+                        allowfullscreen
+                        muted
+                        playsinline></iframe> */}
+                        
+
+                </div>
                 {/* fin probando fondo con video  */}
-                
-                <Card className="cuadro texto-roboto shadow negro" style={{ width: '75%', color : 'black'}}  bordered={false} >
-                <h2>Alojamiento con Reserva Flexible</h2>          
-                <Divider style={{color : 'white'}} ></Divider>
-                    <p className="texto-roboto negro">Encuentra hoteles que puedes cancelar si tus planes cambian</p>
-                    <div className="row" styles="border: 1px solid black">
+
+                {/* <Card className="cuadro texto-roboto shadow negro" style={{ width: '75%', color: 'black' }} bordered={false} > */}
+                    {/* <h2>Alojamiento con Reserva Flexible</h2> */}
+                  
+                    <Divider style={{ color: 'white' }} ></Divider>
+                    {/* <p className="texto-roboto negro">Encuentra hoteles que puedes cancelar si tus planes cambian</p> */}
+
+                    <div className="row" styles="border: 1px solid black"  style={{borderRadius:'20px'}}>
                         <Form
 
                             name="basic"
@@ -143,14 +155,14 @@ function InicioWebsite() {
                         >
                             <div class="col-sm-12 col-md-12 " style={{ color: 'white' }}>
 
-                                <Form.Item label="Destino" style={{ color: 'white' }} name="lugar" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Ingresa un Luagar de destino' }]}>
-                                    <Input placeholder="" />
+                                <Form.Item label="Destino" label={<label className="titulo-buscar" style={{ color: "white" , fontSize:27}}>Lugar de Destino</label>} style={{ color: 'white',borderRadius: 25 }} name="lugar" className="ml-2" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Ingresa un Lugar de destino' }]}>
+                                    <Input placeholder="" style={{borderRadius: '10px'}}  />
                                 </Form.Item>
 
                             </div>
                             <div class="col-sm-12 col-md-12">
-                                <Form.Item name="fecha" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2" label="Entrada y salida" >
-                                    <RangePicker />
+                                <Form.Item name="fecha" label={<label className="titulo-buscar" style={{ color: "white" , fontSize:27}}>Entrada y Salida</label>}   wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2"  >
+                                    <RangePicker style={{borderRadius: '10px'}} />
                                 </Form.Item>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -158,66 +170,14 @@ function InicioWebsite() {
                                 <Form.Item >
                                     <Button className="btnes texto-roboto" htmlType="submit">
                                         Buscar
-        </Button>
+                                    </Button>
                                 </Form.Item>
                             </div>
                         </Form>
                     </div>
-                </Card>
+                {/* </Card> */}
 
             </Row>
-
-            <Row className="hot-pop " >
-                <div id="hoteles" className="container">
-
-
-                    <center>
-
-                        <Carousel responsive={responsive} className="mb-2 mt-2">
-                            {
-                                visible ?
-                                    <>
-
-                                        <Card style={{ width: '100%', marginTop: 16, borderRadius: 30 }} className="ml-2 mr-2" loading={true}>
-                                            <Meta
-                                                avatar={
-                                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                                                }
-                                                title="Card title"
-                                                description="This is the description"
-                                            />
-                                        </Card>
-                                    </> :
-
-
-                                    departamento.map((elemento, i) => (
-
-
-                                        <Card
-                                            key={elemento.IDDEPARTAMENTO}
-                                            hoverable
-                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                            className="shadow"
-                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.RUTAIMAGEN} />}
-                                        >
-                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                            <Meta title={elemento.NOMBRED} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
-                                            <Button style={{ marginTop: 10, }} type="primary" shape="round" >
-                                                <Link style={{ color: 'white' }} to={"/clie/departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
-                                        </Card>
-
-                                    ))
-
-
-                            }
-                        </Carousel>
-
-
-                    </center>
-
-                </div>
-            </Row>
-
 
             <Row className="hot-pop " >
                 <div id="hoteles" className="container">
@@ -226,77 +186,122 @@ function InicioWebsite() {
                     <p className="subtitulos-popular">
                         {subtitulo}
                     </p>
+
+                    <center>
+                        {
+                            estadoBuscar == 1 ?
+                                <UseAnimations strokeColor={'#512da8'} animation={infinity} size={80}></UseAnimations> :
+                                estadoBuscar == 0 ?
+                                    <Carousel responsive={responsive} className="mb-2 mt-2">
+                                        <Card
+                                            hoverable
+                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                            className="shadow"
+                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media.cnnchile.com/sites/2/2019/08/la-serena-mop.jpg" />}
+                                        >
+                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                            <Meta title="La serena" description="Desde $59.000" />
+                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
+          */}
+                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
+                                                Ver más <RightOutlined /></Button>
+                                        </Card>
+                                        <Card
+                                            hoverable
+                                            className="shadow  "
+                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media-cdn.tripadvisor.com/media/photo-s/15/7d/ed/0c/img-20181117-160125972.jpg" />}
+                                        >
+                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                            <Meta title="Viña del Mar" description="Desde $59.000" />
+                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
+          */}
+                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
+                                                Ver más <RightOutlined /></Button>
+
+                                        </Card>
+                                        <Card
+                                            hoverable
+                                            className="shadow"
+                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://pyme.emol.com/wp-content/uploads/2020/01/Fedetur-puc%C3%B3n.jpg" />}
+                                        >
+                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                            <Meta title="Pucón" description="Desde $59.000" />
+                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
+          */}
+                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
+                                                Ver más <RightOutlined /></Button>
+                                        </Card>
+                                        <Card
+                                            hoverable
+                                            className="shadow"
+                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.ola.com.ar/files/circuitos/puerto-varas.jpg" />}
+                                        >
+                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                            <Meta title="Puerto Varas" description="Desde $59.000" />
+                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
+          */}
+                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
+                                                Ver más <RightOutlined /></Button>
+                                        </Card>
+
+                                        <Card
+                                            hoverable
+                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                            className="shadow "
+                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media.cnnchile.com/sites/2/2019/08/la-serena-mop.jpg" />}
+                                        >
+                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                            <Meta title="La serena" description="Desde $59.000" />
+                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
+          */}
+                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
+                                                Ver más <RightOutlined /></Button>
+                                        </Card>
+                                    </Carousel> :
+                                    <Carousel responsive={responsive} className="mb-2 mt-2">
+                                        {
+
+                                            cantF > 0 ?
+                                                departamento.map((elemento, i) => (
+
+
+                                                    <Card
+                                                        key={elemento.IDDEPARTAMENTO}
+                                                        hoverable
+                                                        style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                                        className="shadow"
+                                                        cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.RUTAIMAGEN} />}
+                                                    >
+                                                        <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                                        <Meta title={elemento.NOMBRED} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
+                                                        <Button style={{ marginTop: 10, }} type="primary" shape="round" >
+                                                            <Link style={{ color: 'white' }} to={"/clie/departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
+                                                    </Card>
+
+                                                )) :
+
+                                                <div className="d-flex justify-content-center">
+                                                    <UseAnimations strokeColor={'#512da8'} animation={alertOctagon} size={80}></UseAnimations>
+                                                </div>
+
+
+                                        }
+                                    </Carousel>
+
+                        }
+
+
+                    </center>
+
+                </div>
+            </Row>
+            <Row className="hot-pop " >
+                <div id="hoteles" className="container">
                     <center>
 
-                        <Carousel responsive={responsive} className="mb-2 mt-2">
-                            <Card
-                                hoverable
-                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                className="shadow"
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media.cnnchile.com/sites/2/2019/08/la-serena-mop.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="La serena" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-                            <Card
-                                hoverable
-                                className="shadow  "
-                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media-cdn.tripadvisor.com/media/photo-s/15/7d/ed/0c/img-20181117-160125972.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Viña del Mar" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-
-                            </Card>
-                            <Card
-                                hoverable
-                                className="shadow"
-                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://pyme.emol.com/wp-content/uploads/2020/01/Fedetur-puc%C3%B3n.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Pucón" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-                            <Card
-                                hoverable
-                                className="shadow"
-                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.ola.com.ar/files/circuitos/puerto-varas.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Puerto Varas" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-
-                            <Card
-                                hoverable
-                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                className="shadow "
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media.cnnchile.com/sites/2/2019/08/la-serena-mop.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="La serena" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-                        </Carousel>
 
                         <div className="row flex justify-content-center">
                             <Divider orientation="left"></Divider>
@@ -338,9 +343,9 @@ function InicioWebsite() {
                 </div>
             </Row>
             <Row className="fondo">
-             
+
                 <div className="container">
-                     
+
                     <h3 className="texto-roboto-elegir centrar" style={{ marginTop: 15, marginBottom: 15 }}>Elige Turismo Real para tus viajes</h3>
                     <div className="iconos row" >
                         <div class="col-sm-12 col-md-4">

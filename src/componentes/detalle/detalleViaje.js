@@ -34,7 +34,7 @@ function DetalleViaje() {
     const getDetalleDepartamentoImagen = (idDepartamento) => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/departamentoimagen/${idDepartamento}`
+            url: `http://localhost:3001/api/departamentoimagen/${idDepartamento}`
         }).then(res => {
 
             console.log(res.data);
@@ -47,7 +47,7 @@ function DetalleViaje() {
     const getReservaEspecifica = () => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/reservaespecifica/${idReserva}`
+            url: `http://localhost:3001/api/reservaespecifica/${idReserva}`
         }).then(res => {
 
             setEstadoReserva(res.data[0].ESTADOR_IDESTADO);
@@ -65,7 +65,7 @@ function DetalleViaje() {
     const getToursAgendados = () => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/tourreserva/${idReserva}`
+            url: `http://localhost:3001/api/tourreserva/${idReserva}`
         }).then(res => {
 
             console.log("DATOS TOUR" + JSON.stringify(res.data));
@@ -87,7 +87,7 @@ function DetalleViaje() {
     const getTransporteAgendado = () => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/transportereserva/${idReserva}`
+            url: `http://localhost:3001/api/transportereserva/${idReserva}`
         }).then(res => {
 
 
@@ -116,7 +116,7 @@ function DetalleViaje() {
     const pagoRestante = () => {
         const formData = new FormData();
         formData.append("idReserva", idReserva);
-        axios.post('http://satur.docn.us/api/pagorestante', formData)
+        axios.post('http://localhost:3001/pagorestante', formData)
             .then(response => {
                 console.log(response.data);
                 var respuestaServidor = response.data;
@@ -238,7 +238,7 @@ function DetalleViaje() {
                                             {/* <Button onClick={() => pagoRestante()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                                 Pagar Valor Restante $ {valorRestante}
                                             </Button> */}
-                                             <form id="webpay-form"  action='http://satur.docn.us/api/webpay-normal/initRestante' method="POST" id="form">
+                                             <form id="webpay-form"  action='http://localhost:3001/webpay-normal/initRestante' method="POST" id="form">
                                     <input type="hidden" name="total" value={valorRestante} />
                                     <input name="idReserva" type="hidden" value={idReserva} />
                                     <input name="motivo" type="hidden" value="Check-In" />
