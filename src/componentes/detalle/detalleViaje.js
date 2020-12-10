@@ -238,7 +238,7 @@ function DetalleViaje() {
                                             {/* <Button onClick={() => pagoRestante()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                                 Pagar Valor Restante $ {valorRestante}
                                             </Button> */}
-                                             <form id="webpay-form"  action='http://satur.docn.us/webpay-normal/initRestante' method="POST" id="form">
+                                             <form id="webpay-form"  action='http://satur.docn.us/api/webpay-normal/initRestante' method="POST" id="form">
                                     <input type="hidden" name="total" value={valorRestante} />
                                     <input name="idReserva" type="hidden" value={idReserva} />
                                     <input name="motivo" type="hidden" value="Check-In" />
