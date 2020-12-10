@@ -39,9 +39,11 @@ function Navbar() {
     const cookies = new Cookies();
     const estadoLogin = cookies.get('estadoSesion');
     return (
-        <Router>
+        <Router >
+            
             <Menu mode="horizontal">
-                {/* <img  src="https://www.strunkmedia.com/wp-content/uploads/2018/05/bigstock-221516158.jpg" width="35" height="35"></img> */}
+
+                <img className="logoimg" src="/img/turismoreal-logo.png" width="7%" height="100%"></img> 
                 <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
                     <Link to="/clie/inicio" >Inicio</Link>
                 </Menu.Item>
@@ -71,9 +73,8 @@ function Navbar() {
                         </Menu.Item> : null
                 } */}
 
-
-
             </Menu>
+           
             <Switch>
                 <Route path="/admin/inicio" >
                     <Inicio></Inicio>

@@ -41,7 +41,7 @@ function Ajustes() {
         formData.append("id", idUsuario);
 
 
-        axios.post('http://localhost:3001/api/modificarCliente', formData)
+        axios.post('http://satur.docn.us/api/modificarCliente', formData)
             .then(response => {
                 // Setear Cookies
                 cookies.set('nombre', values.nombre, { path: '/' });

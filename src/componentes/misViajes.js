@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarCheck, faArrowLeft, faMapMarkerAlt, faDollarSign } from "@fortawesome/free-solid-svg-icons";
-import { Card, Avatar, Skeleton } from 'antd';
+import { Card, Avatar, Result,Button } from 'antd';
 
 function MisViajes() {
     const { Meta } = Card;
@@ -13,6 +13,7 @@ function MisViajes() {
     const idUsuario = cookies.get('idUsuario');
     const [misReservas, setMisReservas] = useState([]);
     const [cargadoReserva, setCargadoReserva] = useState(false);
+    const [cantidadReserva, setCantReserva] = useState(0);
     useEffect(() => {
 
         getReservasActivas();
@@ -22,9 +23,10 @@ function MisViajes() {
 
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/getReservas/${idUsuario}`
+            url: `http://satur.docn.us/api/getReservas/${idUsuario}`
         }).then(res => {
-
+            console.log("Datos " + res.data.length)
+            setCantReserva(res.data.length);
             setCargadoReserva(true);
             setMisReservas(res.data);
 
@@ -41,7 +43,7 @@ function MisViajes() {
             <div className="row">
                 {
                     !cargadoReserva ?
-                        <Card style={{ width: '100%', marginTop: 16,borderRadius:30 , height:'100%' }} className="ml-2 mr-2" loading={true}>
+                        <Card style={{ width: '100%', marginTop: 16, borderRadius: 30, height: '100%' }} className="ml-2 mr-2" loading={true}>
                             <Meta
                                 avatar={
                                     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -53,34 +55,43 @@ function MisViajes() {
                         <>
                             {
 
+                                cantidadReserva > 0 ?
 
-                                misReservas.map((elemento, i) => (
-                                    <div className="col-12 col-md-4  mt-2 mb-2">
-                                        <Link to={`/clie/mireserva/${elemento.IDRESERVA}`}>
-                                            <Card
-                                                onClick={() => click()}
-                                                hoverable
-                                                className="shadow box"
-                                                style={{ width: '100%', borderRadius: 30 }}
-                                                cover={<img alt="example" style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }} src={elemento.RUTAIMAGEN} />}
-                                            >
+                                    misReservas.map((elemento, i) => (
+                                        <div className="col-12 col-md-4  mt-2 mb-2">
+                                            <Link to={`/clie/mireserva/${elemento.IDRESERVA}`}>
+                                                <Card
+                                                    onClick={() => click()}
+                                                    hoverable
+                                                    className="shadow box"
+                                                    style={{ width: '100%', borderRadius: 30 }}
+                                                    cover={<img alt="example" style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }} src={elemento.RUTAIMAGEN} />}
+                                                >
 
-                                                <div className="row">
-                                                    <div className="col-6">
-                                                        <span className="contenido-card-viajes"><FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" color={'#311b92'}></FontAwesomeIcon>{elemento.NOMBRED} </span><br></br>
-                                                        <span className="contenido-card-viajes"><FontAwesomeIcon icon={faCalendarCheck} className="mr-2" color={'#311b92'}></FontAwesomeIcon>Check In {elemento.FECHAINICIORESERVA}</span><br></br>
-                                                        <span className="contenido-card-viajes"><FontAwesomeIcon icon={faCalendarCheck} className="mr-2" color={'#311b92'}></FontAwesomeIcon>Check Out {elemento.FECHATERMINORESERVA}</span>
-                                                    </div>
-                                                    <div className="col-6">
-                                                        <div className="row">
-                                                            <div class="col-sm-12 border-left">Estado: {elemento.ESTADORESERVA}</div>
+                                                    <div className="row">
+                                                        <div className="col-6">
+                                                            <span className="contenido-card-viajes"><FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" color={'#311b92'}></FontAwesomeIcon>{elemento.NOMBRED} </span><br></br>
+                                                            <span className="contenido-card-viajes"><FontAwesomeIcon icon={faCalendarCheck} className="mr-2" color={'#311b92'}></FontAwesomeIcon>Check In {elemento.FECHAINICIORESERVA}</span><br></br>
+                                                            <span className="contenido-card-viajes"><FontAwesomeIcon icon={faCalendarCheck} className="mr-2" color={'#311b92'}></FontAwesomeIcon>Check Out {elemento.FECHATERMINORESERVA}</span>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="row">
+                                                                <div class="col-sm-12 border-left">Estado: {elemento.ESTADORESERVA}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </Card>
-                                        </Link>
-                                    </div>
-                                ))
+                                                </Card>
+                                            </Link>
+                                        </div>
+                                    ))
+                                    :
+                                    <Result
+                                    status="403"
+                                    style={{ width: '100%'}}
+                                    title="¿Que esperas?"
+                                    subTitle="aun no tienes reservas agendadas"
+                                    extra={<Button type="primary">Reservar ahora!</Button>}
+                                  />
 
 
                             }

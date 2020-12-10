@@ -83,7 +83,7 @@ function InicioWebsite() {
         formData.append("fechaTermino", fechaTermino);
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/departamentoactivo/${lugar}`
+            url: `http://satur.docn.us/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
 
@@ -110,13 +110,29 @@ function InicioWebsite() {
 
         <>
             <UpCircleTwoTone className="scrollTop" onClick={scrollTop} style={{ height: 40, display: showScroll ? 'flex' : 'none' }} />
-
-            <Row className="banner centrar fondo" >
-
-
-
-                <Card className="cuadro texto-roboto shadow" style={{ width: '75%' }} title="Alojamiento con Reserva Flexible" color={'white'} bordered={false} >
-                    <p className="texto-roboto">Encuentra hoteles que puedes cancelar si tus planes cambian</p>
+            <div className="menubar">
+                menu
+            </div>
+                <img style={{marginLeft: '25%', marginTop: '10%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> 
+            <Row className="banner centrar fondo-cuadro" >
+               {/* inicio probando fondo con video  */}
+               <div class="header-video ">
+                        <iframe src="http://satur.docn.us/static/media/satur-no-audio.mp4"
+                        width="126%" height="705px" 
+                        frameborder="0" 
+                        allow="autoplay; 
+                        fullscreen" 
+                        allowfullscreen 
+                        muted 
+                        playsinline></iframe>
+   
+                </div> 
+                {/* fin probando fondo con video  */}
+                
+                <Card className="cuadro texto-roboto shadow negro" style={{ width: '75%', color : 'black'}}  bordered={false} >
+                <h2>Alojamiento con Reserva Flexible</h2>          
+                <Divider style={{color : 'white'}} ></Divider>
+                    <p className="texto-roboto negro">Encuentra hoteles que puedes cancelar si tus planes cambian</p>
                     <div className="row" styles="border: 1px solid black">
                         <Form
 
@@ -140,7 +156,7 @@ function InicioWebsite() {
                             <div class="col-sm-12 col-md-4">
 
                                 <Form.Item >
-                                    <Button className="btnBuscar texto-roboto" htmlType="submit">
+                                    <Button className="btnes texto-roboto" htmlType="submit">
                                         Buscar
         </Button>
                                 </Form.Item>
@@ -148,8 +164,6 @@ function InicioWebsite() {
                         </Form>
                     </div>
                 </Card>
-
-
 
             </Row>
 
@@ -324,7 +338,9 @@ function InicioWebsite() {
                 </div>
             </Row>
             <Row className="fondo">
+             
                 <div className="container">
+                     
                     <h3 className="texto-roboto-elegir centrar" style={{ marginTop: 15, marginBottom: 15 }}>Elige Turismo Real para tus viajes</h3>
                     <div className="iconos row" >
                         <div class="col-sm-12 col-md-4">

@@ -41,7 +41,7 @@ function ModalAgregarDepartamento(objeto) {
     const getAcondicionados = async => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/api/getAcondicionados'
+            url: 'http://satur.docn.us/api/getAcondicionados'
         }).then(res => {
             console.log(res);
             setAcondicionados(res.data);
@@ -53,7 +53,7 @@ function ModalAgregarDepartamento(objeto) {
     const getRegiones = async => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/api/getRegiones'
+            url: 'http://satur.docn.us/api/getRegiones'
         }).then(res => {
             console.log(res);
             setRegiones(res.data);
@@ -66,7 +66,7 @@ function ModalAgregarDepartamento(objeto) {
         const regionId = e.target.value;
         axios({
             method: 'GET',
-            url: "http://localhost:3001/api/getComuna/" + regionId + ""
+            url: "http://satur.docn.us/api/getComuna/" + regionId + ""
         }).then(res => {
             console.log(res);
             setComunas(res.data);
@@ -104,7 +104,7 @@ function ModalAgregarDepartamento(objeto) {
         const headers = {
             'content-type': 'multipart/form-data'
         }
-        axios.post('http://localhost:3001/api/upload', formData, { headers })
+        axios.post('http://satur.docn.us/api/upload', formData, { headers })
             .then(response => {
                 // Guardo la respuesta del parametro de salida del sp
 

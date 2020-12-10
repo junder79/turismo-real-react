@@ -36,7 +36,7 @@ function Departamentos() {
     const getDepartamentos = async => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/api/getDepartamentos'
+            url: 'http://satur.docn.us/api/getDepartamentos'
         }).then(res => {
             console.log(res);
             setDepartamento(res.data);
@@ -57,7 +57,7 @@ function Departamentos() {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    axios.post('http://localhost:3001/api/eliminarDepartamento', elemento)
+                    axios.post('http://satur.docn.us/api/eliminarDepartamento', elemento)
                         .then(response => {
 
                             var respuestaServidor = response.data;
@@ -90,7 +90,7 @@ function Departamentos() {
         setEstado(true);
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/getImagesDepartament/${idDepartamento}`
+            url: `http://satur.docn.us/api/getImagesDepartament/${idDepartamento}`
         }).then(res => {
             console.log(res.data);
             setEstadoCargaI(true);
@@ -110,7 +110,7 @@ function Departamentos() {
         setEstadoAcond(true);
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/getAcondicionados/${idDepartamento}`
+            url: `http://satur.docn.us/api/getAcondicionados/${idDepartamento}`
         }).then(res => {
             console.log(res.data);
             setEstadoCargaA(true);

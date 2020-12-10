@@ -14,7 +14,7 @@ function InicioSesion() {
         formData.append("correo", values.correo);
         formData.append("contrasena", values.password);
 
-        axios.post('http://localhost:3001/api/validarUsuario', formData)
+        axios.post('http://satur.docn.us/api/validarUsuario', formData)
             .then(response => {
                 // Guardo la respuesta del parametro de salida del sp
                 let respuestaServidor = response.data.p_out;
@@ -63,9 +63,13 @@ function InicioSesion() {
     };
     return (
         <div className="container" style={{}}>
-            
-            <div className="row flex justify-content-center">
-                <Card style={{ borderRadius: 20 }} className="mt-2">
+             <div className="menubar cu">
+                menu
+            </div>
+                <img style={{marginLeft: '25%', marginTop: '10%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> 
+            <div className="row flex justify-content-center ci ">
+                
+                <Card style={{ borderRadius: 20}} className="">
 
                 <h1 className="titulo-componentes justify-content-center">Inicio Sesión</h1>
                     <Form
@@ -77,10 +81,10 @@ function InicioSesion() {
                     >
                         <Form.Item
                             labelCol={{ span: 24 }}
-                            label="Correo"
+                            label="Email"
                             name="correo"
                             className="titulo-registrate"
-                            rules={[{ required: true, message: 'Ingresa tu nombre de usuario' }]}
+                            rules={[{ required: true, message: 'Ingresa tu Email' }]}
                         >
                             <Input />
                         </Form.Item>
@@ -90,7 +94,7 @@ function InicioSesion() {
                             label="Contraseña"
                             name="password"
                             className="titulo-registrate"
-                            rules={[{ required: true, message: 'Ingresa tu password' }]}
+                            rules={[{ required: true, message: 'Ingresa tu contraseña' }]}
                         >
                             <Input.Password />
                         </Form.Item>
@@ -100,9 +104,8 @@ function InicioSesion() {
                         <div className="row flex  text-center ">
                             <div className="col-12">
                                 <Form.Item >
-                                    <Button className="titulo-registrate" style={{ backgroundColor: '#461CE2', color: 'white' }} size={'large'} shape="round" htmlType="submit">
-                                        Ingresar
-</Button>
+                                    <Button className="titulo-registrate btnes"  size={'large'} shape="round" htmlType="submit">
+                                        Ingresar </Button>
 
                                 </Form.Item>
                             </div>

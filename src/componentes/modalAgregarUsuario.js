@@ -35,7 +35,7 @@ function ModalNuevoUsuario(objeto) {
         event.preventDefault()
         setBtnUsuario(true);
         console.log("DATOS A ENVIAR " + JSON.stringify(datosForm));
-        axios.post('http://localhost:3001/api/agregarUsuario', datosForm)
+        axios.post('http://satur.docn.us/api/agregarUsuario', datosForm)
             .then(response => {
                 console.log(response);
 

@@ -10,7 +10,9 @@
 .fondo {
   background-image: url(https://fondosmil.com/fondo/9.jpg),
     linear-gradient(90deg, #de9b98 0%, #73ef6b 100%);
+    
 }
+
 .steps-action {
   margin-top: 24px;
 }
@@ -36,18 +38,14 @@
 }
 .banner {
   margin-top: 1%;
-  background-color: rgb(213, 226, 245);
+  padding-bottom: 10%;
   justify-content: center;
   align-items: center;
 }
 .cuadro {
-  background-color: #270570;
+  background-color: #4a709286;
   border-radius: 15px;
-  /* width: 100%; */
-
   margin-bottom: 15px;
-  color: white;
-
 }
 .suscribe {
   background-color: rgba(168, 187, 214, 0.26);
@@ -62,14 +60,72 @@
   height: 100%;
   padding-left: 5%;
   text-align: center;
-  padding: 5%;
+}
+/* arreglar left y width en header-video */
+.header-video {
+  position: absolute;
+  top: 8%;
+  left: -27%;
+  width: 126%;
+  height: 90%;
+  overflow: hidden;
+  margin-left: 0px;
+  z-index: -1;
+}
+.logotr{
+  display: none;
+}
+.cu{
+  margin-bottom: 5%;
+}
+
+
+/* ------------------MEDIA QUERY --------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .logoimg {
+    display: none;
+  }
+  .header-video {
+    display: none;
+
+  }
+
+  .ci{
+    margin-top: 5%;
+  }
+
+  .logotr{
+    display: block;
+  }
+
+  .fondo-cuadro{
+    background-image: url(/img/hoteldepartamento.jpg);
+  }
+  .cuadro {
+    background-color: #5f94c294;
+    border-radius: 15px;
+    margin-bottom: 15px;
+  }
+
+}
+.menubar{
+  width: 100%;
+  height: 8%;
+ 
+}
+
+.ant-menu-horizontal {
+  width: 100%;
+  height: 8%;
+  position: fixed;
+  z-index: 20;
 }
 
 .ant-card-head {
   color: #fafafa;
 }
 .ant-form-item-label > label {
-  color: black;
+  color: rgb(0, 0, 0);
 }
 
 .carousel {
@@ -81,7 +137,7 @@
 .negro {
   color: black;
 }
-.btnBuscar {
+.btnes {
   align-items: center;
   border-radius: 20px;
   background-color: rgb(223, 145, 0);

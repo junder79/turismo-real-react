@@ -31,7 +31,7 @@ function ModalAgregarTour(objeto) {
         const regionId = `${value}`;
         axios({
             method: 'GET',
-            url: "http://localhost:3001/api/getComuna/" + regionId + ""
+            url: "http://satur.docn.us/api/getComuna/" + regionId + ""
         }).then(res => {
             console.log(res);
             setComunas(res.data);
@@ -42,7 +42,7 @@ function ModalAgregarTour(objeto) {
     }
     const props = {
         name: 'file',
-        action: 'http://localhost:3001/api/uploadImagen',
+        action: 'http://satur.docn.us/api/uploadImagen',
         headers: {
             authorization: 'authorization-text',
         },
@@ -98,7 +98,7 @@ function ModalAgregarTour(objeto) {
         const headers = {
             'content-type': 'multipart/form-data'
         }
-        axios.post('http://localhost:3001/api/agregarTour', formData, { headers })
+        axios.post('http://satur.docn.us/api/agregarTour', formData, { headers })
             .then(response => {
                 // Guardo la respuesta del parametro de salida del sp
 
