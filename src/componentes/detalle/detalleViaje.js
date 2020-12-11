@@ -127,7 +127,7 @@ function DetalleViaje() {
                         icon: 'success',
                         confirmButtonText: 'Continuar'
                     });
-                    history.push('/clie/viajes');
+                    history.push('viajes');
                 } else {
                     swal.fire({
                         title: 'Error al Pagar',

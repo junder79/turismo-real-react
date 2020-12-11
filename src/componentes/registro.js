@@ -43,7 +43,7 @@ function Registro() {
                         icon: 'success',
                         confirmButtonText: 'Continuar'
                     });
-                    let path = '/clie/login';
+                    let path = 'login';
                     history.push(path);
 
                 } else {

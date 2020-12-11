@@ -24,7 +24,7 @@ function DetalleReservaC() {
         history.push(path);
     }
     const redirigirBack = () => {
-        let path = `/clie/tours`;
+        let path = `tours`;
         history.push(path);
     }
 
@@ -73,7 +73,7 @@ function DetalleReservaC() {
         cookies.set('estadoTour', 1, { path: '/' });
         cookies.set('tourId', idTour, { path: '/' });
         cookies.set('lugarTour', lugarTour, { path: '/' });
-        let path = '/clie/detalleTransporte';
+        let path = 'detalleTransporte';
         history.push(path);
     }
     return (

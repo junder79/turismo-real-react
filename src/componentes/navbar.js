@@ -45,31 +45,31 @@ function Navbar() {
 
                 <img className="logoimg" src="/img/turismoreal-logo.png" width="2%" height="40%"></img> 
                 <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
-                    <Link to="/clie/inicio" >Inicio</Link>
+                    <Link to="inicio" >Inicio</Link>
                 </Menu.Item>
                 {
                     estadoLogin == "true" ?
                         <>
                             <Menu.Item key="micuenta" icon={<FontAwesomeIcon icon={faUserCircle} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="/clie/micuenta" >Mi Cuenta</Link>
+                                <Link to="micuenta" >Mi Cuenta</Link>
                             </Menu.Item>
 
                             <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="/clie/viajes" >Mis Reservas</Link>
+                                <Link to="viajes" >Mis Reservas</Link>
                             </Menu.Item>
                             <Menu.Item key="cerrar" icon={<FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="/clie/cerrar" >Cerrar Sesión</Link>
+                                <Link to="cerrar" >Cerrar Sesión</Link>
                             </Menu.Item>
                         </>
                         : <Menu.Item key="inicioSesion" icon={<FontAwesomeIcon icon={faSignInAlt} className="mr-2"></FontAwesomeIcon>}>
-                            <Link to="/clie/login">Iniciar Sesión</Link>
+                            <Link to="login">Iniciar Sesión</Link>
                         </Menu.Item>
                 }
 
                 {/* {
                     estadoLogin == "true" ?
                         <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
-                            <Link to="/clie/viajes" >Mis Viajes</Link>
+                            <Link to="viajes" >Mis Viajes</Link>
                         </Menu.Item> : null
                 } */}
 
@@ -97,46 +97,46 @@ function Navbar() {
                 <Route path="/admin/transportes">
                     <Transportes></Transportes>
                 </Route>
-                <Route path="/clie/reservar">
+                <Route path="reservar">
                     <ReservaCliente></ReservaCliente>
                 </Route>
-                <Route path="/clie/tours/:id">
+                <Route path="tours/:id">
                     <DetalleReservaC></DetalleReservaC>
                 </Route>
-                <Route path="/clie/huespedes">
+                <Route path="huespedes">
                     <AgregarHuespedes></AgregarHuespedes>
                 </Route>
-                <Route path="/clie/tours">
+                <Route path="tours">
                     <ServicioExtraTour></ServicioExtraTour>
                 </Route>
-                <Route path="/clie/detalleTransporte">
+                <Route path="detalleTransporte">
                     <ServicioExtraTransporte></ServicioExtraTransporte>
                 </Route>
-                <Route path="/clie/inicio">
+                <Route path="/inicio" exact>
                     <InicioWebsite></InicioWebsite>
                 </Route>
-                <Route path="/clie/total">
+                <Route path="/total">
                     <TotalReserva></TotalReserva>
                 </Route>
-                <Route path="/clie/registro">
+                <Route path="/registro">
                     <Registro></Registro>
                 </Route>
-                <Route path="/clie/login">
+                <Route path="/login">
                     <InicioSesion></InicioSesion>
                 </Route>
-                <Route path="/clie/cerrar">
+                <Route path="/cerrar">
                     <CerrarSesion></CerrarSesion>
                 </Route>
-                <Route path="/clie/departamento/:id/:comuna">
+                <Route path="/departamento/:id/:comuna">
                     <DetalleDepartamento></DetalleDepartamento>
                 </Route>
-                <Route path="/clie/viajes">
+                <Route path="/viajes">
                     <MisViajes></MisViajes>
                 </Route>
-                <Route path="/clie/mireserva/:idreserva">
+                <Route path="/mireserva/:idreserva">
                     <DetalleViaje></DetalleViaje>
                 </Route>
-                <Route path="/clie/micuenta">
+                <Route path="/micuenta">
                     <Ajustes></Ajustes>
                 </Route>
                 <Route exact path="/detalletour/:tourId/:lugar/:valor/:descripcion/:comuna/:region/:horario" component={DetalleTour}></Route>

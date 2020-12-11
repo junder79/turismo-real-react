@@ -37,15 +37,15 @@ function App() {
             <Route path='/admin/acondicionados' component={Acondicionados}> </Route>
             <Route path='/admin/usuarios' component={GetUsuarios}> </Route>
             <Route path='/admin/departamentos' component={Departamentos}> </Route>
-            <Route path='/clie/reservar' component={ReservaCliente}> </Route>
-            <Route path='/clie/tours/:id' component={DetalleReservaC}> </Route>
-            <Route path='/clie/inicio' component={InicioWebsite}> </Route>
-            <Route path='/clie/total' component={TotalReserva}> </Route>
-            <Route path='/clie/registro' component={Registro}> </Route>
-            <Route path='/clie/login' component={InicioSesion}> </Route>
-            <Route path='/clie/departamento/:id' component={DetalleDepartamento}> </Route>
-            <Route path='/clie/tours' component={ServicioExtraTour}> </Route>
-            <Route path='/clie/mireserva/:idreserva' component={DetalleViaje}> </Route>
+            <Route path='reservar' component={ReservaCliente}> </Route>
+            <Route path='tours/:id' component={DetalleReservaC}> </Route>
+            <Route path='inicio' component={InicioWebsite}> </Route>
+            <Route path='total' component={TotalReserva}> </Route>
+            <Route path='registro' component={Registro}> </Route>
+            <Route path='login' component={InicioSesion}> </Route>
+            <Route path='departamento/:id' component={DetalleDepartamento}> </Route>
+            <Route path='tours' component={ServicioExtraTour}> </Route>
+            <Route path='mireserva/:idreserva' component={DetalleViaje}> </Route>
           </Switch>
         </Router>
 

@@ -108,7 +108,7 @@ function InicioSesion() {
                                 </Form.Item>
                             </div>
                             <div className="col-12">
-                                <Link to="/clie/registro" className="titulo-registrate" >Regístrate</Link>
+                                <Link to="registro" className="titulo-registrate" >Regístrate</Link>
                             </div>
                         </div>
                     </Form>

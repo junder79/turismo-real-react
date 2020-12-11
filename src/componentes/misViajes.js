@@ -59,7 +59,7 @@ function MisViajes() {
 
                                     misReservas.map((elemento, i) => (
                                         <div className="col-12 col-md-4  mt-2 mb-2">
-                                            <Link to={`/clie/mireserva/${elemento.IDRESERVA}`}>
+                                            <Link to={`mireserva/${elemento.IDRESERVA}`}>
                                                 <Card
                                                     onClick={() => click()}
                                                     hoverable

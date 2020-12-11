@@ -11,8 +11,8 @@ function CerrarSesion() {
     }, [])
     const cerrarSesion = () => {
         cookies.set('estadoSesion', false, { path: '/' });
-        // history.push('/clie/login');
-        window.location.href = "/clie/login";
+        // history.push('login');
+        window.location.href = "login";
     }
     return (
         <div>

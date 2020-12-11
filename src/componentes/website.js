@@ -265,7 +265,7 @@ function InicioWebsite() {
                                                         <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
                                                         <Meta title={elemento.NOMBRED} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
                                                         <Button style={{ marginTop: 10, }} type="primary" shape="round" >
-                                                            <Link style={{ color: 'white' }} to={"/clie/departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
+                                                            <Link style={{ color: 'white' }} to={"departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
                                                     </Card>
 
                                                 )) :

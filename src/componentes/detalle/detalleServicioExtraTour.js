@@ -59,7 +59,7 @@ function ServicioExtraTour() {
     }
     const omitir = () => {
         cookies.set('estadoTour', 0, { path: '/' });
-        history.push('/clie/detalleTransporte');
+        history.push('detalleTransporte');
     }
     return (
         <div className="container">
@@ -103,7 +103,7 @@ function ServicioExtraTour() {
                                     <Carousel responsive={responsive}>
                                         {
                                             mapTour.map((elemento, i) => (
-                                                <Link to={`/clie/tours/${elemento.IDDETATOUR}`}>
+                                                <Link to={`tours/${elemento.IDDETATOUR}`}>
                                                     <Card
                                                         className="ml-4 mr-4 mb-4 mt-4 shadow "
                                                         hoverable

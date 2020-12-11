@@ -80,7 +80,7 @@ function ServicioExtraTransporte() {
     };
     const omitir = () => {
         cookies.set('estadoTransporte', 0, { path: '/' });
-        history.push('/clie/total');
+        history.push('total');
     }
     return (
         <div className="container">
