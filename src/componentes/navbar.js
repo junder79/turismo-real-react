@@ -43,7 +43,7 @@ function Navbar() {
             
             <Menu mode="horizontal" styles=" background-color: transparent !important;">
 
-                <img className="logoimg" src="/img/turismoreal-logo.png" width="2%" height="40%"></img> 
+                {/* <img className="logoimg" src="/img/turismoreal-logo.png" width="2%" height="40%"></img>  */}
                 <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
                     <Link to="inicio" >Inicio</Link>
                 </Menu.Item>
@@ -97,19 +97,19 @@ function Navbar() {
                 <Route path="/admin/transportes">
                     <Transportes></Transportes>
                 </Route>
-                <Route path="reservar">
+                <Route path="/reservar">
                     <ReservaCliente></ReservaCliente>
                 </Route>
-                <Route path="tours/:id">
+                <Route path="/tours/:id">
                     <DetalleReservaC></DetalleReservaC>
                 </Route>
-                <Route path="huespedes">
+                <Route path="/huespedes">
                     <AgregarHuespedes></AgregarHuespedes>
                 </Route>
-                <Route path="tours">
+                <Route path="/tours">
                     <ServicioExtraTour></ServicioExtraTour>
                 </Route>
-                <Route path="detalleTransporte">
+                <Route path="/detalleTransporte">
                     <ServicioExtraTransporte></ServicioExtraTransporte>
                 </Route>
                 <Route path="/inicio" exact>

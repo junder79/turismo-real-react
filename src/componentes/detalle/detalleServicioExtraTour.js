@@ -59,7 +59,7 @@ function ServicioExtraTour() {
     }
     const omitir = () => {
         cookies.set('estadoTour', 0, { path: '/' });
-        history.push('detalleTransporte');
+        history.push('/detalleTransporte');
     }
     return (
         <div className="container">
