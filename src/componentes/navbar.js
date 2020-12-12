@@ -97,19 +97,19 @@ function Navbar() {
                 <Route path="/admin/transportes">
                     <Transportes></Transportes>
                 </Route>
-                <Route path="reservar">
+                <Route path="/reservar">
                     <ReservaCliente></ReservaCliente>
                 </Route>
-                <Route path="tours/:id">
+                <Route path="/tours/:id">
                     <DetalleReservaC></DetalleReservaC>
                 </Route>
-                <Route path="huespedes">
+                <Route path="/huespedes">
                     <AgregarHuespedes></AgregarHuespedes>
                 </Route>
-                <Route path="tours">
+                <Route path="/tours">
                     <ServicioExtraTour></ServicioExtraTour>
                 </Route>
-                <Route path="detalleTransporte">
+                <Route path="/detalleTransporte">
                     <ServicioExtraTransporte></ServicioExtraTransporte>
                 </Route>
                 <Route path="/inicio" exact>

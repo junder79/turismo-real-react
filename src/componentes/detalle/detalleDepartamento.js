@@ -102,17 +102,17 @@ function DetalleDepartamento() {
                                 'Para poder agendar, deberás acceder con tu cuenta.',
                             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
                         });
-                        let path = 'login';
+                        let path = '/login';
                         history.push(path);
 
                     } else {
-                        let path = 'tours';
+                        let path = '/tours';
                         history.push(path);
 
                     }
                 } else {
 
-                    let path = 'inicio';
+                    let path = '/inicio';
                     history.push(path);
 
 
@@ -121,7 +121,7 @@ function DetalleDepartamento() {
 
     }
     const goBack = () => {
-        history.push('inicio');
+        history.push('/inicio');
     }
     return (
 

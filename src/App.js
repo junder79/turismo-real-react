@@ -37,7 +37,7 @@ function App() {
             <Route path='/admin/acondicionados' component={Acondicionados}> </Route>
             <Route path='/admin/usuarios' component={GetUsuarios}> </Route>
             <Route path='/admin/departamentos' component={Departamentos}> </Route>
-            <Route path='reservar' component={ReservaCliente}> </Route>
+            <Route path='/reservar' component={ReservaCliente}> </Route>
             <Route path='/tours/:id' component={DetalleReservaC}> </Route>
             <Route path='/inicio' component={InicioWebsite}> </Route>
             <Route path='/total' component={TotalReserva}> </Route>
