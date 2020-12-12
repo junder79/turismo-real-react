@@ -1,13 +1,12 @@
 import React from 'react';
 import logo from '../logo.svg';
 import '../App.css';
-
+import App from '../App';
 
 function Inicio() {
     return (
-      <div>
-          <p>Hola, estas en la pantalla de inico</p>
-      </div>
+     <span>Hola</span>
+  
     );
 }
 export default Inicio;

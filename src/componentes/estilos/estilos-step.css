@@ -75,10 +75,17 @@
 }
 
 .fondo-cuadro{
-  background-image: url(https://cdn.dribbble.com/users/1355613/screenshots/10374363/media/0aeca8e7c535e3784a2d9a562a30acc6.jpg);
+  background-image: url(/img/paisaje.jpg);
   background-position: center;
   background-size: cover;
  
+}
+.jumbotron{
+  background: url(/img/paisaje.jpg) no-repeat center center; 
+  /* -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%; */
 }
 
 /* ------------------MEDIA QUERY --------------------------------------------------------------------- */
@@ -226,8 +233,8 @@ footer {
 }
 .texto-roboto-hoteles {
   font-family: "Roboto", sans-serif;
-  font-size: 35px;
-  font-weight: 800;
+  font-size: 25px;
+  font-weight: 700;
 }
 .subtitulos-hoteles {
   font-family: "Roboto", sans-serif;

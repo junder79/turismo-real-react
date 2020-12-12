@@ -29,7 +29,7 @@ function App() {
     <DataProvider>
       <div  className="app">
 
-        {history.location.pathname === '/login' ? <Login></Login> : <Navbar />}
+        {history.location.pathname === '/' ?  window.location.href = "http://localhost:8001/inicio" : <Navbar />}
         <Router>
           <Switch>
 
@@ -38,14 +38,14 @@ function App() {
             <Route path='/admin/usuarios' component={GetUsuarios}> </Route>
             <Route path='/admin/departamentos' component={Departamentos}> </Route>
             <Route path='reservar' component={ReservaCliente}> </Route>
-            <Route path='tours/:id' component={DetalleReservaC}> </Route>
-            <Route path='inicio' component={InicioWebsite}> </Route>
-            <Route path='total' component={TotalReserva}> </Route>
-            <Route path='registro' component={Registro}> </Route>
-            <Route path='login' component={InicioSesion}> </Route>
-            <Route path='departamento/:id' component={DetalleDepartamento}> </Route>
-            <Route path='tours' component={ServicioExtraTour}> </Route>
-            <Route path='mireserva/:idreserva' component={DetalleViaje}> </Route>
+            <Route path='/tours/:id' component={DetalleReservaC}> </Route>
+            <Route path='/inicio' component={InicioWebsite}> </Route>
+            <Route path='/total' component={TotalReserva}> </Route>
+            <Route path='/registro' component={Registro}> </Route>
+            <Route path='/login' component={InicioSesion}> </Route>
+            <Route path='/departamento/:id' component={DetalleDepartamento}> </Route>
+            <Route path='/tours' component={ServicioExtraTour}> </Route>
+            <Route path='/mireserva/:idreserva' component={DetalleViaje}> </Route>
           </Switch>
         </Router>
 

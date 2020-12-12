@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Modal, Row, Card, Col, Form, Input, DatePicker, Button, Divider, Avatar } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { WhatsAppOutlined, FacebookFilled, InstagramFilled, CreditCardFilled, UpCircleTwoTone, CaretUpOutlined, CarryOutFilled, PicCenterOutlined, IdcardOutlined, CarFilled, StarFilled, RightOutlined, EnvironmentFilled, MailOutlined, GlobalOutlined, WifiOutlined, DesktopOutlined, RestOutlined, MobileOutlined } from '@ant-design/icons';
 import { useHistory, Link } from "react-router-dom";
 import { DataContext } from './context/reserva-context';
@@ -72,7 +72,7 @@ function InicioWebsite() {
 
         setVisible(true);
         setLugar(values.lugar);
-        setTitulo("Buscando en " + values.lugar);
+        setTitulo("Buscando en `" + values.lugar+"`");
         setSubtitulo('');
         setestadoBuscar(1);
         var fechaInicio = moment(values.fecha[0]).format("YYYY-MM-DD");
@@ -91,11 +91,11 @@ function InicioWebsite() {
             url: `http://localhost:3001/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
-            setTitulo("Resultado de " + lugar);
+            setTitulo("Departamentos en" + lugar);
             setVisible(false);
 
 
-            console.log("CANTIDAD FILAS" + res.data.length);
+          
             setestadoBuscar(2);
             setDepart(res.data);
 
@@ -119,57 +119,58 @@ function InicioWebsite() {
 
         <>
             <UpCircleTwoTone className="scrollTop" onClick={scrollTop} style={{ height: 40, display: showScroll ? 'flex' : 'none' }} />
-         
+
             <img style={{ marginLeft: '25%' }} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>
-            <Row style={{borderTopLeftRadius:'20px',borderTopRightRadius:'20px'}} className="banner centrar fondo-cuadro" >
-                {/* inicio probando fondo con video  */}
-                {/* <img src="https://cdn.dribbble.com/users/1355613/screenshots/10374363/media/0aeca8e7c535e3784a2d9a562a30acc6.jpg"  class="header-video "></img> */}
-                {/* fin probando fondo con video  */}
-
-                {/* <Card className="cuadro texto-roboto shadow negro" style={{ width: '75%', color: 'black' }} bordered={false} > */}
-                    {/* <h2>Alojamiento con Reserva Flexible</h2> */}
-                  
-                    
-                    {/* <p className="texto-roboto negro">Encuentra hoteles que puedes cancelar si tus planes cambian</p> */}
-
-                    <div className="row" styles="border: 1px solid black" >
-                        <Form
-
-                            name="basic"
-                            initialValues={{ remember: true }}
-                            onFinish={buscarDepart}
-
-                        >
-                            <div class="col-sm-12 col-md-12 " style={{ color: 'white' }}>
-
-                                <Form.Item label="Destino" label={<label className="titulo-buscar" style={{ color: "white" , fontSize:27}}>Lugar de Destino</label>} style={{ color: 'white',borderRadius: 25 }} name="lugar" className="ml-2" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Ingresa un Lugar de destino' }]}>
-                                    <Input placeholder="" style={{borderRadius: '10px'}}  />
-                                </Form.Item>
-
-                            </div>
-                            <div class="col-sm-12 col-md-12">
-                                <Form.Item name="fecha" label={<label className="titulo-buscar" style={{ color: "white" , fontSize:27}}>Entrada y Salida</label>}   wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2"  >
-                                    <RangePicker style={{borderRadius: '10px'}} />
-                                </Form.Item>
-                            </div>
-                            <div class="col-sm-12 col-md-4">
-
-                                <Form.Item >
-                                    <Button className="btnes texto-roboto" htmlType="submit">
-                                        Buscar
-                                    </Button>
-                                </Form.Item>
-                            </div>
-                        </Form>
+            <div className="jumbotron mr-4 ml-4 mt-2 shadow" style={{ borderRadius: '50px' }} >
+                <div className="row">
+                    <div className="col-md-4">
+                        <h5 style={{ color: 'white', fontWeight: 'bold' }} className="display-4" styles="text-shadow: 1px 1px 2px black;">Sientete un turista cerca de casa</h5>
                     </div>
-                {/* </Card> */}
+                    <div className="col-md-4">
 
-            </Row>
+                    </div>
+                    <div className="col-md-4">
 
-            <Row className="hot-pop " >
+                    </div>
+                </div>
+                <hr className="my-4"></hr>
+                <Form
+
+                    name="basic"
+                    initialValues={{ remember: true }}
+                    onFinish={buscarDepart}
+
+                >
+                    <div class="col-sm-6 col-md-6 " style={{ color: 'white' }}>
+
+                        <Form.Item label="Destino" labelCol={{ span: 24 }}
+                            label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Lugar de Destino  <FontAwesomeIcon  size="sm" icon={faMapMarkerAlt}></FontAwesomeIcon></label>} style={{ color: 'white', borderRadius: 25 }} name="lugar" className="ml-2" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Ingresa un Lugar de destino' }]}>
+                            <Input placeholder="" style={{ borderRadius: '10px' }} />
+                        </Form.Item>
+
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <Form.Item name="fecha" labelCol={{ span: 24 }} label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Entrada y Salida  <FontAwesomeIcon  size="sm" icon={faCalendarAlt}></FontAwesomeIcon></label>} wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2"  >
+                            <RangePicker style={{ borderRadius: '10px' }} />
+                        </Form.Item>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+
+                        <Form.Item >
+                            <Button className="btnes texto-roboto" htmlType="submit">
+                                Buscar
+        </Button>
+                        </Form.Item>
+                    </div>
+                </Form>
+
+            </div>
+
+
+            < Row className="hot-pop " >
                 <div id="hoteles" className="container">
 
-                    <h3 className="texto-roboto-hoteles " style={{ marginTop: 10 }}>{titulo}</h3>
+                    <h3 className="texto-roboto-hoteles " style={{ marginTop: 10  }}>{titulo}</h3>
                     <p className="subtitulos-popular">
                         {subtitulo}
                     </p>
@@ -284,7 +285,7 @@ function InicioWebsite() {
                     </center>
 
                 </div>
-            </Row>
+            </Row >
             <Row className="hot-pop " >
                 <div id="hoteles" className="container">
                     <center>
