@@ -309,7 +309,7 @@ footer {
 }
 
 .jumbotron {
-  background-image: url("https://cdn.dribbble.com/users/3198880/screenshots/13803872/media/07cf2431ac7e4040a68ff223bca856ac.jpg");
+  background-image: url(/img/paisaje.jpg);
   background-size: cover;
 
 }
