@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, Card, Avatar } from 'antd';
+import { Button, Card, Avatar,Result } from 'antd';
 import { useHistory } from "react-router-dom";
 import { DataContext } from '../context/reserva-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,7 +9,8 @@ import Cookies from 'universal-cookie';
 import ModalAgregarTransporte from '../modal/modalTransporte';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
+import UseAnimations from 'react-useanimations';
+import alertCircle from 'react-useanimations/lib/alertCircle'
 function ServicioExtraTransporte() {
     const history = useHistory();
     const cookies = new Cookies();
@@ -118,13 +119,18 @@ function ServicioExtraTransporte() {
                                     <Card
                                         className="ml-4 mr-4 mb-4 mt-4 shadow "
                                         hoverable
-                                      
+
                                         style={{ borderRadius: 30 }}
-                                        cover={<img alt="example" style={{ borderRadius: 30 }} src="https://www.flaticon.com/svg/static/icons/svg/1329/1329663.svg" />}
+
                                     >
 
-                                       <span className="texto-no-disponible">Ups! no tenemos servicios disponibles</span>
-                                    </Card> :
+                                        <Result
+                                            icon={<div className="d-flex justify-content-center"><UseAnimations strokeColor={'#512da8'} animation={alertCircle} size={120}></UseAnimations></div>}
+                                            title=""
+                                            extra={<span className="texto-no-disponible">Ups! no tenemos servicios disponibles en la ubicación deseada.</span>}
+                                        />
+                                    </Card>
+                                    :
                                     <Carousel responsive={responsive}>
                                         {
                                             mapTransporte.map((elemento, i) => (

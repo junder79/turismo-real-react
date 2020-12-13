@@ -73,7 +73,7 @@ function DetalleReservaC() {
         cookies.set('estadoTour', 1, { path: '/' });
         cookies.set('tourId', idTour, { path: '/' });
         cookies.set('lugarTour', lugarTour, { path: '/' });
-        let path = 'detalleTransporte';
+        let path = '/detalleTransporte';
         history.push(path);
     }
     return (

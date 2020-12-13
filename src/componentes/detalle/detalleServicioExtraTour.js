@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Card, Avatar } from 'antd';
+import { Button, Card, Avatar, Result } from 'antd';
 import { useHistory, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt, faDollarSign, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +7,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import UseAnimations from 'react-useanimations';
+import alertCircle from 'react-useanimations/lib/alertCircle'
 const { Meta } = Card;
 function ServicioExtraTour() {
     const history = useHistory();
@@ -50,7 +52,7 @@ function ServicioExtraTour() {
             setCantidadFilas(res.data.length);
             if (res.data.length > 0) {
                 setMapTour(res.data);
-               
+
             }
 
         }).catch(err => {
@@ -95,11 +97,17 @@ function ServicioExtraTour() {
                                         hoverable
 
                                         style={{ borderRadius: 30 }}
-                                        cover={<img alt="example" style={{ borderRadius: 30 }} src="https://www.flaticon.com/svg/static/icons/svg/1329/1329663.svg" />}
+
                                     >
 
-                                        <span className="texto-no-disponible">Ups! no tenemos servicios disponibles</span>
-                                    </Card> :
+                                        <Result
+                                            icon={<div className="d-flex justify-content-center"><UseAnimations strokeColor={'#512da8'} animation={alertCircle} size={120}></UseAnimations></div>}
+                                            title=""
+                                            extra={<span className="texto-no-disponible">Ups! no tenemos servicios disponibles en la ubicación deseada.</span>}
+                                        />
+                                    </Card>
+
+                                    :
                                     <Carousel responsive={responsive}>
                                         {
                                             mapTour.map((elemento, i) => (

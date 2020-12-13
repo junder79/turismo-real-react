@@ -95,7 +95,7 @@ function DetalleDepartamento() {
             .then((willDelete) => {
                 if (willDelete) {
                     console.log("estado" + estadoInicioS);
-                    if (estadoInicioS === 'false') {
+                    if (estadoInicioS === 'false' || estadoInicioS == undefined) {
                         notification.open({
                             message: 'Inicio de Sesión',
                             description:

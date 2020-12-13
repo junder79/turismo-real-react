@@ -72,7 +72,7 @@ function InicioWebsite() {
 
         setVisible(true);
         setLugar(values.lugar);
-        setTitulo("Buscando en `" + values.lugar+"`");
+        setTitulo("Buscando en `" + values.lugar + "`");
         setSubtitulo('');
         setestadoBuscar(1);
         var fechaInicio = moment(values.fecha[0]).format("YYYY-MM-DD");
@@ -95,7 +95,7 @@ function InicioWebsite() {
             setVisible(false);
 
 
-          
+
             setestadoBuscar(2);
             setDepart(res.data);
 
@@ -120,7 +120,7 @@ function InicioWebsite() {
         <>
             <UpCircleTwoTone className="scrollTop" onClick={scrollTop} style={{ height: 40, display: showScroll ? 'flex' : 'none' }} />
 
-            <img style={{ marginLeft: '25%' }} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>
+            {/* <img style={{ marginLeft: '25%' }} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> */}
             <div className="jumbotron mr-4 ml-4 mt-2 shadow" style={{ borderRadius: '50px' }} >
                 <div className="row">
                     <div className="col-md-4">
@@ -144,13 +144,13 @@ function InicioWebsite() {
                     <div class="col-sm-6 col-md-6 " style={{ color: 'white' }}>
 
                         <Form.Item label="Destino" labelCol={{ span: 24 }}
-                            label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Lugar de Destino  <FontAwesomeIcon  size="sm" icon={faMapMarkerAlt}></FontAwesomeIcon></label>} style={{ color: 'white', borderRadius: 25 }} name="lugar" className="ml-2" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Ingresa un Lugar de destino' }]}>
+                            label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Lugar de Destino  <FontAwesomeIcon size="sm" icon={faMapMarkerAlt}></FontAwesomeIcon></label>} style={{ color: 'white', borderRadius: 25 }} name="lugar" className="ml-2" wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Ingresa un Lugar de destino' }]}>
                             <Input placeholder="" style={{ borderRadius: '10px' }} />
                         </Form.Item>
 
                     </div>
                     <div class="col-sm-6 col-md-6">
-                        <Form.Item name="fecha" labelCol={{ span: 24 }} label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Entrada y Salida  <FontAwesomeIcon  size="sm" icon={faCalendarAlt}></FontAwesomeIcon></label>} wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2"  >
+                        <Form.Item name="fecha" labelCol={{ span: 24 }} label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Entrada y Salida  <FontAwesomeIcon size="sm" icon={faCalendarAlt}></FontAwesomeIcon></label>} wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2"  >
                             <RangePicker style={{ borderRadius: '10px' }} />
                         </Form.Item>
                     </div>
@@ -170,7 +170,7 @@ function InicioWebsite() {
             < Row className="hot-pop " >
                 <div id="hoteles" className="container">
 
-                    <h3 className="texto-roboto-hoteles " style={{ marginTop: 10  }}>{titulo}</h3>
+                    <h3 className="texto-roboto-hoteles " style={{ marginTop: 10 }}>{titulo}</h3>
                     <p className="subtitulos-popular">
                         {subtitulo}
                     </p>
@@ -249,35 +249,44 @@ function InicioWebsite() {
                                                 Ver más <RightOutlined /></Button>
                                         </Card>
                                     </Carousel> :
-                                    <Carousel responsive={responsive} className="mb-2 mt-2">
+                                    <>
                                         {
 
                                             cantF > 0 ?
-                                                departamento.map((elemento, i) => (
+                                                <Carousel responsive={responsive} className="mb-2 mt-2">
+
+                                                    {
+                                                        departamento.map((elemento, i) => (
 
 
-                                                    <Card
-                                                        key={elemento.IDDEPARTAMENTO}
-                                                        hoverable
-                                                        style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                                        className="shadow"
-                                                        cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.RUTAIMAGEN} />}
-                                                    >
-                                                        <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                                        <Meta title={elemento.NOMBRED} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
-                                                        <Button style={{ marginTop: 10, }} type="primary" shape="round" >
-                                                            <Link style={{ color: 'white' }} to={"departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
-                                                    </Card>
+                                                            <Card
+                                                                key={elemento.IDDEPARTAMENTO}
+                                                                hoverable
+                                                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                                                className="shadow"
+                                                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.RUTAIMAGEN} />}
+                                                            >
+                                                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                                                <Meta title={elemento.NOMBRED} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
+                                                                <Button style={{ marginTop: 10, }} type="primary" shape="round" >
+                                                                    <Link style={{ color: 'white' }} to={"departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
+                                                            </Card>
 
-                                                )) :
+                                                        ))
+                                                    }
+                                                </Carousel>
+                                                :
 
-                                                <div className="d-flex justify-content-center">
-                                                    <UseAnimations strokeColor={'#512da8'} animation={alertOctagon} size={80}></UseAnimations>
-                                                </div>
+                                                <center>
+                                                    <div className="d-flex justify-content-center">
+                                                        <UseAnimations strokeColor={'#512da8'} animation={alertOctagon} size={80}></UseAnimations>
+                                                    </div>
 
+                                                </center>
 
                                         }
-                                    </Carousel>
+                                    </>
+
 
                         }
 

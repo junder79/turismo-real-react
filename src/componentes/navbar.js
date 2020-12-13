@@ -1,4 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    NavbarText
+} from 'reactstrap';
 import { DatePicker } from 'antd';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import GetUsuarios from './data';
@@ -34,47 +48,57 @@ import DetalleViaje from './detalle/detalleViaje';
 
 import Cookies from 'universal-cookie';
 const { SubMenu } = Menu;
-function Navbar() {
+function BarraNavegacion() {
 
     const cookies = new Cookies();
     const estadoLogin = cookies.get('estadoSesion');
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
     return (
         <Router >
-            
-            <Menu mode="horizontal" styles=" background-color: transparent !important;">
 
-                <img className="logoimg" src="/img/turismoreal-logo.png" width="5%" height="40%"></img> 
-                <Menu.Item key="inicio" icon={<FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>}>
-                    <Link to="inicio" >Inicio</Link>
-                </Menu.Item>
-                {
-                    estadoLogin == "true" ?
-                        <>
-                            <Menu.Item key="micuenta" icon={<FontAwesomeIcon icon={faUserCircle} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="micuenta" >Mi Cuenta</Link>
-                            </Menu.Item>
+            <Navbar color="light" light expand="md" style={{borderRadius:'30'}}>
+                <a class="navbar-brand" href="#">
+                    <img src="/img/turismoreal-logo.png" width="60" height="40" class="d-inline-block align-top" alt="" loading="lazy"></img>
+                </a>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <Link to={"inicio"} className="nav-link">
+                                <FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>
+                                Inicio
+              </Link>
+                        </NavItem>
+                        {
+                            estadoLogin == "true" ?
+                                <>
+                                    <NavItem>
+                                        <Link to={"micuenta"} className="nav-link" ><FontAwesomeIcon icon={faUserCircle} className="mr-2"></FontAwesomeIcon> Mi Cuenta</Link>
+                                    </NavItem>
 
-                            <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="viajes" >Mis Reservas</Link>
-                            </Menu.Item>
-                            <Menu.Item key="cerrar" icon={<FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon>}>
-                                <Link to="cerrar" >Cerrar Sesión</Link>
-                            </Menu.Item>
-                        </>
-                        : <Menu.Item key="inicioSesion" icon={<FontAwesomeIcon icon={faSignInAlt} className="mr-2"></FontAwesomeIcon>}>
-                            <Link to="login">Iniciar Sesión</Link>
-                        </Menu.Item>
-                }
+                                    <NavItem>
+                                        <Link to={"viajes"} className="nav-link" ><FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon> Mis Reservas</Link>
+                                    </NavItem>
+                                </>
+                                : null
+                        }
 
-                {/* {
-                    estadoLogin == "true" ?
-                        <Menu.Item key="departamento" icon={<FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon>}>
-                            <Link to="viajes" >Mis Viajes</Link>
-                        </Menu.Item> : null
-                } */}
+                    </Nav>
+                    {
+                        estadoLogin == "true" ?
+                            <>
+                                <NavbarText>  <Link to="cerrar" ><FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon> Cerrar Sesión</Link></NavbarText>
+                            </>
+                            :
+                            <NavbarText>  <Link to="login" ><FontAwesomeIcon icon={faSignInAlt} className="mr-2"></FontAwesomeIcon>Iniciar Sesión </Link></NavbarText>
+                    }
 
-            </Menu>
-           
+                </Collapse>
+            </Navbar>
+
             <Switch>
                 <Route path="/admin/inicio" >
                     <Inicio></Inicio>
@@ -146,4 +170,4 @@ function Navbar() {
 
 }
 
-export default Navbar;
+export default BarraNavegacion;

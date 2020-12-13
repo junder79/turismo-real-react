@@ -64,10 +64,10 @@ function InicioSesion() {
     return (
         <div className="container" style={{}}>
 
-                <img style={{marginLeft: '25%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img> 
-            <div className="row flex justify-content-center ci ">
+                {/* <img style={{marginLeft: '25%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>  */}
+            <div className="row flex justify-content-center mt-4 ">
                 
-                <Card style={{ borderRadius: 20}} className="">
+                <Card style={{ borderRadius: 20}} className="shadow">
 
                 <h1 className="titulo-componentes justify-content-center">Inicio Sesión</h1>
                     <Form
