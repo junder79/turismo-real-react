@@ -67,7 +67,7 @@ function BarraNavegacion() {
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
-                            <Link to={"inicio"} className="nav-link">
+                            <Link to={"/inicio"} className="nav-link">
                                 <FontAwesomeIcon icon={faHome} className="mr-2"></FontAwesomeIcon>
                                 Inicio
               </Link>

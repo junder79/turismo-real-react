@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Descriptions, Card, Avatar, Row, Col, notification } from 'antd';
+import { Button, Descriptions, Card, Avatar, Row, message, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWifi, faBed, faTv, faThermometerFull,faChair, faFan , faMapMarkerAlt, faSink , faArrowLeft,faCalendarCheck} from "@fortawesome/free-solid-svg-icons";
+import { faWifi, faBed, faTv, faThermometerFull, faChair, faFan, faMapMarkerAlt, faSink, faArrowLeft, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 import { useHistory, useParams } from "react-router-dom";
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -20,11 +20,13 @@ function DetalleDepartamento() {
     cookies.set('idComuna', params.comuna, { path: '/' });
     const estadoInicioS = cookies.get('estadoSesion');
     const idDepartamento = cookies.get('idDepart');
+    const checkIn = cookies.get('checkIn');
+    const checkOut = cookies.get('checkOut');
     const idRegion = 16;
 
 
     const history = useHistory();
-    const { setRegion, checkOut, checkIn, cantDia } = useContext(DataContext);
+    const { setRegion, cantDia } = useContext(DataContext);
     const [detalleDepartImages, setDetalleDepartamentoImages] = useState([]);
     const [detalleDepart, setDetalleDepartamento] = useState([]);
     const [detalleDepartAcondicionado, setDetalleDepartamentoAcondicionado] = useState([]);
@@ -85,39 +87,66 @@ function DetalleDepartamento() {
     }
 
     const agendarReserva = () => {
-        swal({
-            title: "¿Deseas realizar la reserva?",
-            text: "",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    console.log("estado" + estadoInicioS);
-                    if (estadoInicioS === 'false' || estadoInicioS == undefined) {
-                        notification.open({
-                            message: 'Inicio de Sesión',
-                            description:
-                                'Para poder agendar, deberás acceder con tu cuenta.',
-                            icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-                        });
-                        let path = '/login';
-                        history.push(path);
 
-                    } else {
-                        let path = '/tours';
-                        history.push(path);
+        const hide = message.loading('Verificando Disponibilidad del Departamento', 0);
+        // Dismiss manually and asynchronously
+        setTimeout(hide, 2500);
 
-                    }
+        const formData = new FormData();
+        // Datos del departamento
+        formData.append("fecha_inicio", checkIn);
+        formData.append("fecha_termino", checkOut);
+        formData.append("id_departamento", idDepartamento);
+        axios.post('http://localhost:3001/api/disponibilidaddepartamento', formData)
+            .then(response => {
+                if (response.data.length > 0) {
+                    notification.open({
+                        message: 'Departamento no disponible',
+                        description:
+                            'Porfavor elige otra fecha de entrada y salida.',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
                 } else {
+                    swal({
+                        title: "¿Deseas realizar la reserva?",
+                        text: "",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                console.log("estado" + estadoInicioS);
+                                if (estadoInicioS === 'false' || estadoInicioS == undefined) {
+                                    notification.open({
+                                        message: 'Inicio de Sesión',
+                                        description:
+                                            'Para poder agendar, deberás acceder con tu cuenta.',
+                                        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+                                    });
+                                    let path = '/login';
+                                    history.push(path);
 
-                    let path = '/inicio';
-                    history.push(path);
+                                } else {
+                                    let path = '/tours';
+                                    history.push(path);
+
+                                }
+                            } else {
+
+                                // let path = '/inicio';
+                                // history.push(path);
 
 
+                            }
+                        });
                 }
-            });
+
+            })
+            .catch(err => console.warn(err));
+
 
     }
     const goBack = () => {
@@ -131,7 +160,7 @@ function DetalleDepartamento() {
                     <div className="col-12 col-sm-12 col-md-6 mt-2">
                         {
                             !estadoCargado ?
-                                <Card style={{ width: '100%', marginTop: 16 , borderRadius:30 }} loading={true}>
+                                <Card style={{ width: '100%', marginTop: 16, borderRadius: 30 }} loading={true}>
                                     <Meta
                                         avatar={
                                             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -168,17 +197,17 @@ function DetalleDepartamento() {
                                             <div className="row">
                                                 {
                                                     detalleDepartAcondicionado.map((elemento, i) => (
-                                                       
+
                                                         <div className="col-4 text-center mb-1 mt-1">
                                                             {
 
 
-                                                                elemento.NOMBREACONDI == 'Internet' ? <FontAwesomeIcon  size="lg" className="shadow rounded" style={{ color: '#311b92'}} icon={faWifi} ></FontAwesomeIcon>
-                                                                    : elemento.NOMBREACONDI == 'Cable' ? <FontAwesomeIcon  size="lg" className="shadow rounded" style={{ color: '#311b92'}} icon={faTv} ></FontAwesomeIcon>
-                                                                    : elemento.NOMBREACONDI == 'Calefaccion' ? <FontAwesomeIcon size="lg" className="shadow rounded"  style={{ color: '#311b92'}} icon={faThermometerFull} ></FontAwesomeIcon>
-                                                                    : elemento.NOMBREACONDI == 'Amoblado' ? <FontAwesomeIcon size="lg" className="shadow rounded"  style={{ color: '#311b92'}} icon={faChair} ></FontAwesomeIcon>
-                                                                    : elemento.NOMBREACONDI == 'Aire Acondicionado' ? <FontAwesomeIcon size="lg" className="shadow rounded"  style={{ color: '#311b92'}} icon={faFan} ></FontAwesomeIcon>
-                                                                        : elemento.NOMBREACONDI
+                                                                elemento.NOMBREACONDI == 'Internet' ? <FontAwesomeIcon size="lg" className="shadow rounded" style={{ color: '#311b92' }} icon={faWifi} ></FontAwesomeIcon>
+                                                                    : elemento.NOMBREACONDI == 'Cable' ? <FontAwesomeIcon size="lg" className="shadow rounded" style={{ color: '#311b92' }} icon={faTv} ></FontAwesomeIcon>
+                                                                        : elemento.NOMBREACONDI == 'Calefaccion' ? <FontAwesomeIcon size="lg" className="shadow rounded" style={{ color: '#311b92' }} icon={faThermometerFull} ></FontAwesomeIcon>
+                                                                            : elemento.NOMBREACONDI == 'Amoblado' ? <FontAwesomeIcon size="lg" className="shadow rounded" style={{ color: '#311b92' }} icon={faChair} ></FontAwesomeIcon>
+                                                                                : elemento.NOMBREACONDI == 'Aire Acondicionado' ? <FontAwesomeIcon size="lg" className="shadow rounded" style={{ color: '#311b92' }} icon={faFan} ></FontAwesomeIcon>
+                                                                                    : elemento.NOMBREACONDI
                                                             }
                                                         </div>
 
@@ -202,7 +231,7 @@ function DetalleDepartamento() {
                                         <hr></hr>
                                         <Row>
                                             <span className="texto-calistoga"> <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" ></FontAwesomeIcon>Lugar: </span><br></br>
-                                           
+
                                             <strong>{elemento.DIRECCIOND}</strong>
                                         </Row>
                                         <hr></hr>
@@ -214,7 +243,7 @@ function DetalleDepartamento() {
                                 ))
                             }
 
-                            <Button style={{ backgroundColor: '#311b92', color: 'white' }} onClick={agendarReserva} className="mt-2" shape="round" icon={<FontAwesomeIcon className="mr-2" icon={faCalendarCheck}></FontAwesomeIcon>}  size={'large'}>
+                            <Button style={{ backgroundColor: '#311b92', color: 'white' }} onClick={agendarReserva} className="mt-2" shape="round" icon={<FontAwesomeIcon className="mr-2" icon={faCalendarCheck}></FontAwesomeIcon>} size={'large'}>
                                 Reservar Ahora
 </Button>
                             <Button style={{ backgroundColor: '#311b92', color: 'white' }} onClick={goBack} className="mt-2" shape="round" icon={<FontAwesomeIcon className="mr-2" icon={faArrowLeft}></FontAwesomeIcon>} size={'large'}>
