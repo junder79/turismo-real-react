@@ -1,8 +1,10 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { Form, Input, InputNumber, Button, Card } from 'antd';
 import axios from 'axios';
 import swal from 'sweetalert2'
 import { useHistory } from "react-router-dom";
+import UseAnimations from 'react-useanimations';
+import loading from 'react-useanimations/lib/loading'
 const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -20,9 +22,10 @@ const validateMessages = {
 };
 function Registro() {
     const history = useHistory();
+    const [cargado, setCargado] = useState(false);
     const onFinish = values => {
 
-
+        setCargado(true);
         // Enviar Peticion POST a Registrar
         const formData = new FormData()
         formData.append("rut", values.rut);
@@ -34,7 +37,7 @@ function Registro() {
         axios.post('http://localhost:3001/api/agregarCliente', formData)
             .then(response => {
                 console.log(response);
-
+                setCargado(false);
                 var respuestaServidor = response.data;
                 if (respuestaServidor == 1) {
                     swal.fire({
@@ -106,13 +109,17 @@ function Registro() {
 
                             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                                 <Button size={'large'} style={{ backgroundColor: '#461CE2', color: 'white' }} shape="round" htmlType="submit">
-                                    Regístrate
+                                {
+                                            cargado ?
+                                                <UseAnimations strokeColor={'white'} animation={loading} size={35}></UseAnimations> :
+                                                <span>Regístrate</span>
+                                        }
         </Button>
                             </Form.Item>
                         </Form>
                     </div>
                     <div className="col-sm-6">
-                        <img style={{borderRadius:'40px'}} className="img-fluid" src="https://cdn.dribbble.com/users/3874322/screenshots/7080986/clip-04-02_4x.png"></img>
+                        <img style={{ borderRadius: '40px' }} className="img-fluid" src="https://cdn.dribbble.com/users/3874322/screenshots/7080986/clip-04-02_4x.png"></img>
                     </div>
                 </div>
             </Card>

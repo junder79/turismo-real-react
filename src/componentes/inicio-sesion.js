@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Card, Row } from 'antd';
 import axios from 'axios';
 import swal from 'sweetalert2'
 import { useHistory, Link } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import UseAnimations from 'react-useanimations';
+import loading from 'react-useanimations/lib/loading'
+
 function InicioSesion() {
     const history = useHistory();
     const cookies = new Cookies();
-
+    const [cargado, setCargado] = useState(false);
     const onFinish = values => {
-        
+        setCargado(true);
         const formData = new FormData()
         formData.append("correo", values.correo);
         formData.append("contrasena", values.password);
 
         axios.post('http://localhost:3001/api/validarUsuario', formData)
             .then(response => {
+                setCargado(false);
                 // Guardo la respuesta del parametro de salida del sp
                 let respuestaServidor = response.data.p_out;
                 let idUsuario = response.data.p_out_id;
@@ -28,7 +32,7 @@ function InicioSesion() {
                 let email = response.data.p_out_email;
                 if (respuestaServidor === "1") {
                     console.log("Usuario Encontrado");
-                   
+
                     // Se crea las cookies con el id del usuario
                     let estadoSesion = true;
                     cookies.set('idUsuario', idUsuario, { path: '/' });
@@ -43,6 +47,7 @@ function InicioSesion() {
                     let path = 'inicio';
                     // history.push(path);
                     window.location.href = "inicio";
+
                 } else {
                     console.log("No pudimos encontrar una cuenta");
 
@@ -64,12 +69,12 @@ function InicioSesion() {
     return (
         <div className="container" style={{}}>
 
-                {/* <img style={{marginLeft: '25%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>  */}
+            {/* <img style={{marginLeft: '25%'}} className="logotr" src="/img/turismoreal-logo.png" width="50%" height="100%"></img>  */}
             <div className="row flex justify-content-center mt-4 ">
-                
-                <Card style={{ borderRadius: 20}} className="shadow">
 
-                <h1 className="titulo-componentes justify-content-center">Inicio Sesión</h1>
+                <Card style={{ borderRadius: 20 }} className="shadow">
+
+                    <h1 className="titulo-componentes justify-content-center">Inicio Sesión</h1>
                     <Form
 
                         name="basic"
@@ -102,8 +107,13 @@ function InicioSesion() {
                         <div className="row flex  text-center ">
                             <div className="col-12">
                                 <Form.Item >
-                                    <Button className="titulo-registrate btnes"  size={'large'} shape="round" htmlType="submit">
-                                        Ingresar </Button>
+                                    <Button className="titulo-registrate btnes" size={'large'} shape="round" htmlType="submit">
+                                        {
+                                            cargado ?
+                                                <UseAnimations strokeColor={'#512da8'} animation={loading} size={35}></UseAnimations> :
+                                                <span>Ingresar</span>
+                                        }
+                                    </Button>
 
                                 </Form.Item>
                             </div>

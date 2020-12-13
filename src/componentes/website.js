@@ -98,7 +98,7 @@ function InicioWebsite() {
             url: `http://localhost:3001/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
-            setTitulo("Departamentos en" + lugar);
+            setTitulo("Departamentos en " + lugar);
             setVisible(false);
 
 

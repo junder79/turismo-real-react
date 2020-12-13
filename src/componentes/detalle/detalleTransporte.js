@@ -70,8 +70,9 @@ function ServicioExtraTransporte() {
 
     const redireccionTotal = (idVehiculo) => {
         setTransporteSeleccionado(idVehiculo);
-        let path = 'total';
-        history.push(path);
+        // let path = '/total';
+        // history.push(path);
+        window.location.href = "/total";
     }
 
     const [estadoModalTransp, setEstadoModalTran] = useState(false);
@@ -81,7 +82,7 @@ function ServicioExtraTransporte() {
     };
     const omitir = () => {
         cookies.set('estadoTransporte', 0, { path: '/' });
-        history.push('total');
+        history.push('/total');
     }
     return (
         <div className="container">

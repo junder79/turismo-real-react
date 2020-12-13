@@ -243,7 +243,7 @@ function DetalleViaje() {
                                     <input name="idReserva" type="hidden" value={idReserva} />
                                     <input name="motivo" type="hidden" value="Check-In" />
                         
-                                    <input type="primary" shape="round" className="mt-2 text-center btn-primary btn" size={'large'} type="submit"  value="Pagar" />
+                                    <input type="primary" shape="round" className="mt-2 text-center btn-primary btn" size={'large'} type="submit"  value={"Check In a Pagar: $" + valorRestante} />
 
                   
                                        </form>

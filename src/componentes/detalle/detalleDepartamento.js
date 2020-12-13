@@ -136,8 +136,7 @@ function DetalleDepartamento() {
                                 }
                             } else {
 
-                                // let path = '/inicio';
-                                // history.push(path);
+                           
 
 
                             }
