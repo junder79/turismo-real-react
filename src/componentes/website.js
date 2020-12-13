@@ -13,7 +13,9 @@ import axios from 'axios';
 import UseAnimations from 'react-useanimations';
 import infinity from 'react-useanimations/lib/infinity'
 import alertOctagon from 'react-useanimations/lib/alertOctagon'
-
+import { enUS, es } from 'date-fns/locale'
+import { DateRangePicker, START_DATE, END_DATE } from 'react-nice-dates'
+import 'react-nice-dates/build/style.css'
 const { Header, Content, Footer } = Layout;
 function InicioWebsite() {
     const cookies = new Cookies();
@@ -26,6 +28,9 @@ function InicioWebsite() {
     const [visible, setVisible] = useState(false);
     const [cantF, setCantF] = useState('');
     const [lugar, setLugar] = useState('');
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate] = useState()
+    const [btnBuscarDepart, setBtnBuscarDepart] = useState(true);
     const { Meta } = Card;
     const history = useHistory();
     const responsive = {
@@ -73,11 +78,13 @@ function InicioWebsite() {
         setVisible(true);
         setLugar(values.lugar);
         setTitulo("Buscando en `" + values.lugar + "`");
+       
         setSubtitulo('');
         setestadoBuscar(1);
-        var fechaInicio = moment(values.fecha[0]).format("YYYY-MM-DD");
+        var fechaInicio = moment(startDate).format("YYYY-MM-DD");
 
-        var fechaTermino = moment(values.fecha[1]).format("YYYY-MM-DD");
+        var fechaTermino = moment(endDate).format("YYYY-MM-DD");
+        console.log("FECHAS INICIO " + fechaInicio + "salida " + fechaTermino);
         cookies.set('checkIn', fechaInicio, { path: '/' });
         cookies.set('checkOut', fechaTermino, { path: '/' });
         cookies.set('cantD', getDaysDiff(fechaInicio, fechaTermino), { path: '/' });
@@ -115,6 +122,10 @@ function InicioWebsite() {
     }
 
     window.addEventListener('scroll', checkScrollTop)
+    const cambioFecha = (value) => {
+        setStartDate(value);
+        setBtnBuscarDepart(false);
+    }
     return (
 
         <>
@@ -150,14 +161,47 @@ function InicioWebsite() {
 
                     </div>
                     <div class="col-sm-6 col-md-6">
-                        <Form.Item name="fecha" labelCol={{ span: 24 }} label={<label className="titulo-buscar" style={{ color: "white", fontSize: 27 }}>Entrada y Salida  <FontAwesomeIcon size="sm" icon={faCalendarAlt}></FontAwesomeIcon></label>} wrapperCol={{ span: 24 }} rules={[{ required: true, message: 'Selecciona el rango de fecha' }]} className="ml-2"  >
-                            <RangePicker style={{ borderRadius: '10px' }} />
-                        </Form.Item>
+                        <DateRangePicker
+                            startDate={startDate}
+                            endDate={endDate}
+                            onStartDateChange={cambioFecha}
+                            onEndDateChange={setEndDate}
+                            minimumDate={new Date()}
+                            minimumLength={1}
+                            locale={es}
+                            format='dd/MM/yyyy'
+                        >
+                            {({ startDateInputProps, endDateInputProps, focus }) => (
+                                <div className='date-range row'>
+                                    <div className="col-sm-12 col-md-6" >
+                                    <label className="titulo-buscar" form="llegada" style={{ color: "white", fontSize: 27 }}>Llegada</label>
+                                        <input
+                                            className={'input form-control mt-2' + (focus === START_DATE ? ' -focused' : '')}
+                                            {...startDateInputProps}
+                                            placeholder='Agregar Fechas'
+                                            style={{ borderRadius: '10px' }}
+                                            id="llegada"
+                                        />
+                                    </div>
+                                    <span className='date-range_arrow' />
+                                    <div className="col-sm-12 col-md-6">
+                                    <label className="titulo-buscar" form="salida" style={{ color: "white", fontSize: 27 }}>Salida</label>
+                                        <input
+                                            className={'input form-control mt-2' + (focus === END_DATE ? ' -focused' : '')}
+                                            {...endDateInputProps}
+                                            placeholder='Agregar Fechas'
+                                            style={{ borderRadius: '10px' }}
+                                            id="salida"
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </DateRangePicker>
                     </div>
                     <div class="col-sm-12 col-md-4">
 
                         <Form.Item >
-                            <Button className="btnes texto-roboto" htmlType="submit">
+                            <Button disabled={btnBuscarDepart}  className="btnes texto-roboto mt-2" htmlType="submit">
                                 Buscar
         </Button>
                         </Form.Item>
