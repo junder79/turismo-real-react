@@ -313,3 +313,10 @@ footer {
   background-size: cover;
 
 }
+.shadow-mensaje{
+
+  text-shadow: 1px 1px 1px  black; 
+}
+.border-right {
+  border-right: 1px solid black;
+}

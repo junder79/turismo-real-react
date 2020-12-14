@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Modal, Row, Card, Col, Form, Input, DatePicker, Button, Divider, Avatar } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +33,10 @@ function InicioWebsite() {
     const [btnBuscarDepart, setBtnBuscarDepart] = useState(true);
     const { Meta } = Card;
     const history = useHistory();
+    useEffect(() => {
+        getLugaresPopulares();
+        getToursPopulares();
+    }, [])
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -65,7 +69,34 @@ function InicioWebsite() {
     const scrollTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-
+    const [departPopular, setDepartPopular] = useState([]);
+    const [dataDepart, setDataDepart] = useState(false);
+    const getLugaresPopulares = () => {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:3001/api/websiteinicial'
+        }).then(res => {
+            console.log(res);
+            setDepartPopular(res.data);
+            setDataDepart(true);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    const [tourPopular, setTourPopular] = useState([]);
+    const [dataTour, setDataTour] = useState(false);
+    const getToursPopulares = () => {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:3001/api/toursinicial/'
+        }).then(res => {
+            console.log(res);
+            setTourPopular(res.data);
+            setDataTour(true);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
     const buscarDepart = values => {
 
         const getDaysDiff = (start_date, end_date, date_format = 'YYYY-MM-DD') => {
@@ -78,7 +109,7 @@ function InicioWebsite() {
         setVisible(true);
         setLugar(values.lugar);
         setTitulo("Buscando en `" + values.lugar + "`");
-       
+
         setSubtitulo('');
         setestadoBuscar(1);
         var fechaInicio = moment(startDate).format("YYYY-MM-DD");
@@ -135,7 +166,7 @@ function InicioWebsite() {
             <div className="jumbotron mr-4 ml-4 mt-2 shadow" style={{ borderRadius: '50px' }} >
                 <div className="row">
                     <div className="col-md-4">
-                        <h5 style={{ color: 'white', fontWeight: 'bold' }} className="display-4" styles="text-shadow: 1px 1px 2px black;">Sientete un turista cerca de casa</h5>
+                        <h5 style={{ color: 'white', fontWeight: 'bold', }} className="display-4 shadow-mensaje" >Siéntete un turista cerca de casa</h5>
                     </div>
                     <div className="col-md-4">
 
@@ -172,9 +203,9 @@ function InicioWebsite() {
                             format='dd/MM/yyyy'
                         >
                             {({ startDateInputProps, endDateInputProps, focus }) => (
-                                <div className='date-range row'>
-                                    <div className="col-sm-12 col-md-6" >
-                                    <label className="titulo-buscar" form="llegada" style={{ color: "white", fontSize: 27 }}>Llegada</label>
+                                <div className='date-range row ' style={{ marginLeft: '0.2px' }}>
+                                    <div className="col-sm-12 col-md-6 " >
+                                        <label className="titulo-buscar" form="llegada" style={{ color: "white", fontSize: 27 }}>Llegada</label>
                                         <input
                                             className={'input form-control mt-2' + (focus === START_DATE ? ' -focused' : '')}
                                             {...startDateInputProps}
@@ -185,7 +216,7 @@ function InicioWebsite() {
                                     </div>
                                     <span className='date-range_arrow' />
                                     <div className="col-sm-12 col-md-6">
-                                    <label className="titulo-buscar" form="salida" style={{ color: "white", fontSize: 27 }}>Salida</label>
+                                        <label className="titulo-buscar" form="salida" style={{ color: "white", fontSize: 27 }}>Salida</label>
                                         <input
                                             className={'input form-control mt-2' + (focus === END_DATE ? ' -focused' : '')}
                                             {...endDateInputProps}
@@ -201,7 +232,7 @@ function InicioWebsite() {
                     <div class="col-sm-12 col-md-4">
 
                         <Form.Item >
-                            <Button disabled={btnBuscarDepart}  className="btnes texto-roboto mt-2" htmlType="submit">
+                            <Button disabled={btnBuscarDepart} className="btnes texto-roboto mt-2 ml-2" htmlType="submit">
                                 Buscar
         </Button>
                         </Form.Item>
@@ -224,75 +255,30 @@ function InicioWebsite() {
                             estadoBuscar == 1 ?
                                 <UseAnimations strokeColor={'#512da8'} animation={infinity} size={80}></UseAnimations> :
                                 estadoBuscar == 0 ?
-                                    <Carousel responsive={responsive} className="mb-2 mt-2">
-                                        <Card
-                                            hoverable
-                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                            className="shadow"
-                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media.cnnchile.com/sites/2/2019/08/la-serena-mop.jpg" />}
-                                        >
-                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                            <Meta title="La serena" description="Desde $59.000" />
-                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                                Ver más <RightOutlined /></Button>
-                                        </Card>
-                                        <Card
-                                            hoverable
-                                            className="shadow  "
-                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media-cdn.tripadvisor.com/media/photo-s/15/7d/ed/0c/img-20181117-160125972.jpg" />}
-                                        >
-                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                            <Meta title="Viña del Mar" description="Desde $59.000" />
-                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                                Ver más <RightOutlined /></Button>
+                                    !dataDepart ?
+                                        <div className="d-flex justify-content-center">
+                                            <UseAnimations strokeColor={'#512da8'} animation={infinity} size={80}></UseAnimations>
+                                        </div> :
+                                        <Carousel responsive={responsive} className="mb-2 mt-2">
+                                            {
 
-                                        </Card>
-                                        <Card
-                                            hoverable
-                                            className="shadow"
-                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://pyme.emol.com/wp-content/uploads/2020/01/Fedetur-puc%C3%B3n.jpg" />}
-                                        >
-                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                            <Meta title="Pucón" description="Desde $59.000" />
-                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
+                                                departPopular.map((elemento, i) => (
+                                                    <Card
+                                                        hoverable
+                                                        style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                                        className="shadow"
+                                                        cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.RUTAIMAGEN} />}
+                                                    >
+                                                        <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                                        <Meta title={elemento.DESCRIPCIOND} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
+                                                        {/*      <Button onClick={redirigir}>Ver más</Button> 
           */}
-                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                                Ver más <RightOutlined /></Button>
-                                        </Card>
-                                        <Card
-                                            hoverable
-                                            className="shadow"
-                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.ola.com.ar/files/circuitos/puerto-varas.jpg" />}
-                                        >
-                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                            <Meta title="Puerto Varas" description="Desde $59.000" />
-                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                                Ver más <RightOutlined /></Button>
-                                        </Card>
-
-                                        <Card
-                                            hoverable
-                                            style={{ width: 240, borderRadius: 20, margin: '1%' }}
-                                            className="shadow "
-                                            cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://media.cnnchile.com/sites/2/2019/08/la-serena-mop.jpg" />}
-                                        >
-                                            <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                            <Meta title="La serena" description="Desde $59.000" />
-                                            {/*      <Button onClick={redirigir}>Ver más</Button> 
-          */}
-                                            <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                                Ver más <RightOutlined /></Button>
-                                        </Card>
-                                    </Carousel> :
+                                                        <Button style={{ marginTop: 10 }} type="primary" shape="round" >
+                                                            <Link style={{ color: 'white' }} to={"departamento/" + elemento.IDDEPARTAMENTO + "/" + elemento.COMUNA_IDCOMUNA} >Ver más </Link><RightOutlined /></Button>
+                                                    </Card>
+                                                ))
+                                            }
+                                        </Carousel> :
                                     <>
                                         {
 
@@ -387,7 +373,7 @@ function InicioWebsite() {
 
                 <div className="container">
 
-                    <h3 className="texto-roboto-elegir centrar" style={{ marginTop: 15, marginBottom: 15 }}>Elige Turismo Real para tus viajes</h3>
+                    <h3 className="texto-roboto-elegir centrar shadow-mensaje" style={{ marginTop: 15, marginBottom: 15, color: 'white' }}>Elige Turismo Real para tus viajes</h3>
                     <div className="iconos row" >
                         <div class="col-sm-12 col-md-4">
                             <Card className="centrar sub-card-texto shadow" style={{ borderRadius: 20, margin: '3%', height: '40%' }} bordered={false}>
@@ -466,7 +452,7 @@ function InicioWebsite() {
                 </Card>
             </Row> */}
 
-            <Row className="hot-pop " >
+            {/* <Row className="hot-pop " >
                 <div id="tours">
                     <h3 className="texto-roboto-popular " style={{ marginTop: 10 }}>Algunos Tours Populares</h3>
                     <p className="subtitulos-popular">
@@ -475,96 +461,83 @@ function InicioWebsite() {
 
                     <div className="row flex justify-content-center" >
 
-                        <div className="col-sm-12 col-md-12 col-lg-3">
-                            <Card
-                                hoverable
-                                style={{ borderRadius: 20, }}
-                                className="shadow mt-2 mb-2"
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.foodtripchile.cl/wp-content/uploads/2019/06/tour-palacio-la-moneda-1.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Santiago" description="Desde $59.000" />
+                        {
+                            !dataTour ?
+                                <center>
+                                    <div className="d-flex justify-content-center">
+                                        <UseAnimations strokeColor={'#512da8'} animation={infinity} size={80}></UseAnimations>
+                                    </div>
 
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-3">
-                            <Card
-                                hoverable
-                                style={{ borderRadius: 20, }}
-                                className="shadow mt-2 mb-2"
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.baltazar.cl/w3/wp-content/uploads/2015/01/Ascensor_Artiller%C3%ADa.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Valparaiso" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-                        */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
+                                </center>
+                                :
+                                tourPopular.map((elemento, i) => {
+                                    if (i >= 4) return null;
+                                    return (
+                                        <div className="col-sm-12 col-md-12 col-lg-3">
+                                            <Card
+                                                hoverable
+                                                style={{ borderRadius: 20, }}
+                                                className="shadow mt-2 mb-2"
+                                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.IMAGEN} />}
+                                            >
+                                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                                <Meta title={elemento.LUGAR} description={"Desde $" + elemento.VALORTOUR} />
 
-                            </Card>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-3">
-                            <Card
-                                hoverable
-                                style={{ borderRadius: 20, }}
-                                className="shadow mt-2 mb-2"
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.gochile.cl/fotos/full/105976-pucon-hector-garcia-1-@2x.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Puerto Montt" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-                        */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-3">
-                            <Card
-                                hoverable
-                                style={{ borderRadius: 20, }}
-                                className="shadow mt-2 mb-2"
-                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src="https://www.gochile.cl/fotos/full/105610-14700791_1254267347978399_2625816188240095663_o@2x.jpg" />}
-                            >
-                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                <Meta title="Pucón" description="Desde $59.000" />
-                                {/*      <Button onClick={redirigir}>Ver más</Button> 
-                        */}
-                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
-                                    Ver más <RightOutlined /></Button>
-                            </Card>
-                        </div>
+                                                <Button style={{ marginTop: 10 }} onClick={event => window.location.href = 'detalleDepartamento'} type="primary" shape="round" >
+                                                    Ver más <RightOutlined /></Button>
+                                            </Card>
+                                        </div>
+                                    )
+                                })
+                        }
+
 
 
                     </div>
 
                 </div>
-            </Row>
-
-
-            {/* <Row style={{ backgroundColor: '#EEEEEE' }}>
-                <h3 className="texto-roboto-paisajes centrar" style={{ marginTop: 15, color: 'black', marginBottom: 15 }}>Algunos paisajes que podrás ver</h3>
             </Row> */}
-            {/* <Carousel className="carousel" autoplay>
+            < Row className="hot-pop " >
+                <div id="hoteles" className="container">
 
-                <div>
-                    <img className="galeria" src="https://i.pinimg.com/originals/6d/4f/7a/6d4f7a7c5c377e8554f020bf814bd5a2.jpg"></img>
-                </div>
-                <div>
-                    <img className="galeria" src="https://content.skyscnr.com/m/7a5757675453387a/original/GettyImages-100517538_doc.jpg?resize=1800px:1800px&quality=100"></img>
-                </div>
-                <div>
-                    <img className="galeria" src="https://speakzeasy.files.wordpress.com/2015/04/santiago.jpg"></img>
-                </div>
-                <div>
-                    <img className="galeria" src="https://i1.wp.com/www.alltherooms.com/blog/wp-content/uploads/2018/11/Feature-9-Adventure-Travel-Experiences-in-Pucon-Chile-By-Guaxinim.jpg?fit=1000%2C667&ssl=1"></img>
-                </div>
-                <div>
-                    <img className="galeria" src="https://www.diariodeosorno.cl/files/5f597635ab876_890x533.jpg"></img>
-                </div>
+                    <h3 className="texto-roboto-hoteles " style={{ marginTop: 10 }}>Algunos Tours Populares</h3>
+                    <p className="subtitulos-popular">
+                        Te mostramos los tours más reservados y con mejor puntuación para que elijas.
+                    </p>
 
-            </Carousel> */}
+                    <center>
+                        {
+                            !dataTour ?
+                                <UseAnimations strokeColor={'#512da8'} animation={infinity} size={80}></UseAnimations> :
+
+                                <Carousel responsive={responsive} className="mb-2 mt-2">
+                                    {
+
+                                        tourPopular.map((elemento, i) => (
+                                            <Card
+                                                hoverable
+                                                style={{ width: 240, borderRadius: 20, margin: '1%' }}
+                                                className="shadow"
+                                                cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.IMAGEN} />}
+                                            >
+                                                <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                                                <Meta title={elemento.LUGAR} description={"Desde $" + elemento.VALORTOUR} />
+                                                <Button style={{ marginTop: 10 }} type="primary" shape="round" >
+                                                    <Link style={{ color: 'white' }}  >Ver más </Link><RightOutlined /></Button>
+                                            </Card>
+                                        ))
+                                    }
+                                </Carousel>
+
+
+
+                        }
+
+
+                    </center>
+
+                </div>
+            </Row >
             <div>
 
                 <div>

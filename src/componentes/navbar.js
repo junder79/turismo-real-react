@@ -29,7 +29,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faLuggageCart, faHome, faSignInAlt, faSignOutAlt, faFan, faMapMarkerAlt, faSink, faArrowLeft, faCalendarCheck, faRoute } from "@fortawesome/free-solid-svg-icons";
 
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined, UserOutlined, HomeOutlined, CarOutlined, CarryOutOutlined } from '@ant-design/icons';
 import AgregarHuespedes from './detalle/detalleHuespedes';
 
 import DetalleReservaC from './detalle/detalleReservaCliente';
@@ -59,7 +58,7 @@ function BarraNavegacion() {
     return (
         <Router >
 
-            <Navbar color="light" light expand="md" style={{borderRadius:'30'}}>
+            <Navbar color="light" light expand="md" style={{ borderRadius: '30' }}>
                 <a class="navbar-brand" href="#">
                     <img src="/img/turismoreal-logo.png" width="60" height="40" class="d-inline-block align-top" alt="" loading="lazy"></img>
                 </a>
@@ -76,11 +75,11 @@ function BarraNavegacion() {
                             estadoLogin == "true" ?
                                 <>
                                     <NavItem>
-                                        <Link to={"micuenta"} className="nav-link" ><FontAwesomeIcon icon={faUserCircle} className="mr-2"></FontAwesomeIcon> Mi Cuenta</Link>
+                                        <Link to={"/micuenta"} className="nav-link" ><FontAwesomeIcon icon={faUserCircle} className="mr-2"></FontAwesomeIcon> Mi Cuenta</Link>
                                     </NavItem>
 
                                     <NavItem>
-                                        <Link to={"viajes"} className="nav-link" ><FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon> Mis Reservas</Link>
+                                        <Link to={"/viajes"} className="nav-link" ><FontAwesomeIcon icon={faLuggageCart} className="mr-2"></FontAwesomeIcon> Mis Reservas</Link>
                                     </NavItem>
                                 </>
                                 : null
@@ -90,10 +89,14 @@ function BarraNavegacion() {
                     {
                         estadoLogin == "true" ?
                             <>
-                                <NavbarText>  <Link to="cerrar" ><FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon> Cerrar Sesión</Link></NavbarText>
+                                <NavbarText>  <Link to="/cerrar" ><FontAwesomeIcon icon={faSignOutAlt} className="mr-2"></FontAwesomeIcon> Cerrar Sesión</Link></NavbarText>
                             </>
                             :
-                            <NavbarText>  <Link to="login" ><FontAwesomeIcon icon={faSignInAlt} className="mr-2"></FontAwesomeIcon>Iniciar Sesión </Link></NavbarText>
+                            <>
+                                <NavbarText>  <Link to="/login" >Iniciar Sesión</Link></NavbarText>
+                                <NavbarText className="ml-2">  o </NavbarText>
+                                <NavbarText >  <Link to="/registro" className="ml-2" >Regístrate</Link></NavbarText>
+                            </>
                     }
 
                 </Collapse>
