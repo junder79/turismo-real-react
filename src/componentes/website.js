@@ -74,7 +74,7 @@ function InicioWebsite() {
     const getLugaresPopulares = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/api/websiteinicial'
+            url: 'http://satur.docn.us/api/websiteinicial'
         }).then(res => {
             console.log(res);
             setDepartPopular(res.data);
@@ -88,7 +88,7 @@ function InicioWebsite() {
     const getToursPopulares = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/api/toursinicial/'
+            url: 'http://satur.docn.us/api/toursinicial/'
         }).then(res => {
             console.log(res);
             setTourPopular(res.data);
@@ -126,7 +126,7 @@ function InicioWebsite() {
         formData.append("fechaTermino", fechaTermino);
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/departamentoactivo/${lugar}`
+            url: `http://satur.docn.us/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
             setTitulo("Departamentos en " + lugar);

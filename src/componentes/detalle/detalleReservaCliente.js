@@ -43,7 +43,7 @@ function DetalleReservaC() {
     const getDetalleTour = (setTourNombre, setValorTour) => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/detalleTourImagen/${idTour}`
+            url: `http://satur.docn.us/api/detalleTourImagen/${idTour}`
         }).then(res => {
             setCargado(true);
             console.log(res.data);
@@ -55,7 +55,7 @@ function DetalleReservaC() {
         })
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/detalleTour/${idTour}`
+            url: `http://satur.docn.us/api/detalleTour/${idTour}`
         }).then(res => {
 
             console.log(res.data);

@@ -44,7 +44,7 @@ function ServicioExtraTour() {
     const getToursZona = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:3001/api/getTours/${comuna}`
+            url: `http://satur.docn.us/api/getTours/${comuna}`
         }).then(res => {
             setEstadoCargaT(true);
             console.log("Detalle Tour" + JSON.stringify(res.data));

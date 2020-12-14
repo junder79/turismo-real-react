@@ -16,7 +16,7 @@ function Tours() {
     const getToursDisponibles = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3001/api/getTours'
+            url: 'http://satur.docn.us/api/getTours'
         }).then(res => {
             console.log(res);
             setTours(res.data);
