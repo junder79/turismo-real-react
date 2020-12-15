@@ -22,7 +22,7 @@ function Login() {
 
     const onSubmit = (data) => {
 
-        console.log("FORMULARIO" + JSON.stringify(data));
+        // console.log("FORMULARIO" + JSON.stringify(data));
         axios.post('http://localhost:3001/api/validarUsuario', data)
             .then(response => {
                 // Guardo la respuesta del parametro de salida del sp

@@ -60,6 +60,15 @@ function TotalReserva() {
     const [estadoReservaGenerada, setReservaGenerada] = useState(false);
     const [lastId, setLastId] = useState('');
 
+    function formatDate(input) {
+        var datePart = input.match(/\d+/g),
+            year = datePart[0].substring(2), // get only two digits
+            month = datePart[1], day = datePart[2];
+
+        return day + '/' + month + '/' + year;
+    }
+
+    // "18/01/10"
 
     const realizarPago = () => {
         let timerInterval
@@ -67,8 +76,8 @@ function TotalReserva() {
 
         const formData = new FormData();
         // Datos de Reserva 
-        formData.append("fecha_inicio", checkIn);
-        formData.append("fecha_termino", checkOut);
+        formData.append("fecha_inicio", "17-06-2021");
+        formData.append("fecha_termino", "23-06-2021");
         formData.append("monto_total", totalReserva);
         formData.append("valor_anticipado", valorAnticipado);
         formData.append("id_usuario", idUsuario);
@@ -81,7 +90,7 @@ function TotalReserva() {
             formData.append("estadoTransporte", 1);
             formData.append("transporteId", transporteId);
             formData.append("horaTransporte", horaTransporte);
-            formData.append("fechaTransporte", fechaTransporte);
+            formData.append("fechaTransporte",formatDate(fechaTransporte));
         }
         // Estado Tour
         if (estadoTour == 1) {
@@ -197,7 +206,7 @@ function TotalReserva() {
                             <Button disabled={btnAgregarReserva} onClick={() => realizarPago()} type="primary" shape="round" className="mt-2 text-center" size={'large'}>
                                 Pagar Ahora
         </Button>
-                            <img style={{float:'right'}} width='160' height="90"  src="https://www.enlanubelab.cl/wp-content/uploads/2016/09/webpay.png"></img>
+                            <img style={{ float: 'right' }} width='160' height="90" src="https://www.enlanubelab.cl/wp-content/uploads/2016/09/webpay.png"></img>
                             <Modal
                                 title="Confirmación de Reserva"
                                 visible={modalPago}
