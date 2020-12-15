@@ -17,7 +17,7 @@ function InicioSesion() {
         formData.append("correo", values.correo);
         formData.append("contrasena", values.password);
 
-        axios.post('http://satur.docn.us/api/validarUsuario', formData)
+        axios.post('http://localhost:3001/api/validarUsuario', formData)
             .then(response => {
                 setCargado(false);
                 // Guardo la respuesta del parametro de salida del sp

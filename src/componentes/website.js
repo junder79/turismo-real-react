@@ -74,7 +74,7 @@ function InicioWebsite() {
     const getLugaresPopulares = () => {
         axios({
             method: 'GET',
-            url: 'http://satur.docn.us/api/websiteinicial'
+            url: 'http://localhost:3001/api/websiteinicial'
         }).then(res => {
             console.log(res);
             setDepartPopular(res.data);
@@ -88,7 +88,7 @@ function InicioWebsite() {
     const getToursPopulares = () => {
         axios({
             method: 'GET',
-            url: 'http://satur.docn.us/api/toursinicial/'
+            url: 'http://localhost:3001/api/toursinicial/'
         }).then(res => {
             console.log(res);
             setTourPopular(res.data);
@@ -126,7 +126,7 @@ function InicioWebsite() {
         formData.append("fechaTermino", fechaTermino);
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/departamentoactivo/${lugar}`
+            url: `http://localhost:3001/api/departamentoactivo/${lugar}`
         }).then(res => {
             console.log(res.data);
             setTitulo("Departamentos en " + lugar);
@@ -270,7 +270,7 @@ function InicioWebsite() {
                                                         cover={<img alt="Imagen" style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }} src={elemento.RUTAIMAGEN} />}
                                                     >
                                                         <StarFilled /><StarFilled /><StarFilled /><StarFilled /><StarFilled />
-                                                        <Meta title={elemento.DESCRIPCIOND} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
+                                                        <Meta title={elemento.NOMBRED} description={"Desde $" + elemento.VALORDEPARTAMENTO} />
                                                         {/*      <Button onClick={redirigir}>Ver más</Button> 
           */}
                                                         <Button style={{ marginTop: 10 }} type="primary" shape="round" >

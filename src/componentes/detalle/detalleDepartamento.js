@@ -44,7 +44,7 @@ function DetalleDepartamento() {
     const getDetalleDepartamentoImagen = () => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/departamentoimagen/${idDepartamento}`
+            url: `http://localhost:3001/api/departamentoimagen/${idDepartamento}`
         }).then(res => {
             setCargado(true);
             console.log(res.data);
@@ -56,7 +56,7 @@ function DetalleDepartamento() {
     const getDetalleDepartamento = () => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/getInfodepartamento/${idDepartamento}`
+            url: `http://localhost:3001/api/getInfodepartamento/${idDepartamento}`
         }).then(res => {
             setCargado(true);
             console.log("valor DEPARTAMENTO" + res.data[0].VALORDEPARTAMENTO * cantDia);
@@ -76,7 +76,7 @@ function DetalleDepartamento() {
     const getDetalleAcondicionado = () => {
         axios({
             method: 'GET',
-            url: `http://satur.docn.us/api/getInfoacondicionado/${idDepartamento}`
+            url: `http://localhost:3001/api/getInfoacondicionado/${idDepartamento}`
         }).then(res => {
 
             console.log(res.data);
@@ -97,7 +97,7 @@ function DetalleDepartamento() {
         formData.append("fecha_inicio", checkIn);
         formData.append("fecha_termino", checkOut);
         formData.append("id_departamento", idDepartamento);
-        axios.post('http://satur.docn.us/api/disponibilidaddepartamento', formData)
+        axios.post('http://localhost:3001/api/disponibilidaddepartamento', formData)
             .then(response => {
                 if (response.data.length > 0) {
                     notification.open({
@@ -172,8 +172,10 @@ function DetalleDepartamento() {
                                     {
 
                                         detalleDepartImages.map((elemento, i) => (
-                                            <div>
-                                                <img src={elemento.RUTAIMAGEN} />
+                                            <div styles="border: 1px solid red !important">
+                                                <img className="img-fluid" styles="max-width:100%;
+  max-height:100%; border: 1px solid red !important" src={elemento.RUTAIMAGEN} style={{justifyContent: 'center',
+          alignItems: 'center' }} />
 
                                             </div>
                                         ))

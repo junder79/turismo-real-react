@@ -16,7 +16,7 @@ function GetUsuarios() {
     const getUsuarios = () => {
         axios({
             method: 'GET',
-            url: 'http://satur.docn.us/api/usuarios'
+            url: 'http://localhost:3001/api/usuarios'
         }).then(res => {
             console.log(res);
             setDataUsuario(res.data);
@@ -65,7 +65,7 @@ function GetUsuarios() {
     const enviarUsuarioModificado = () => {
         console.log("DATOS " + JSON.stringify(usuarioSeleccionado));
         console.log(usuarioSeleccionado);
-        axios.post('http://satur.docn.us/api/updateUsuario', usuarioSeleccionado)
+        axios.post('http://localhost:3001/api/updateUsuario', usuarioSeleccionado)
             .then(response => response.status)
             .catch(err => console.warn(err));
 
@@ -83,7 +83,7 @@ function GetUsuarios() {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    axios.post('http://satur.docn.us/api/eliminarUsuario', elemento)
+                    axios.post('http://localhost:3001/api/eliminarUsuario', elemento)
                         .then(response => {
 
                             var respuestaServidor = response.data;

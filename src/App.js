@@ -29,7 +29,7 @@ function App() {
     <DataProvider>
       <div  className="app">
 
-        {history.location.pathname === '/' ?  window.location.href = "http://satur.docn.us/inicio" : <Navbar />}
+        {history.location.pathname === '/' ?  window.location.href = "http://localhost:8001/inicio" : <Navbar />}
         <Router>
           <Switch>
 
